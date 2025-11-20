@@ -1,0 +1,32 @@
+{
+  "name": "group-project-backend",
+  "version": "1.0.0",
+  "description": "The back-end for the group project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "setup-dbs": "psql -f ./db/setup-dbs.sql"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josephhelmore/breed-team-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/josephhelmore/breed-team-backend/issues"
+  },
+  "homepage": "https://github.com/josephhelmore/breed-team-backend#readme",
+  "devDependencies": {
+    "jest": "^30.2.0",
+    "nodemon": "^3.1.11"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "node-postgres": "^0.6.2",
+    "pg": "^8.16.3",
+    "pg-format": "^1.0.4"
+  }
+}
