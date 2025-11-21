@@ -1,7 +1,6 @@
-const db = require('../db/connection');
-const data = require('../db/data/test');
-const seed = require('../db/seeds/seed');
-const { beforeAll } = require('');
+import db from '../db/connection';
+import data from '../db/data/test';
+import seed from '../db/seeds/seed';
 
 beforeAll(() => seed(data));
 

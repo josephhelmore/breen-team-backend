@@ -1,4 +1,4 @@
-const { drizzle } = require('drizzle-orm/node-postgres');
+import { drizzle } from 'drizzle-orm/node-postgres';
 const ENV = process.env.NODE_ENV || 'development';
 const pathToCorrectEnvFile = `${__dirname}/.env.${ENV}`;
 
@@ -20,4 +20,4 @@ const db = drizzle({
   }
 });
 
-module.exports = db;
+export default db;

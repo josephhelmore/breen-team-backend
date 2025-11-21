@@ -1,7 +1,7 @@
-const userData = require('./userData');
-const scoreData = require('./scoreData');
+import userData from './userData';
+import scoreData from './scoreData';
 
-module.exports = {
+export default {
   userData,
   scoreData
 };
