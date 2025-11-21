@@ -1,3 +1,6 @@
+const { pgTable, interger } = require('drizzle-orm/pg-core');
+
+const users = () => {};
 
 const { pgTable, integer, varchar, timestamp } = require('drizzle-orm/pg-core');
 

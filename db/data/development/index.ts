@@ -1,5 +1,5 @@
-const userData = require('./userData');
+import userData from './userData';
 
-module.exports = {
+export default {
   userData
 };

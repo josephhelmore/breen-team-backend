@@ -14,7 +14,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/josephhelmore/breed-team-backend/issues"
   },
@@ -23,16 +23,20 @@
     "@babel/core": "^7.28.5",
     "@babel/preset-env": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
+    "@jest/globals": "^30.2.0",
     "@types/pg": "^8.15.6",
     "babel-jest": "^30.2.0",
     "drizzle-kit": "^0.31.7",
     "jest": "^30.2.0",
     "nodemon": "^3.1.11",
-    "tsx": "^4.20.6"
+    "tsx": "^4.20.6",
+    "vitest": "^4.0.12"
   },
   "dependencies": {
+    "@types/express": "^5.0.5",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.7",
+    "express": "^5.1.0",
     "node-postgres": "^0.6.2",
     "pg": "^8.16.3",
     "pg-format": "^1.0.4"
