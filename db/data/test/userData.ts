@@ -1,4 +1,4 @@
-module.exports = [
+const userData = [
 
     {
         username: 'Gilson',
@@ -6,3 +6,5 @@ module.exports = [
     }
     
 ]
+
+export default userData

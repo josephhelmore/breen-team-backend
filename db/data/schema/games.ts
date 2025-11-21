@@ -1,4 +1,4 @@
-const { pgTable, integer, varchar} = require("drizzle-orm/pg-core")
+import { pgTable, integer, varchar} from "drizzle-orm/pg-core"
 
  const games = pgTable('games', {
   id: integer().primaryKey().notNull(),
