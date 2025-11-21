@@ -4,7 +4,7 @@
   "description": "The back-end for the group project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "setup-dbs": "psql -f ./db/setup-dbs.sql"
   },
   "repository": {
@@ -20,11 +20,19 @@
   },
   "homepage": "https://github.com/josephhelmore/breed-team-backend#readme",
   "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@babel/preset-typescript": "^7.28.5",
+    "@types/pg": "^8.15.6",
+    "babel-jest": "^30.2.0",
+    "drizzle-kit": "^0.31.7",
     "jest": "^30.2.0",
-    "nodemon": "^3.1.11"
+    "nodemon": "^3.1.11",
+    "tsx": "^4.20.6"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.44.7",
     "node-postgres": "^0.6.2",
     "pg": "^8.16.3",
     "pg-format": "^1.0.4"

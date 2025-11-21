@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleDetection": "force"
+  },
+  "exclude": ["./__tests__"]
+}
