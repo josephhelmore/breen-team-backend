@@ -1,8 +1,7 @@
 import 'dotenv/config';
 import { defineConfig } from 'drizzle-kit';
 
-const ENV = process.env.NODE_ENV || 'development';
-const pathToCorrectEnvFile = `./db/.env.${ENV}`;
+const pathToCorrectEnvFile = `./db/.env.test`;
 import dotenv from 'dotenv';
 
 dotenv.config({
@@ -11,9 +10,10 @@ dotenv.config({
 
 export default defineConfig({
   out: './drizzle',
-  schema: './db/data/schema.ts',
+  schema: './db/data/schema',
   dialect: 'postgresql',
   dbCredentials: {
     url: process.env.DATABASE_URL!
-  }
+  },
+  verbose: true
 });
