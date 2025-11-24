@@ -8,9 +8,11 @@ export const scores = pgTable('scores', {
   user_id: integer()
     .notNull()
     .references(() => users.user_id, { onDelete: 'cascade' }),
-  //username: varchar().notNull().references(()=>users.username),
+  // username: varchar()
+  //   .notNull()
+  //   .references(() => users.username),
   game_id: integer()
     .notNull()
-    .references(() => games.id, { onDelete: 'cascade' }),
+    .references(() => games.game_id, { onDelete: 'cascade' }),
   created_on: timestamp().defaultNow().notNull()
 });
