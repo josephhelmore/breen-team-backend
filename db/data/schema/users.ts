@@ -5,3 +5,5 @@ export const users = pgTable('users', {
   username: varchar().notNull(),
   created_on: timestamp().defaultNow().notNull()
 });
+
+module.exports = users;

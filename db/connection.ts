@@ -1,4 +1,5 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
+
 import dotenv from 'dotenv';
 import path from 'path';
 
@@ -9,6 +10,7 @@ const envPath = import.meta.dirname + '/.env.' + ENV;
 
 // dotenv config using module way instead of require
 dotenv.config({ path: envPath });
+
 
 if (!process.env.DATABASE_URL) {
   throw new Error('No DATABASE_URL configured');
