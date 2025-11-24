@@ -6,4 +6,3 @@ export const users = pgTable('users', {
   created_on: timestamp().defaultNow().notNull()
 });
 
-module.exports = users;
