@@ -5,7 +5,9 @@
   "main": "listen.ts",
   "scripts": {
     "test": "vitest",
-    "setup-dbs": "psql -f ./db/setup-dbs.sql"
+    "setup-dbs": "psql -f ./db/setup-dbs.sql",
+    "push-dev": "drizzle-kit push --config=drizzle-dev.config.ts",
+    "push-test": "drizzle-kit push --config=drizzle-test.config.ts"
   },
   "repository": {
     "type": "git",
@@ -38,6 +40,7 @@
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.7",
     "express": "^5.1.0",
+    "jest-extended": "^6.0.0",
     "node-postgres": "^0.6.2",
     "pg": "^8.16.3",
     "pg-format": "^1.0.4"

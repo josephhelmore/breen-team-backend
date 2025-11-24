@@ -1,10 +1,12 @@
-import { beforeAll, afterAll, describe, test, expect } from 'vitest'
+import { beforeAll, afterAll, describe, test, expect } from 'vitest';
 import db from '../db/connection';
 import { seed } from '../db/seed';
 import { users } from '../db/data/schema/users';
 
-beforeAll(() => seed());
-afterAll(() => db.$client.end());
+expect.extend(matchers);
+
+beforeAll(() => seedTable());
+afterAll(() => dropTable());
 
 describe('Seed users table', () => {
     test('should check if users table has the correct fields and values', () => {
@@ -17,4 +19,3 @@ describe('Seed users table', () => {
         })
     });
 });
-
