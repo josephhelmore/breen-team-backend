@@ -7,7 +7,9 @@
     "test": "vitest",
     "setup-dbs": "psql -f ./db/setup-dbs.sql",
     "push-dev": "drizzle-kit push --config=drizzle-dev.config.ts",
-    "push-test": "drizzle-kit push --config=drizzle-test.config.ts"
+    "push-test": "drizzle-kit push --config=drizzle-test.config.ts",
+    "dev": "nodemon app.ts",
+    "start": "node listen.ts"
   },
   "repository": {
     "type": "git",
