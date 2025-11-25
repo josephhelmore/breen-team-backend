@@ -26,13 +26,15 @@ jest-extended
 npm run setup-dbs
 ```
 
-2. Push the schemas to create tables through drizzle-kit
+2. Create .env.development and .env.test inside the /data folder and set DATABASE_URL in the files.
+
+3. Push the schemas to create tables through drizzle-kit
 
 ```
 npm run push-test
 ```
 
-3. Run the test through Vitest
+4. Run the test through Vitest
 
 ```
 npm t
