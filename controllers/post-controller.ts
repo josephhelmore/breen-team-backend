@@ -2,12 +2,12 @@ import { Response, Request } from 'express';
 import { createUser } from '../models/create-model';
 import { createScore } from '../models';
 
-export const postUser = (req: Request, res: Response) => {
-    const { username }: { username: string } = req.body
+export const postUser = async (req: Request, res: Response) => {
+  const { username }: { username: string } = req.body
 
-    return createUser(username).then(user => {
-        return res.status(201).send({ user: user[0] })
-    })
+  const [resUsername] = await createUser(username)
+
+  return res.status(201).send({ user: resUsername })
 }
 
 export const postScore = async (req: Request, res: Response) => {

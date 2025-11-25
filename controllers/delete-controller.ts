@@ -1,10 +1,13 @@
 import { Response, Request } from "express"
 import { deleteUser } from "../models/delete-model"
 
-export const deleteUserId = (req: Request, res: Response) => {
+export const deleteUserId = async (req: Request, res: Response) => {
     const user_id = req.params.user_id
+    const convertedUserIdToNumber = Number(user_id)
+    const user = await deleteUser(convertedUserIdToNumber)
 
-    return deleteUser(user_id).then(() => {
-        return res.status(204).send()
-    })
+    res.send(user)
 }
+
+
+
