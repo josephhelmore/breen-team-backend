@@ -55,8 +55,7 @@ describe('GET', () => {
         });
       })
     });
-
-    test('GET user by ID', async () => {
+    test('GET user by Id', async () => {
       return request(app).get('/api/users/1').expect(200).then(({ body }) => {
         const { user } = body
         expect(user.user_id).toBeNumber();
@@ -65,9 +64,19 @@ describe('GET', () => {
         expect(
           /^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(user.created_on)
         ).toBeTrue();
-
       })
     });
 
+  })
+});
+
+
+
+
+describe('DELETE', () => {
+  describe('DELETE /users', () => {
+    test('DELETE user by Id', async () => {
+      return request(app).delete('/api/users/1').expect(204)
+    })
   })
 });
