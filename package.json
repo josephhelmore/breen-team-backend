@@ -8,7 +8,12 @@
     "setup-dbs": "psql -f ./db/setup-dbs.sql",
     "push-dev": "drizzle-kit push --config=drizzle-dev.config.ts",
     "push-test": "drizzle-kit push --config=drizzle-test.config.ts",
+<<<<<<< HEAD
     "push-prod": "drizzle-kit push --config=drizzle-prod.config.ts"
+=======
+    "dev": "nodemon app.ts",
+    "start": "node listen.ts"
+>>>>>>> c08d31a79063a57441cbb0f049303e2e76436a0a
   },
   "repository": {
     "type": "git",
@@ -23,27 +28,27 @@
   },
   "homepage": "https://github.com/josephhelmore/breed-team-backend#readme",
   "devDependencies": {
-    "@babel/core": "^7.28.5",
-    "@babel/preset-env": "^7.28.5",
-    "@babel/preset-typescript": "^7.28.5",
     "@jest/globals": "^30.2.0",
     "@types/pg": "^8.15.6",
-    "babel-jest": "^30.2.0",
     "drizzle-kit": "^0.31.7",
-    "jest": "^30.2.0",
+    "jest-extended": "^6.0.0",
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.6",
     "vitest": "^4.0.12"
   },
   "dependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
+    "@types/supertest": "^6.0.3",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.7",
+    "drizzle-seed": "^0.3.1",
     "express": "^5.1.0",
-    "jest-extended": "^6.0.0",
+    "jest-sorted": "^1.0.15",
     "node-postgres": "^0.6.2",
     "pg": "^8.16.3",
-    "pg-format": "^1.0.4"
+    "supertest": "^7.1.4"
   }
 }
