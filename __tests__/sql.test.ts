@@ -19,7 +19,7 @@ describe('users table', () => {
     expect(exists).toBe(true);
   });
 
-  test('users table has user_id column as integer', async () => {
+  test('users table has user_id column as serial', async () => {
     const {
       rows: [column]
     } = await db.execute(sql`SELECT *
@@ -29,6 +29,7 @@ describe('users table', () => {
 
     expect(column.column_name).toBe('user_id');
     expect(column.data_type).toBe('integer');
+    expect(column.column_default).toBe("nextval('users_user_id_seq'::regclass)");
   });
 
   test('users table has user_id column as the primary key', async () => {
@@ -133,7 +134,7 @@ describe('scores table', () => {
     expect(exists).toBe(true);
   });
 
-  test('scores table has score_id column as integer', async () => {
+  test('scores table has score_id column as serial', async () => {
     const {
       rows: [column]
     } = await db.execute(sql`SELECT *
@@ -143,6 +144,7 @@ describe('scores table', () => {
 
     expect(column.column_name).toBe('score_id');
     expect(column.data_type).toBe('integer');
+    expect(column.column_default).toBe("nextval('scores_score_id_seq'::regclass)");
   });
 
   test('scores table has score_id column as the primary key', async () => {
@@ -182,7 +184,7 @@ describe('scores table', () => {
     expect(column.data_type).toBe('integer');
   });
 
-  test('scores table references user_id from uers', async () => {
+  test('scores table references user_id from users', async () => {
     const { rows } = await db.execute(
       sql`
         SELECT *
@@ -199,5 +201,79 @@ describe('scores table', () => {
       `
     );
     expect(rows).toHaveLength(1);
+  });
+
+  test('scores table has username column as character varying', async () => {
+    const {
+      rows: [column]
+    } = await db.execute(sql`SELECT *
+            FROM information_schema.columns
+            WHERE table_name = 'scores'
+            AND column_name = 'username';`);
+
+    expect(column.column_name).toBe('username');
+    expect(column.data_type).toBe('character varying');
+  });
+
+  test('scores table references username from users', async () => {
+    const { rows } = await db.execute(
+      sql`
+        SELECT *
+        FROM information_schema.table_constraints AS tc
+        JOIN information_schema.key_column_usage AS kcu
+          ON tc.constraint_name = kcu.constraint_name
+        JOIN information_schema.constraint_column_usage AS ccu
+          ON ccu.constraint_name = tc.constraint_name
+        WHERE tc.constraint_type = 'FOREIGN KEY'
+          AND tc.table_name = 'scores'
+          AND kcu.column_name = 'username'
+          AND ccu.table_name = 'users'
+          AND ccu.column_name = 'username';
+      `
+    );
+    expect(rows).toHaveLength(1);
+  });
+
+  test('scores table has game_id column as integer', async () => {
+    const {
+      rows: [column]
+    } = await db.execute(sql`SELECT *
+            FROM information_schema.columns
+            WHERE table_name = 'scores'
+            AND column_name = 'game_id';`);
+
+    expect(column.column_name).toBe('game_id');
+    expect(column.data_type).toBe('integer');
+  });
+
+  test('scores table references game_id from games', async () => {
+    const { rows } = await db.execute(
+      sql`
+        SELECT *
+        FROM information_schema.table_constraints AS tc
+        JOIN information_schema.key_column_usage AS kcu
+          ON tc.constraint_name = kcu.constraint_name
+        JOIN information_schema.constraint_column_usage AS ccu
+          ON ccu.constraint_name = tc.constraint_name
+        WHERE tc.constraint_type = 'FOREIGN KEY'
+          AND tc.table_name = 'scores'
+          AND kcu.column_name = 'game_id'
+          AND ccu.table_name = 'games'
+          AND ccu.column_name = 'game_id';
+      `
+    );
+    expect(rows).toHaveLength(1);
+  });
+
+  test('scores table has created_on column as timestamp', async () => {
+    const {
+      rows: [column]
+    } = await db.execute(sql`SELECT *
+            FROM information_schema.columns
+            WHERE table_name = 'scores'
+            AND column_name = 'created_on';`);
+
+    expect(column.column_name).toBe('created_on');
+    expect(column.data_type).toBe('timestamp without time zone');
   });
 });
