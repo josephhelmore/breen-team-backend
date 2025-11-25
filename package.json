@@ -8,12 +8,9 @@
     "setup-dbs": "psql -f ./db/setup-dbs.sql",
     "push-dev": "drizzle-kit push --config=drizzle-dev.config.ts",
     "push-test": "drizzle-kit push --config=drizzle-test.config.ts",
-<<<<<<< HEAD
-    "push-prod": "drizzle-kit push --config=drizzle-prod.config.ts"
-=======
+    "push-prod": "drizzle-kit push --config=drizzle-prod.config.ts",
     "dev": "nodemon app.ts",
     "start": "node listen.ts"
->>>>>>> c08d31a79063a57441cbb0f049303e2e76436a0a
   },
   "repository": {
     "type": "git",
