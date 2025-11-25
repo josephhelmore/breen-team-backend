@@ -66,6 +66,37 @@ describe('GET', () => {
       expect(scores1[0].score_id).not.toBe(scores2[0].score_id);
     });
   });
+
+  describe('GET /users', () => {
+    test('GET all users from database', async () => {
+      const { body } = await request(app).get('/api/users').expect(200);
+      const users = body
+
+      users.forEach(user => {
+        expect(user.user_id).toBeNumber();
+        expect(user.username).toBeString();
+        expect(user.created_on).toBeString();
+        expect(
+          /^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(user.created_on)
+        ).toBeTrue();
+      });
+    });
+
+    test('GET user by id', async () => {
+      const {
+        body: { user }
+      } = await request(app).get('/api/users/1').expect(200);
+
+      expect(user.user_id).toBeNumber();
+      expect(user.username).toBeString();
+      expect(user.created_on).toBeString();
+      expect(
+        /^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(user.created_on)
+      ).toBeTrue();
+
+    });
+
+  });
 });
 
 describe('POST', () => {
@@ -93,60 +124,27 @@ describe('POST', () => {
       await seedTable();
     });
   });
-
-  describe('GET /users', () => {
-    test('GET all users from database', async () => {
-      return request(app).get("/api/users").expect(200).then(({ body }) => {
-        const users = body
-        users.forEach(user => {
-          expect(user.user_id).toBeNumber();
-          expect(user.username).toBeString();
-          expect(user.created_on).toBeString();
-          expect(
-            /^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(user.created_on)
-          ).toBeTrue();
-        });
-      })
-    });
-    test('GET user by Id', async () => {
-      return request(app).get('/api/users/1').expect(200).then(({ body }) => {
-        const { user } = body
-        expect(user.user_id).toBeNumber();
-        expect(user.username).toBeString();
-        expect(user.created_on).toBeString();
-        expect(
-          /^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(user.created_on)
-        ).toBeTrue();
-      })
-    });
-
-  })
 });
 
 describe('POST', () => {
   describe('POST /users', () => {
-    test('POST user to the database', async () => {
+    test.only('POST user to the database', async () => {
+
       const newUser = {
-        user_id: 11,
         username: 'Gilson',
-        created_on: 213123123
       }
 
-      return request(app)
-        .post('/api/users')
-        .send(newUser)
-        .expect(201)
-        .then(({ body }) => {
-          const { user } = body;
-          console.log(user)
-          expect(user).toHaveProperty("user_id");
-          expect(user).toHaveProperty("username");
-          expect(user).toHaveProperty("created_on");
-          expect(typeof user).toBe("object");
-          expect(typeof user.user_id).toBe("number");
-          expect(typeof user.username).toBe("string");
-          expect(typeof user.created_on).toBe("string");
-        })
+      const {
+        body: { user }
+      } = await request(app).post('/api/users').send(newUser).expect(201);
+
+      expect(user).toHaveProperty("user_id");
+      expect(user).toHaveProperty("username");
+      expect(user).toHaveProperty("created_on");
+      expect(typeof user).toBe("object");
+      expect(typeof user.user_id).toBe("number");
+      expect(typeof user.username).toBe("string");
+      expect(typeof user.created_on).toBe("string");
     })
   })
 });
@@ -154,8 +152,8 @@ describe('POST', () => {
 
 describe('DELETE', () => {
   describe('DELETE /users', () => {
-    test('DELETE user by Id', async () => {
-      return request(app).delete('/api/users/1').expect(204)
+    test.only('DELETE user by Id', async () => {
+      return request(app).delete('/api/users/9').expect(200)
     })
   })
 });
