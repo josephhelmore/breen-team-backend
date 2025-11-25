@@ -36,11 +36,15 @@
   "dependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
+    "@types/supertest": "^6.0.3",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.7",
+    "drizzle-seed": "^0.3.1",
     "express": "^5.1.0",
+    "jest-sorted": "^1.0.15",
     "node-postgres": "^0.6.2",
-    "pg": "^8.16.3"
+    "pg": "^8.16.3",
+    "supertest": "^7.1.4"
   }
 }

@@ -1,12 +1,14 @@
-import express from 'express'
-import cors from 'cors'
-import { findAllUsers } from './controllers'
+import express from 'express';
+import cors from 'cors';
+import { getScores } from './controllers';
 
-const app = express()
+const app = express();
 
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
-app.get('/api/users', findAllUsers);
+// app.get('/api/users', findAllUsers);
 
-export default app
+app.get('/api/scores', getScores);
+
+export default app;
