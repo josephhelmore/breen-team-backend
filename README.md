@@ -22,6 +22,10 @@ jest-extended
 
 1. Set up databases through through psql command in npm script
 
+```
+npm run setup-dbs
+```
+
 2. Create .env.development inside the /data folder and set DATABASE_URL in the files.
 
 ```
