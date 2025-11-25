@@ -5,6 +5,7 @@ import * as matchers from 'jest-extended';
 import seedTable from '../db/seed/seed';
 import { sql } from 'drizzle-orm';
 import dropTable from '../db/seed/drop';
+import { scores } from '../db/data/schema/scores';
 
 expect.extend(matchers);
 
@@ -33,3 +34,13 @@ describe('Seed users table', () => {
       });
   });
 });
+  test('Should check that the scores table has a column referenced to the users table', () => {
+    return db
+      .select()
+      .from(scores)
+      .then(scores => {
+        scores.forEach( score => {
+          expect(score).toHaveProperty('username');
+        });
+      });
+  });
