@@ -4,10 +4,9 @@ import { scores } from '../db/data/schema/scores';
 
 
 export const createUser = async (username: string) => {
-    return await db.insert(users).values({ username: username }).returning();
+  return await db.insert(users).values({ username: username }).returning();
 }
-  return await db.insert(users).values({ username: username });
-};
+
 
 export const createScore = async (
   score: number,

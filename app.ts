@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import { getScores } from './controllers';
 import { getUser, getUsers } from './controllers/get-controller';
 import { deleteUserId } from './controllers/delete-controller';
 import { postUser } from './controllers/post-controller';
