@@ -40,4 +40,34 @@ describe('GET', () => {
       }
     });
   });
+
+  describe('GET /users', () => {
+    test('GET all users from database', async () => {
+      return request(app).get("/api/users").expect(200).then(({ body }) => {
+        const users = body
+        users.forEach(user => {
+          expect(user.user_id).toBeNumber();
+          expect(user.username).toBeString();
+          expect(user.created_on).toBeString();
+          expect(
+            /^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(user.created_on)
+          ).toBeTrue();
+        });
+      })
+    });
+
+    test('GET user by ID', async () => {
+      return request(app).get('/api/users/1').expect(200).then(({ body }) => {
+        const { user } = body
+        expect(user.user_id).toBeNumber();
+        expect(user.username).toBeString();
+        expect(user.created_on).toBeString();
+        expect(
+          /^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(user.created_on)
+        ).toBeTrue();
+
+      })
+    });
+
+  })
 });
