@@ -7,7 +7,9 @@
     "test": "vitest",
     "setup-dbs": "psql -f ./db/setup-dbs.sql",
     "push-dev": "drizzle-kit push --config=drizzle-dev.config.ts",
-    "push-test": "drizzle-kit push --config=drizzle-test.config.ts"
+    "push-test": "drizzle-kit push --config=drizzle-test.config.ts",
+    "dev": "nodemon app.ts",
+    "start": "node listen.ts"
   },
   "repository": {
     "type": "git",
@@ -32,7 +34,9 @@
     "vitest": "^4.0.12"
   },
   "dependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.7",
     "express": "^5.1.0",
