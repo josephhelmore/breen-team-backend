@@ -10,7 +10,7 @@ import { games } from '../db/data/schema/games';
 
 expect.extend(matchers);
 
-beforeAll(() => seedTable(30));
+beforeAll(() => seedTable());
 afterAll(() => dropTable());
 
 describe('GET', () => {
@@ -68,10 +68,9 @@ describe('GET', () => {
   });
 
   describe('GET /users', () => {
-    test('GET all users from database', async () => {
+    test.only('GET all users from database', async () => {
       const { body } = await request(app).get('/api/users').expect(200);
       const users = body
-
       users.forEach(user => {
         expect(user.user_id).toBeNumber();
         expect(user.username).toBeString();
@@ -82,11 +81,8 @@ describe('GET', () => {
       });
     });
 
-    test('GET user by id', async () => {
-      const {
-        body: { user }
-      } = await request(app).get('/api/users/1').expect(200);
-
+    test.only('GET user by id', async () => {
+      const { body: { user } } = await request(app).get('/api/users/3').expect(200);
       expect(user.user_id).toBeNumber();
       expect(user.username).toBeString();
       expect(user.created_on).toBeString();
@@ -124,12 +120,8 @@ describe('POST', () => {
       await seedTable();
     });
   });
-});
-
-describe('POST', () => {
   describe('POST /users', () => {
     test.only('POST user to the database', async () => {
-
       const newUser = {
         username: 'Gilson',
       }
@@ -138,6 +130,7 @@ describe('POST', () => {
         body: { user }
       } = await request(app).post('/api/users').send(newUser).expect(201);
 
+      console.log(user)
       expect(user).toHaveProperty("user_id");
       expect(user).toHaveProperty("username");
       expect(user).toHaveProperty("created_on");
@@ -148,7 +141,6 @@ describe('POST', () => {
     })
   })
 });
-
 
 describe('DELETE', () => {
   describe('DELETE /users', () => {
