@@ -12,9 +12,15 @@ afterAll(() => dropTable());
 
 describe('GET', () => {
   describe('GET /users', () => {
+    interface User {
+      user_id: number;
+      username: string;
+      created_on: string;
+    }
+
     test('GET all users from database', async () => {
       const { body } = await request(app).get('/api/users').expect(200);
-      const users = body;
+      const users: User[] = body;
       users.forEach(user => {
         expect(user.user_id).toBeNumber();
         expect(user.username).toBeString();
