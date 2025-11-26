@@ -10,7 +10,7 @@
     "push-test": "drizzle-kit push --config=drizzle-test.config.ts",
     "push-prod": "drizzle-kit push --config=drizzle-prod.config.ts",
     "seed-prod": "NODE_ENV=production npm run push-prod",
-    "dev": "nodemon app.ts",
+    "dev": "tsx app.ts",
     "start": "node listen.ts"
   },
   "repository": {

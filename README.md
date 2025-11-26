@@ -26,7 +26,7 @@ jest-extended
 npm run setup-dbs
 ```
 
-2. Create .env.development inside the /data folder and set DATABASE_URL in the files.
+2. Create .env.development inside the /db folder and set DATABASE_URL in the files.
 
 ```
 DATABASE_URL=postgresql://{username}:{password}@localhost/breen_server
@@ -48,7 +48,7 @@ npm run push-dev
 npm run setup-dbs
 ```
 
-2. Create .env.test inside the /data folder and set DATABASE_URL in the files.
+2. Create .env.test inside the /db folder and set DATABASE_URL in the files.
 
 ```
 DATABASE_URL=postgresql://{username}:{password}@localhost/breen_server_test
