@@ -3,12 +3,12 @@ import { createUser } from '../models/create-model';
 import { createScore } from '../models/index';
 
 export const postUser = async (req: Request, res: Response) => {
-  const { username }: { username: string } = req.body
+  const { username }: { username: string } = req.body;
 
-  const [resUsername] = await createUser(username)
+  const [resUsername] = await createUser(username);
 
-  return res.status(201).send({ user: resUsername })
-}
+  return res.status(201).send({ user: resUsername });
+};
 
 export const postScore = async (req: Request, res: Response) => {
   const { score, user_id, username } = req.body;

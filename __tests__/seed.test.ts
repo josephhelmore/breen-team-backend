@@ -1,11 +1,11 @@
 import { beforeAll, afterAll, describe, test, expect } from 'vitest';
-import { users } from '../db/data/schema/users';
-import { scores } from '../db/data/schema/scores';
-import { games } from '../db/data/schema/games';
+import { users } from '../src/db/data/schema/users';
+import { scores } from '../src/db/data/schema/scores';
+import { games } from '../src/db/data/schema/games';
 import matchers from 'jest-extended';
-import db from '../db/connection';
-import seedTable from '../db/seed/seed-test';
-import dropTable from '../db/seed/drop';
+import db from '../src/db/connection';
+import seedTable from '../src/db/seed/seed-test';
+import dropTable from '../src/db/seed/drop';
 
 expect.extend(matchers);
 

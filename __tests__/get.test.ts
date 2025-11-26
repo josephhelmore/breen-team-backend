@@ -1,8 +1,8 @@
-import app from '../app';
+import app from '../src/app';
 import * as matchers from 'jest-extended';
 import { beforeAll, afterAll, describe, test, expect } from 'vitest';
-import seedTable from '../db/seed/seed-test';
-import dropTable from '../db/seed/drop';
+import seedTable from '../src/db/seed/seed-test';
+import dropTable from '../src/db/seed/drop';
 import request from 'supertest';
 
 expect.extend(matchers);

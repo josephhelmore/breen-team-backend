@@ -5,11 +5,11 @@
   "main": "listen.ts",
   "scripts": {
     "test": "vitest",
-    "setup-dbs": "psql -f ./db/setup-dbs.sql",
+    "setup-dbs": "psql -f ./src/db/setup-dbs.sql",
     "push-dev": "drizzle-kit push --config=drizzle-dev.config.ts",
     "push-test": "drizzle-kit push --config=drizzle-test.config.ts",
     "push-prod": "drizzle-kit push --config=drizzle-prod.config.ts",
-    "seed-dev": "tsx ./db/seed/seed-dev.ts",
+    "seed-dev": "tsx ./src/db/seed/seed-dev.ts",
     "seed-prod": "NODE_ENV=production npm run seed-dev",
     "dev": "tsx app.ts",
     "start": "tsx listen.ts",

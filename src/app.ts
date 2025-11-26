@@ -22,5 +22,4 @@ app.post('/api/users', postUser);
 
 app.delete('/api/users/:user_id', deleteUserId);
 
-
 export default app;

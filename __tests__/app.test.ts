@@ -1,10 +1,10 @@
-import app from '../app';
+import app from '../src/app';
 import * as matchers from 'jest-extended';
 import { beforeAll, afterAll, describe, test, expect } from 'vitest';
 import request from 'supertest';
-import { seed } from '../db/seed/seed';
-import dropTable from '../db/seed/drop';
-import { data } from '../db/data/test/index';
+import { seed } from '../src/db/seed/seed';
+import dropTable from '../src/db/seed/drop';
+import { data } from '../src/db/data/test/index';
 
 expect.extend(matchers);
 

@@ -1,4 +1,4 @@
-import db from '../db/connection';
+import db from '../src/db/connection';
 import { describe, test, expect } from 'vitest';
 import * as matchers from 'jest-extended';
 import { sql } from 'drizzle-orm';

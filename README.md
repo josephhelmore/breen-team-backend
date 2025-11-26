@@ -92,7 +92,7 @@ npm run start        -- start server
 # Testing script order
 npm run setup-dbs   
 npm run push-test
-npm run t
+npm run test
 
 
 
