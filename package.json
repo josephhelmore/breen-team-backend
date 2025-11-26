@@ -9,9 +9,9 @@
     "push-dev": "drizzle-kit push --config=drizzle-dev.config.ts",
     "push-test": "drizzle-kit push --config=drizzle-test.config.ts",
     "push-prod": "drizzle-kit push --config=drizzle-prod.config.ts",
-    "seed-prod": "NODE_ENV=production npm run seed.ts",
+    "seed-prod": "NODE_ENV=production ",
     "dev": "tsx app.ts",
-    "start": "node src/dist/listen.js",
+    "start": "node dist/listen.js",
     "build": "tsc"
   },
   "repository": {
