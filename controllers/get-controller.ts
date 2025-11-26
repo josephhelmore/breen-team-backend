@@ -5,15 +5,16 @@ import { readScores } from '../models/index';
 export const getUsers = async (req: Request, res: Response) => {
   const users = await readUsers()
 
-  res.send(users)
+  return res.send(users)
 };
 
 export const getUser = async (req: Request, res: Response) => {
   const user_id = req.params.user_id;
+  const convertedUserIdToNumber = Number(user_id)
 
-  const user = await readUser(user_id)
+  const user = await readUser(convertedUserIdToNumber)
 
-  res.send({ user: user[0] });
+  return res.send({ user: user[0] });
 };
 
 export const getScores = async (req: Request, res: Response) => {
