@@ -22,7 +22,5 @@ app.post('/api/users', postUser);
 
 app.delete('/api/users/:user_id', deleteUserId);
 
-app.use((err, req, res, next) => {
-  console.log(err);
-});
+
 export default app;
