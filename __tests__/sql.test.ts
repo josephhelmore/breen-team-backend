@@ -82,7 +82,7 @@ describe('games table', () => {
     expect(exists).toBe(true);
   });
 
-  test('games table has game_id column as integer', async () => {
+  test('games table has game_id column as serial', async () => {
     const {
       rows: [column]
     } = await db.execute(sql`SELECT *
@@ -92,6 +92,7 @@ describe('games table', () => {
 
     expect(column.column_name).toBe('game_id');
     expect(column.data_type).toBe('integer');
+    expect(column.column_default).toBe("nextval('games_game_id_seq'::regclass)");
   });
 
   test('games table has game_id column as the primary key', async () => {

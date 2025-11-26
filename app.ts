@@ -14,6 +14,11 @@ app.get('/api/users', getUsers);
 app.get('/api/users/:user_id', getUser);
 app.get('/api/scores', getScores);
 
+app.post('/api/games/:gameid/scores', postScore);
+
+app.use((err, req, res, next) => {
+  console.log(err);
+});
 app.post('/api/users', postUser)
 
 app.delete('/api/users/:user_id', deleteUserId);

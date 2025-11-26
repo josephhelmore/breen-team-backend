@@ -17,4 +17,3 @@ export const createScore = async (
     .values({ score: score, user_id: user_id, username: username, game_id: game_id })
     .returning();
 };
-//{score:scores.score,user_id:scores.user_id}

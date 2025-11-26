@@ -1,14 +1,13 @@
 import app from '../app';
 import * as matchers from 'jest-extended';
 import { beforeAll, afterAll, describe, test, expect } from 'vitest';
-import seedTable from '../db/seed/seed';
-import dropTable from '../db/seed/drop';
 import request from 'supertest';
-import db from '../db/connection';
-import { users } from '../db/data/schema/users';
-import { games } from '../db/data/schema/games';
+import { seedAPI } from '../db/seed/seedAPI';
+import dropTable from '../db/seed/drop';
+import { data } from '../db/data/test/index';
 
 expect.extend(matchers);
+
 
 beforeAll(() => seedTable());
 afterAll(() => dropTable());
@@ -98,26 +97,20 @@ describe('GET', () => {
 describe('POST', () => {
   describe('POST scores', () => {
     test('POST a score', async () => {
-      await dropTable();
-      await db.insert(users).values({ user_id: 40, username: 'test_user' });
-      await db.insert(games).values({ game_id: 50, name: 'test_game' });
-
       const testScore = {
         score: 100,
-        user_id: 40,
-        username: 'test_user',
-        game_id: 50
+        user_id: 1,
+        username: 'testUser1'
       };
 
       const {
         body: { score }
-      } = await request(app).post('/api/scores').send(testScore).expect(201);
+      } = await request(app).post('/api/games/1/scores').send(testScore).expect(201);
 
       expect(score.score).toBe(100);
-      expect(score.user_id).toBe(40);
-      expect(score.username).toBe('test_user');
-      expect(score.game_id).toBe(50);
-      await seedTable();
+      expect(score.user_id).toBe(1);
+      expect(score.username).toBe('testUser1');
+      expect(score.game_id).toBe(1);
     });
   });
   describe('POST /users', () => {

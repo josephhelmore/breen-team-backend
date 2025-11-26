@@ -11,11 +11,11 @@ export const postUser = async (req: Request, res: Response) => {
 }
 
 export const postScore = async (req: Request, res: Response) => {
-  const { score, user_id, username, game_id } = req.body;
+  const { score, user_id, username } = req.body;
+  const { gameid } = req.params;
+  const game_id = Number(gameid);
 
   const [resScore] = await createScore(score, user_id, username, game_id);
-
-  console.log(resScore);
 
   return res.status(201).send({ score: resScore });
 };

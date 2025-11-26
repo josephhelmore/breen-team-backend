@@ -1,7 +1,9 @@
-import userData from './userData';
-// import scoreData from './scoreData';
+import usersData from './usersData';
+import scoresData from './scoresData';
+import gamesData from './gamesData';
 
-export default {
-  userData,
-  // scoreData
+export const data = {
+  usersData,
+  scoresData,
+  gamesData
 };

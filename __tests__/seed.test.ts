@@ -2,7 +2,6 @@ import { beforeAll, afterAll, describe, test, expect } from 'vitest';
 import { users } from '../db/data/schema/users';
 import { scores } from '../db/data/schema/scores';
 import { games } from '../db/data/schema/games';
-
 import matchers from 'jest-extended';
 import db from '../db/connection';
 import seedTable from '../db/seed/seed';
@@ -53,7 +52,7 @@ test('Should check that the scores table has a column referenced to the users ta
         expect(score).toHaveProperty('username');
       });
     });
-})
+});
 
 describe('Data insertion for scores table', () => {
   test('Should check that the scores table has the correct columns', () => {
