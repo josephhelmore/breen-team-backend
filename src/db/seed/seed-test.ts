@@ -1,4 +1,4 @@
-import db from '../connection';
+import db from '../connection.js';
 import { scores, games, users } from '../data/schema.js';
 import { seed } from 'drizzle-seed';
 

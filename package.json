@@ -2,7 +2,7 @@
   "name": "group-project-backend",
   "version": "1.0.0",
   "description": "The back-end for the group project",
-  "main": "listen.ts",
+  "main": "./src/listen.ts",
   "scripts": {
     "test": "vitest",
     "setup-dbs": "psql -f ./src/db/setup-dbs.sql",
@@ -11,9 +11,9 @@
     "push-prod": "drizzle-kit push --config=drizzle-prod.config.ts",
     "seed-dev": "tsx ./src/db/seed/seed-dev.ts",
     "seed-prod": "NODE_ENV=production npm run seed-dev",
-    "dev": "tsx app.ts",
-    "start": "tsx listen.ts",
-    "build": "tsc"
+    "dev": "tsx ./src/listen.ts",
+    "build": "tsc --build",
+    "start": "node ./dist/listen.js"
   },
   "repository": {
     "type": "git",
@@ -37,12 +37,12 @@
     "vitest": "^4.0.12"
   },
   "dependencies": {
-    "ts-node": "^10.9.2",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
     "@types/supertest": "^6.0.3",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
+    "drizzle-kit": "^0.31.7",
     "drizzle-orm": "^0.44.7",
     "drizzle-seed": "^0.3.1",
     "express": "^5.1.0",
@@ -50,6 +50,6 @@
     "node-postgres": "^0.6.2",
     "pg": "^8.16.3",
     "supertest": "^7.1.4",
-    "drizzle-kit": "^0.31.7"
+    "ts-node": "^10.9.2"
   }
 }

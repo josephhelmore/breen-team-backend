@@ -1,4 +1,4 @@
-import db from '../db/connection';
+import db from '../db/connection.js';
 import { users } from '../db/data/schema.js';
 import { scores } from '../db/data/schema.js';
 

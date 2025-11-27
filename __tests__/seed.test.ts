@@ -1,9 +1,9 @@
 import { beforeAll, afterAll, describe, test, expect } from 'vitest';
 import { users, scores, games } from '../src/db/data/schema.js';
 import matchers from 'jest-extended';
-import db from '../src/db/connection';
-import seedTable from '../src/db/seed/seed-test';
-import dropTable from '../src/db/seed/drop';
+import db from '../src/db/connection.js'
+import seedTable from '../src/db/seed/seed-test.js';
+import dropTable from '../src/db/seed/drop.js';
 
 expect.extend(matchers);
 
