@@ -40,7 +40,6 @@ describe('GET', () => {
       expect(/^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(user.created_on)).toBeTrue();
     });
   });
-
   describe('GET /scores', () => {
     test('GET scores from database', async () => {
       const {

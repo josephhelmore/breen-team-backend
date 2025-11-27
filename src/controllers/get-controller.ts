@@ -51,11 +51,22 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
   }
 };
 
-export const getScores = async (req: Request, res: Response) => {
+export const getScores = async (req: Request, res: Response, next: NextFunction) => {
   const { p } = req.query;
+  const {game_id: paramGameId} = req.params
   const page = Number(p);
+  const queryGameId = req.query.game_id;
+  
+  const id = Number(paramGameId || queryGameId);
+  
+   if(isNaN(id)) {
+      return next ({
+        status:400,
+        message:'Please enter a valid game_id'
+      })
+    }
 
-  const scores = await readScores(page || 1);
+  const scores = await readScores(id, page || 1 );
 
   res.send(scores);
 };
