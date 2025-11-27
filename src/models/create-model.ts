@@ -1,10 +1,10 @@
 import db from '../db/connection';
-import { users } from '../db/data/schema/users';
-import { scores } from '../db/data/schema/scores';
+import { users } from '../db/data/schema.js';
+import { scores } from '../db/data/schema.js';
 
 export const createUser = async (username: string) => {
-  return await db.insert(users).values({ username: username }).returning()
-}
+  return await db.insert(users).values({ username: username }).returning();
+};
 
 export const createScore = async (
   score: number,

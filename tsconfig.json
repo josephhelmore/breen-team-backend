@@ -1,26 +1,12 @@
 {
   "compilerOptions": {
-    "rootDir": ".",
-    "outDir": "./dist",
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "esModuleInterop": true,
-    "target": "esnext",
-    "types": ["node"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "es2020",
     "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-    "strict": true,
-    "jsx": "react-jsx",
-    "verbatimModuleSyntax": false,
-    "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
-    "skipLibCheck": true,
-
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
-  "include": ["**/*.ts" ],
-  "exclude": ["__tests__"]
+  "include": ["src/**/*"]
 }

@@ -1,11 +1,9 @@
-import db from '../connection';
-import { users } from '../data/schema/users';
-import { scores } from '../data/schema/scores';
-import { games } from '../data/schema/games';
+import db from '../connection.js';
+import { scores, games, users } from '../data/schema.js';
 import { sql } from 'drizzle-orm';
 
 async function dropTable() {
-  await db.delete(users)
+  await db.delete(users);
   await db.delete(scores);
   await db.delete(games);
   await db.execute(sql`ALTER SEQUENCE users_user_id_seq RESTART WITH 1;`);

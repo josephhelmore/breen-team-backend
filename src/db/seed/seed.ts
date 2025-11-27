@@ -1,6 +1,4 @@
-import { users } from '../data/schema/users';
-import { games } from '../data/schema/games';
-import { scores } from '../data/schema/scores';
+import { scores, games, users } from '../data/schema.js';
 import db from '../connection';
 
 export type ScoresType = {

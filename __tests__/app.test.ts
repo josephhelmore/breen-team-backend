@@ -31,7 +31,7 @@ describe('POST', () => {
     });
   });
   describe('POST /users', () => {
-    test.only('POST user to the database', async () => {
+    test('POST user to the database', async () => {
       const newUser = {
         username: 'Gilson'
       };
@@ -53,7 +53,7 @@ describe('POST', () => {
 
 describe('DELETE', () => {
   describe('DELETE /users', () => {
-    test.only('DELETE user by Id', async () => {
+    test('DELETE user by Id', async () => {
       return request(app).delete('/api/users/9').expect(200);
     });
   });
