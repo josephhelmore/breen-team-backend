@@ -21,22 +21,22 @@ export const getUsers = async (req: Request, res: Response, next: NextFunction) 
 
 export const getUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const {user_id} = req.params
+    const { user_id } = req.params;
     const numId = Number(user_id);
 
-    if(isNaN(numId)) {
-      return next ({
-        status:400,
-        message:'Please enter a valid user_id'
-      })
+    if (isNaN(numId)) {
+      return next({
+        status: 400,
+        message: 'Please enter a valid user_id'
+      });
     }
 
     const user = await readUser(numId);
-    if(user.length === 0){
+    if (user.length === 0) {
       return next({
-        status:404,
+        status: 404,
         message: 'Sorry, this user does not exist'
-      })
+      });
     }
 
     return res.status(200).json({ user: user[0] });
@@ -51,22 +51,6 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
   }
 };
 
-export const getScores = async (req: Request, res: Response, next: NextFunction) => {
-  const { p } = req.query;
-  const {game_id: paramGameId} = req.params
-  const page = Number(p);
-  const queryGameId = req.query.game_id;
-  
-  const id = Number(paramGameId || queryGameId);
-  
-   if(isNaN(id)) {
-      return next ({
-        status:400,
-        message:'Please enter a valid game_id'
-      })
-    }
-
-  const scores = await readScores(id, page || 1 );
-
-  res.send(scores);
-};
+export const getScores = async (req: Request, res: Response, next: NextFunction) => { const { p } = req.query; const page = Number(p); const scores =
+ await readScores(page || 1); console.log(scores)
+  res.send(scores); }; 

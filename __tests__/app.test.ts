@@ -94,4 +94,8 @@ describe('SCORES ERROR HANDLING', () => {
      expect(body.message).toBe('Please enter a valid game_id')
     })
   });
+  test('Should return a 400 when passed a game_id that does not exist', () => {
+    return request(app)
+    .get('/api/games/9999999/scores')
+  });
 });
