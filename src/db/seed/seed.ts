@@ -1,20 +1,7 @@
 import { scores, games, users } from '../data/schema.js';
 import db from '../connection.js';
 
-export type ScoresType = {
-  score: number;
-  user_id: number;
-  username: string;
-  game_id: number;
-}[];
-
-export type usersType = {
-  username: string;
-}[];
-
-export type gamesType = {
-  name: string;
-}[];
+import { ScoresType, usersType, gamesType } from '../../types/index.js';
 
 export const seed = async ({
   usersData,

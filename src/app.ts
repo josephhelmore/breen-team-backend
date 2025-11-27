@@ -5,7 +5,6 @@ import { getUser, getUsers } from './controllers/get-controller.js';
 import { deleteUserId } from './controllers/delete-controller.js';
 import { postUser } from './controllers/post-controller.js';
 import { getScores, postScore } from './controllers/index.js';
-import { ControllerError } from './controllers/controller-error-handling.js';
 
 const app = express();
 
@@ -46,13 +45,6 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
     });
   }
 
-  if (error instanceof ControllerError) {
-    return res.status(500).json({
-      error: error.name,
-      message: error.message,
-      cause: error.cause
-    });
-  }
 
   return res.status(500).json({
     error: 'unknown error',

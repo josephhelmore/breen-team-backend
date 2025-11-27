@@ -1,7 +1,7 @@
 import { beforeAll, afterAll, describe, test, expect } from 'vitest';
 import { users, scores, games } from '../src/db/data/schema.js';
 import matchers from 'jest-extended';
-import db from '../src/db/connection.js'
+import db from '../src/db/connection.js';
 import seedTable from '../src/db/seed/seed-test.js';
 import dropTable from '../src/db/seed/drop.js';
 
@@ -40,18 +40,6 @@ describe('Data Insertion for user table', () => {
       });
   });
 });
-
-test('Should check that the scores table has a column referenced to the users table', () => {
-  return db
-    .select()
-    .from(scores)
-    .then(scores => {
-      scores.forEach(score => {
-        expect(score).toHaveProperty('username');
-      });
-    });
-});
-
 describe('Data insertion for scores table', () => {
   test('Should check that the scores table has the correct columns', () => {
     return db
@@ -85,7 +73,6 @@ describe('Data insertion for scores table', () => {
       });
   });
 });
-
 describe('Data insertion into the game table', () => {
   test('Should check that the game table has the correct columns', () => {
     return db

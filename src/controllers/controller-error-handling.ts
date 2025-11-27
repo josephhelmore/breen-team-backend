@@ -1,12 +1,30 @@
-type ErrorName = 'get-username-error' | 'get-scores-error';
-
-export class ControllerError extends Error {
-  cause: any;
-  constructor({ name, message, cause }: { name: ErrorName; message: string; cause?: any }) {
-    super(message);
-    this.name = name;
-    this.cause = cause;
-
-    Object.setPrototypeOf(this, ControllerError.prototype);
+export function validId(id: string) {
+  const num = Number(id);
+  if (isNaN(num)) {
+    throw {
+      status: 400,
+      message: 'Please enter a valid user_id'
+    };
   }
+  return num;
+}
+export function isUser(user) {
+  if (user.length === 0) {
+    throw {
+      status: 404,
+      message: 'Sorry, this user does not exist'
+    };
+  } else return user;
+}
+export function ValidGameId(game_id: any) {
+  const check = Number(game_id);
+  if (Number.isNaN(check)) {
+    throw {
+      status: 400,
+      message: 'Please enter a valid game_id'
+    };
+  } else return game_id;
+}
+export function isGame(game_id: number) {
+  
 }

@@ -57,7 +57,7 @@ describe('DELETE', () => {
     });
   });
 });
-describe(' USER ERROR HANDLING', () => {
+describe('USER ERROR HANDLING', () => {
   test('Should return with a status of 400 when passed an invalid user_id is passed', () => {
     return request(app)
       .get('/api/users/invalid')
@@ -68,7 +68,7 @@ describe(' USER ERROR HANDLING', () => {
   });
   test('Should return with a status of 404 when passed a user_id that does not exist', () => {
     return request(app)
-      .get('/api/users/99999999')
+      .get('/api/users/999999999')
       .expect(404)
       .then(({ body }) => {
         expect(body.message).toBe('Sorry, this user does not exist');
@@ -90,12 +90,16 @@ describe('SCORES ERROR HANDLING', () => {
     .get('/api/games/invalid/scores')
     .expect(400)
     .then(({body}) => {
-      console.log(body)
      expect(body.message).toBe('Please enter a valid game_id')
     })
   });
   test('Should return a 400 when passed a game_id that does not exist', () => {
     return request(app)
     .get('/api/games/9999999/scores')
+    .expect(400)
+    .then(({body}) => [
+        expect(body.message).toBe("Sorry, this game does not exits")
+    ])
   });
 });
+

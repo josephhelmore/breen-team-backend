@@ -4,11 +4,12 @@ import { beforeAll, afterAll, describe, test, expect } from 'vitest';
 import seedTable from '../src/db/seed/seed-test.js';
 import dropTable from '../src/db/seed/drop.js';
 import request from 'supertest';
+import { Score } from '../src/types/index.js';
 
 expect.extend(matchers);
 
 beforeAll(() => seedTable(50));
-afterAll(() => dropTable())
+afterAll(() => dropTable());
 describe('GET', () => {
   describe('GET /users', () => {
     interface User {
@@ -46,7 +47,9 @@ describe('GET', () => {
         body: { scores }
       } = await request(app).get('/api/games/1/scores').expect(200);
 
-      scores.forEach(score => {
+
+
+      scores.forEach((score: Score) => {
         expect(score.score_id).toBeNumber();
         expect(score.score).toBeNumber();
         expect(score.user_id).toBeNumber();
