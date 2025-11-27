@@ -11,11 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.redirect('/api');
-});
-
-app.use('/api', express.static('public'));
+app.get('/api', express.static('public'));
 
 app.get('/api/users', getUsers);
 
@@ -38,13 +34,12 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
     });
   }
 
-  if (error.code === "22P02") {
+  if (error.code === '22P02') {
     return res.status(400).json({
-      error: "Bad Request",
-      message: "Please enter a valid user_id"
+      error: 'Bad Request',
+      message: 'Please enter a valid user_id'
     });
   }
-
 
   return res.status(500).json({
     error: 'unknown error',
