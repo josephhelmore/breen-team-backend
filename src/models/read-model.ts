@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm';
-import db from '../db/connection';
-import { users } from '../db/data/schema/users';
-import { scores } from '../db/data/schema/scores';
+import db from '../db/connection.js';
+import { users } from '../db/data/schema.js';
+import { scores } from '../db/data/schema.js';
 import { desc } from 'drizzle-orm';
 import { Index } from 'drizzle-orm/gel-core';
 
@@ -10,10 +10,7 @@ export const readUsers = async () => {
 };
 
 export const readUser = async (user_id: number) => {
-  return await db
-    .select()
-    .from(users)
-    .where(eq(users.user_id, user_id));
+  return await db.select().from(users).where(eq(users.user_id, user_id));
 };
 
 export const readScores = async (page: number) => {

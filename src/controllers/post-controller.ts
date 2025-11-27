@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
-import { createUser } from '../models/create-model';
-import { createScore } from '../models/index';
+import { createUser } from '../models/create-model.js';
+import { createScore } from '../models/index.js';
 
 export const postUser = async (req: Request, res: Response) => {
   const { username }: { username: string } = req.body;

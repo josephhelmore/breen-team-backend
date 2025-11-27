@@ -1,10 +1,10 @@
-import app from '../src/app';
+import app from '../src/app.js';
 import * as matchers from 'jest-extended';
 import { beforeAll, afterAll, describe, test, expect } from 'vitest';
 import request from 'supertest';
-import { seed } from '../src/db/seed/seed';
-import dropTable from '../src/db/seed/drop';
-import { data } from '../src/db/data/test/index';
+import { seed } from '../src/db/seed/seed.js';
+import dropTable from '../src/db/seed/drop.js';
+import { data } from '../src/db/data/test/index.js';
 
 expect.extend(matchers);
 
@@ -31,7 +31,7 @@ describe('POST', () => {
     });
   });
   describe('POST /users', () => {
-    test.only('POST user to the database', async () => {
+    test('POST user to the database', async () => {
       const newUser = {
         username: 'Gilson'
       };
@@ -53,7 +53,7 @@ describe('POST', () => {
 
 describe('DELETE', () => {
   describe('DELETE /users', () => {
-    test.only('DELETE user by Id', async () => {
+    test('DELETE user by Id', async () => {
       return request(app).delete('/api/users/9').expect(200);
     });
   });

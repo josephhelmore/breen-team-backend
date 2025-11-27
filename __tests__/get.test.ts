@@ -1,8 +1,8 @@
-import app from '../src/app';
+import app from '../src/app.js';
 import * as matchers from 'jest-extended';
 import { beforeAll, afterAll, describe, test, expect } from 'vitest';
-import seedTable from '../src/db/seed/seed-test';
-import dropTable from '../src/db/seed/drop';
+import seedTable from '../src/db/seed/seed-test.js';
+import dropTable from '../src/db/seed/drop.js';
 import request from 'supertest';
 
 expect.extend(matchers);
@@ -39,6 +39,16 @@ describe('GET', () => {
       expect(user.username).toBeString();
       expect(user.created_on).toBeString();
       expect(/^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(user.created_on)).toBeTrue();
+    });
+  });
+  describe('GET /users error handling', () => {
+    test('Should return with a status of 400 when passed an invalid user_id is passed', () => {
+          return request(app)
+      .get("/api/articles/99/comments")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe("This article does not exist");
+      });
     });
   });
   describe('GET /scores', () => {

@@ -1,7 +1,14 @@
-import { pgTable, integer, varchar, timestamp, serial } from 'drizzle-orm/pg-core';
-import { users } from './users';
-import { games } from './games';
 import { relations } from 'drizzle-orm';
+import { pgTable, serial, varchar, timestamp, integer } from 'drizzle-orm/pg-core';
+
+export const games = pgTable('games', {
+  game_id: serial('game_id').primaryKey().notNull(),
+  name: varchar('name').notNull()
+});
+
+export const gamesRelations = relations(games, ({ many }) => ({
+  scores: many(scores)
+}));
 
 export const scores = pgTable('scores', {
   score_id: serial('score_id').primaryKey().notNull(),
@@ -27,4 +34,14 @@ export const scoresRelations = relations(scores, ({ one }) => ({
     fields: [scores.game_id],
     references: [games.game_id]
   })
+}));
+
+export const users = pgTable('users', {
+  user_id: serial('user_id').primaryKey().notNull(),
+  username: varchar('username').notNull().unique(),
+  created_on: timestamp('created_on').defaultNow().notNull()
+});
+
+export const usersRelations = relations(users, ({ many }) => ({
+  scores: many(scores)
 }));
