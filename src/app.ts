@@ -12,11 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/api', express.static('public'));
-
-app.get('/', (req, res) => {
-  res.redirect('/api');
-});
+app.get('/api', express.static('public'));
 
 app.get('/api/users', getUsers);
 
