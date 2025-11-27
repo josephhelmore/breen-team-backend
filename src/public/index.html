@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Breen Team Server</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Breen Team Arcade API</h1>
+      <p>Server for the game website in which you can access data by endpoints in below</p>
+    </header>
+    <nav>
+      <h2>Nav for endpoints</h2>
+      <ul class="nav__ul">
+        <li class="nav__li">
+          <a href="https://breen-team-backend.vercel.app/api/users">Users</a>
+        </li>
+        <li class="nav__li">
+          <a href="https://breen-team-backend.vercel.app/api/games/1/scores"
+            >Scores for Orc of the Rings</a
+          >
+        </li>
+      </ul>
+    </nav>
+    <section class="section-endpoints">
+      <h2>Endpoints</h2>
+      <ul class="section-endpoints__ul">
+        <li class="section-endpoints__li">
+          <p class="section-endpoints__li-get">GET</p>
+          <ul class="section-endpoints__li-get__ul">
+            <li class="section-endpoints__li-get__li">/api/users - a list of users</li>
+            <li class="section-endpoints__li-get__li">/api/users/:userid - a user by user id</li>
+            <li class="section-endpoints__li-get__li">
+              /api/games/:gamesid/scores - paginated scoress by game
+            </li>
+          </ul>
+        </li>
+        <li class="section-endpoints__li">
+          <p class="section-endpoints__li-post">POST</p>
+          <ul class="section-endpoints__li-post__ul">
+            <li class="section-endpoints__li-post__li">/api/users - create a user</li>
+            <li class="section-endpoints__li-post__li">
+              /api/games/:gameid/scores - create a score
+            </li>
+          </ul>
+        </li>
+        <li class="section-endpoints__li">
+          <p class="section-endpoints__li-delete">DELETE</p>
+          <ul class="section-endpoints__li-delete__ul">
+            <li class="section-endpoints__li-delete__li">/api/users/:userid - create a user</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+    <footer>
+      <p>
+        Please refer to our
+        <a id="link-github" href="https://github.com/josephhelmore/breen-team-backend"
+          >repo on GitHub</a
+        >
+        for this project
+      </p>
+    </footer>
+  </body>
+</html>
