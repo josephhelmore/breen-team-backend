@@ -26,6 +26,21 @@ app.post('/api/users', postUser);
 app.delete('/api/users/:user_id', deleteUserId);
 
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+  if (error.status) {
+    return res.status(error.status).json({
+      error: error.name || 'CustomError',
+      message: error.message,
+      cause: error.cause
+    });
+  }
+
+  if (error.code === "22P02") {
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "Please enter a valid user_id"
+    });
+  }
+
   if (error instanceof ControllerError) {
     return res.status(500).json({
       error: error.name,

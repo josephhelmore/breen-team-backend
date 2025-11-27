@@ -8,8 +8,7 @@ import request from 'supertest';
 expect.extend(matchers);
 
 beforeAll(() => seedTable(50));
-afterAll(() => dropTable());
-
+afterAll(() => dropTable())
 describe('GET', () => {
   describe('GET /users', () => {
     interface User {
@@ -41,16 +40,7 @@ describe('GET', () => {
       expect(/^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(user.created_on)).toBeTrue();
     });
   });
-  describe('GET /users error handling', () => {
-    test('Should return with a status of 400 when passed an invalid user_id is passed', () => {
-          return request(app)
-      .get("/api/articles/99/comments")
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.message).toBe("This article does not exist");
-      });
-    });
-  });
+
   describe('GET /scores', () => {
     test('GET scores from database', async () => {
       const {

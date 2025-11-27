@@ -5,6 +5,7 @@ import request from 'supertest';
 import { seed } from '../src/db/seed/seed.js';
 import dropTable from '../src/db/seed/drop.js';
 import { data } from '../src/db/data/test/index.js';
+import { desc } from 'drizzle-orm';
 
 expect.extend(matchers);
 
@@ -57,4 +58,23 @@ describe('DELETE', () => {
       return request(app).delete('/api/users/9').expect(200);
     });
   });
+});
+
+describe('ERROR HANDLING', () => {
+  test('Should return with a status of 400 when passed an invalid user_id is passed', () => {
+          return request(app)
+      .get("/api/users/invalid")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("Please enter a valid user_id");
+      });
+    });
+    test('Should return with a status of 404 when passed a user_id that does not exist', () => {
+      return request(app)
+      .get("/api/users/99999999")
+      .expect(404)
+      .then(({body}) => {
+        expect(body.message).toBe("Sorry, this user does not exist")
+      })
+    });
 });

@@ -21,17 +21,30 @@ export const getUsers = async (req: Request, res: Response, next: NextFunction) 
 
 export const getUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user_id = req.params.user_id;
-    const convertedUserIdToNumber = Number(user_id);
+    const {user_id} = req.params
+    const numId = Number(user_id);
 
-    const user = await readUser(convertedUserIdToNumber);
+    if(isNaN(numId)) {
+      return next ({
+        status:400,
+        message:'Please enter a valid user_id'
+      })
+    }
 
-    return res.send({ user: user[0] });
+    const user = await readUser(numId);
+    if(user.length === 0){
+      return next({
+        status:404,
+        message: 'Sorry, this user does not exist'
+      })
+    }
+
+    return res.status(200).json({ user: user[0] });
   } catch (error) {
     return next(
       new ControllerError({
         name: 'get-username-error',
-        message: 'invalid username',
+        message: 'unexpected error',
         cause: error
       })
     );
