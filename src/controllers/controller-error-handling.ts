@@ -1,3 +1,6 @@
+import { User } from "../types/index.js";
+import { readGame } from "../models/read-model.js";
+
 export function validId(id: string) {
   const num = Number(id);
   if (isNaN(num)) {
@@ -8,7 +11,7 @@ export function validId(id: string) {
   }
   return num;
 }
-export function isUser(user) {
+export function userExist(user: User[]) {
   if (user.length === 0) {
     throw {
       status: 404,
@@ -16,15 +19,25 @@ export function isUser(user) {
     };
   } else return user;
 }
-export function ValidGameId(game_id: any) {
-  const check = Number(game_id);
-  if (Number.isNaN(check)) {
+export function ValidGameId(game_id: string) {
+
+  if (Number.isNaN(Number(game_id))) {
     throw {
       status: 400,
       message: 'Please enter a valid game_id'
     };
+  
   } else return game_id;
 }
-export function isGame(game_id: number) {
-  
+export async function gameExists(game_id: number) {
+
+  const resGame = await readGame(game_id)
+
+
+if(resGame.length === 0) {
+  throw {
+    status: 404,
+    message: 'Sorry, this game does not exist'
+  };
+} 
 }

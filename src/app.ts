@@ -17,15 +17,16 @@ app.get('/api/users', getUsers);
 
 app.get('/api/users/:user_id', getUser);
 
-app.get('/api/games/:gameid/scores', getScores);
+app.get('/api/games/:game_id/scores', getScores);
 
-app.post('/api/games/:gameid/scores', postGuestUserAndPostScore);
+app.post('/api/games/:game_id/scores', postGuestUserAndPostScore);
 
 app.post('/api/users', postUser);
 
 app.delete('/api/users/:user_id', deleteUserId);
 
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+  console.log(error, 'error<<<< ')
   if (error.status) {
     return res.status(error.status).json({
       error: error.name || 'CustomError',
@@ -34,12 +35,6 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
     });
   }
 
-  if (error.code === '22P02') {
-    return res.status(400).json({
-      error: 'Bad Request',
-      message: 'Please enter a valid user_id'
-    });
-  }
 
   return res.status(500).json({
     error: 'unknown error',

@@ -1,9 +1,8 @@
 import { eq } from 'drizzle-orm';
 import db from '../db/connection.js';
-import { users } from '../db/data/schema.js';
-import { scores } from '../db/data/schema.js';
+import { users, scores, games } from '../db/data/schema.js';
+import { Score } from '../types/index.js';
 import { desc } from 'drizzle-orm';
-import { Index } from 'drizzle-orm/gel-core';
 
 export const readUsers = async () => {
   return await db.select().from(users);
@@ -21,20 +20,13 @@ export const readUserIdByUsername = async (username: string) => {
 };
 
 export const readScores = async (page: number) => {
-  type score = {
-    score_id: number;
-    score: number;
-    user_id: number;
-    username: string;
-    game_id: number;
-    created_on: Date;
-  };
+
   const limit = 10;
 
   const dbScores = await db.select().from(scores).orderBy(desc(scores.score));
 
   const paginatedScores = dbScores.reduce(
-    (acc: { [key: number]: score[] }, cur) => {
+    (acc: { [key: number]: Score[] }, cur) => {
       const currentPage = Object.keys(acc).length;
       if (acc[currentPage]!.length < limit) {
         acc[currentPage]!.push(cur);
@@ -48,3 +40,5 @@ export const readScores = async (page: number) => {
 
   return { scores: paginatedScores[page], page: page };
 };
+
+export const readGame = async (game_id: number) => db.select().from(games).where(eq(games.game_id, game_id))

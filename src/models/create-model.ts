@@ -12,8 +12,12 @@ export const createScore = async (
   username: string,
   game_id: number
 ) => {
-  return await db
+ try {return await db
     .insert(scores)
     .values({ score: score, user_id: user_id, username: username, game_id: game_id })
-    .returning();
+    .returning();}
+    catch (error) {
+      console.log(error)
+    }
+    
 };

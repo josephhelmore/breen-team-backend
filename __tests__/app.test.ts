@@ -114,7 +114,9 @@ describe('SCORES ERROR HANDLING', () => {
   test('Should return a 400 when passed a game_id that does not exist', () => {
     return request(app)
       .get('/api/games/9999999/scores')
-      .expect(400)
-      .then(({ body }) => [expect(body.message).toBe('Sorry, this game does not exits')]);
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe('Sorry, this game does not exist');
+      });
   });
 });
