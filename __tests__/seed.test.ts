@@ -27,6 +27,7 @@ describe('Data Insertion for user table', () => {
         });
       });
   });
+
   test('Should check the users table has the correct data-types', () => {
     return db
       .select()
@@ -40,6 +41,7 @@ describe('Data Insertion for user table', () => {
       });
   });
 });
+
 describe('Data insertion for scores table', () => {
   test('Should check that the scores table has the correct columns', () => {
     return db
@@ -57,6 +59,7 @@ describe('Data insertion for scores table', () => {
         });
       });
   });
+
   test('Should check the scores table has the correct data-types', () => {
     return db
       .select()

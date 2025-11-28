@@ -13,10 +13,9 @@ afterAll(() => dropTable());
 
 describe('POST', () => {
   describe('POST scores', () => {
-    test('POST a score', async () => {
+    test('POST a score when user exists', async () => {
       const testScore = {
         score: 100,
-        user_id: 1,
         username: 'testUser1'
       };
 
@@ -25,8 +24,27 @@ describe('POST', () => {
       } = await request(app).post('/api/games/1/scores').send(testScore).expect(201);
 
       expect(score.score).toBe(100);
-      expect(score.user_id).toBe(1);
       expect(score.username).toBe('testUser1');
+      expect(score.game_id).toBe(1);
+    });
+
+    test('POST a guest user and POST a score when user does not exists', async () => {
+      const testScore = {
+        score: 200,
+        username: 'testUser10'
+      };
+
+      const {
+        body: { score }
+      } = await request(app).post('/api/games/1/scores').send(testScore).expect(201);
+
+      const {
+        body: { user }
+      } = await request(app).get(`/api/users/${score.user_id}`).expect(200);
+
+      expect(user.username).toBe('testUser10');
+      expect(score.score).toBe(200);
+      expect(score.username).toBe('testUser10');
       expect(score.game_id).toBe(1);
     });
   });
@@ -87,19 +105,16 @@ describe('USER ERROR HANDLING', () => {
 describe('SCORES ERROR HANDLING', () => {
   test('Should return a 400 when passed an invalid game_id', () => {
     return request(app)
-    .get('/api/games/invalid/scores')
-    .expect(400)
-    .then(({body}) => {
-     expect(body.message).toBe('Please enter a valid game_id')
-    })
+      .get('/api/games/invalid/scores')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe('Please enter a valid game_id');
+      });
   });
   test('Should return a 400 when passed a game_id that does not exist', () => {
     return request(app)
-    .get('/api/games/9999999/scores')
-    .expect(400)
-    .then(({body}) => [
-        expect(body.message).toBe("Sorry, this game does not exits")
-    ])
+      .get('/api/games/9999999/scores')
+      .expect(400)
+      .then(({ body }) => [expect(body.message).toBe('Sorry, this game does not exits')]);
   });
 });
-

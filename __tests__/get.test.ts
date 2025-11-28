@@ -47,8 +47,6 @@ describe('GET', () => {
         body: { scores }
       } = await request(app).get('/api/games/1/scores').expect(200);
 
-
-
       scores.forEach((score: Score) => {
         expect(score.score_id).toBeNumber();
         expect(score.score).toBeNumber();
