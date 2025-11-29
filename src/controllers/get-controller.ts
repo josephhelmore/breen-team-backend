@@ -17,20 +17,16 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
 };
 
 export const getScores = async (req: Request, res: Response, next: NextFunction) => {
-  const { p } = req.query;
-  const {game_id} = req.params;
-  
+  const { p, score_id } = req.query;
+  const { game_id } = req.params;
+
   ValidGameId(game_id);
-  
-  const numGame_id = Number(game_id)
 
-
+  const numGame_id = Number(game_id);
 
   await gameExists(numGame_id);
 
   const page = Number(p);
-  const scores = await readScores(page || 1);
+  const scores = await readScores(page || 1, Number(score_id));
   res.send(scores);
 };
-
-

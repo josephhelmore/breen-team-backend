@@ -26,7 +26,6 @@ app.post('/api/users', postUser);
 app.delete('/api/users/:user_id', deleteUserId);
 
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
-  console.log(error, 'error<<<< ')
   if (error.status) {
     return res.status(error.status).json({
       error: error.name || 'CustomError',
@@ -34,7 +33,6 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
       cause: error.cause
     });
   }
-
 
   return res.status(500).json({
     error: 'unknown error',

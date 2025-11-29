@@ -12,18 +12,34 @@ export const readUser = async (user_id: number) => {
   return await db.select().from(users).where(eq(users.user_id, user_id));
 };
 
-export const readUserIdByUsername = async (username: string) => {
+export const readUserIdByUsername = async (username: string): Promise<{ userid: number }[]> => {
   return await db
     .select({ user_id: users.user_id })
     .from(users)
     .where(eq(users.username, username));
 };
 
-export const readScores = async (page: number) => {
-
+export const readScores = async (
+  page: number,
+  score_id: number
+): Promise<{ scores: Score[]; page?: number }> => {
   const limit = 10;
 
-  const dbScores = await db.select().from(scores).orderBy(desc(scores.score));
+  const dbScores: Score[] = await db.select().from(scores).orderBy(desc(scores.score));
+
+  if (!Number.isNaN(score_id)) {
+    const indexOfScoreId = dbScores.findIndex(score => score.score_id === score_id);
+    const topOverflow = indexOfScoreId < 4 ? 4 - indexOfScoreId : 0;
+    const botOverflow =
+      dbScores.length - indexOfScoreId < 6 ? 6 - (dbScores.length - indexOfScoreId) : 0;
+
+    const scoreIdPage = dbScores.slice(
+      indexOfScoreId - (4 - topOverflow + botOverflow),
+      indexOfScoreId + (6 + topOverflow - botOverflow)
+    );
+
+    return { scores: scoreIdPage };
+  }
 
   const paginatedScores = dbScores.reduce(
     (acc: { [key: number]: Score[] }, cur) => {
@@ -41,4 +57,5 @@ export const readScores = async (page: number) => {
   return { scores: paginatedScores[page], page: page };
 };
 
-export const readGame = async (game_id: number) => db.select().from(games).where(eq(games.game_id, game_id))
+export const readGame = async (game_id: number) =>
+  db.select().from(games).where(eq(games.game_id, game_id));

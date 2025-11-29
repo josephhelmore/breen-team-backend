@@ -1,15 +1,17 @@
 import app from '../src/app.js';
 import * as matchers from 'jest-extended';
 import { beforeAll, afterAll, describe, test, expect } from 'vitest';
-import seedTable from '../src/db/seed/seed-test.js';
 import dropTable from '../src/db/seed/drop.js';
 import request from 'supertest';
-import { Score } from '../src/types/index.js';
+import { seed } from '../src/db/seed/seed.js';
+import { data } from '../src/db/data/test/index.js';
+import { User, Score, Game } from '../src/types/index.js';
 
 expect.extend(matchers);
 
-beforeAll(() => seedTable(50));
+beforeAll(() => seed(data));
 afterAll(() => dropTable());
+
 describe('GET', () => {
   describe('GET /users', () => {
     interface User {
@@ -55,7 +57,7 @@ describe('GET', () => {
         expect(score.game_id).toBeNumber();
         expect(score.created_on).toBeString();
         expect(
-          /^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(score.created_on)
+          /^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(score.created_on!)
         ).toBeTrue();
       });
     });
@@ -66,7 +68,7 @@ describe('GET', () => {
       } = await request(app).get('/api/games/1/scores').expect(200);
 
       for (let i = 0; i < scores.length - 1; i++) {
-        expect(scores[i].score > scores[i + 1].score).toBeTrue();
+        expect(scores[i].score >= scores[i + 1].score).toBeTrue();
       }
     });
 
@@ -91,6 +93,72 @@ describe('GET', () => {
       expect(page1).toBe(1);
       expect(page2).toBe(2);
       expect(scores1[0].score_id).not.toBe(scores2[0].score_id);
+    });
+
+    test('GET scores with a score_id query will show the page of the queried score', async () => {
+      const testScore = {
+        score: 950,
+        username: 'testUser'
+      };
+
+      const {
+        body: {
+          score: { score_id }
+        }
+      } = await request(app).post('/api/games/1/scores').send(testScore).expect(201);
+
+      const {
+        body: { scores }
+      } = await request(app).get(`/api/games/1/scores?score_id=${score_id}`).expect(200);
+
+      expect(scores.length).toBe(10);
+      expect(scores[4].score_id).toBe(score_id);
+      expect(scores[4].score).toBe(testScore.score);
+      expect(scores[4].username).toBe(testScore.username);
+    });
+
+    test('GET scores with score_id of top score will show top 10 scores', async () => {
+      const testScore = {
+        score: 5000,
+        username: 'testUser'
+      };
+
+      const {
+        body: {
+          score: { score_id }
+        }
+      } = await request(app).post('/api/games/1/scores').send(testScore).expect(201);
+
+      const {
+        body: { scores }
+      } = await request(app).get(`/api/games/1/scores?score_id=${score_id}`).expect(200);
+
+      expect(scores.length).toBe(10);
+      expect(scores[0].score_id).toBe(score_id);
+      expect(scores[0].score).toBe(testScore.score);
+      expect(scores[0].username).toBe(testScore.username);
+    });
+
+    test('GET scores with score_id of top score will show top 10 scores', async () => {
+      const testScore = {
+        score: 50,
+        username: 'testUser'
+      };
+
+      const {
+        body: {
+          score: { score_id }
+        }
+      } = await request(app).post('/api/games/1/scores').send(testScore).expect(201);
+
+      const {
+        body: { scores }
+      } = await request(app).get(`/api/games/1/scores?score_id=${score_id}`).expect(200);
+
+      expect(scores.length).toBe(10);
+      expect(scores[9].score_id).toBe(score_id);
+      expect(scores[9].score).toBe(testScore.score);
+      expect(scores[9].username).toBe(testScore.username);
     });
   });
 });

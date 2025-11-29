@@ -4,7 +4,7 @@ const usersData = [
   { username: 'testUser3' },
   { username: 'testUser4' },
   { username: 'testUser5' },
-  { usernmae: 'testUser6' },
+  { username: 'testUser6' },
   { username: 'testUser7' }
 ];
 
