@@ -4,7 +4,7 @@ import cors from 'cors';
 import { getUser, getUsers } from './controllers/get-controller.js';
 import { deleteUserId } from './controllers/delete-controller.js';
 import { postUser } from './controllers/post-controller.js';
-import { getScores, postGuestUserAndPostScore } from './controllers/index.js';
+import { getScores, postGuestUserAndPostScore, getScoresByScoreId } from './controllers/index.js';
 
 const app = express();
 
@@ -17,7 +17,9 @@ app.get('/api/users', getUsers);
 
 app.get('/api/users/:user_id', getUser);
 
-app.get('/api/games/:game_id/scores', getScores);
+app.get('/api/games/:game_id/scores/', getScores);
+
+app.get('/api/games/:game_id/scores/:score_id', getScoresByScoreId);
 
 app.post('/api/games/:game_id/scores', postGuestUserAndPostScore);
 
@@ -26,7 +28,6 @@ app.post('/api/users', postUser);
 app.delete('/api/users/:user_id', deleteUserId);
 
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
-  console.log(error, 'error<<<< ')
   if (error.status) {
     return res.status(error.status).json({
       error: error.name || 'CustomError',
@@ -34,7 +35,6 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
       cause: error.cause
     });
   }
-
 
   return res.status(500).json({
     error: 'unknown error',
