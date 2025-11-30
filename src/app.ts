@@ -1,8 +1,9 @@
 import express from 'express';
+import type { Response, Request, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import passport from 'passport';
-import type { Response, Request, NextFunction } from 'express';
 import cors from 'cors';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 import googleConfig from './services/passport.js';
 import cookieSession from 'cookie-session';
 import { getUser, getUsers } from './controllers/get-controller.js';
@@ -19,6 +20,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use('/api', createProxyMiddleware({ target: 'http://localhost:4000/' }));
 
 app.get('/api', express.static('public'));
 
@@ -49,6 +52,10 @@ app.get('/api/logout', (req: Request, res: Response, next: NextFunction) => {
     if (error) return next(error);
     res.redirect('/');
   });
+});
+
+app.get('/api/current_user', (req: Request, res: Response) => {
+  res.send(req.user);
 });
 
 app.get('/api/users', getUsers);
