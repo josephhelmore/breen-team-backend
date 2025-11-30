@@ -11,7 +11,8 @@
     "push-prod": "drizzle-kit push --config=drizzle-prod.config.ts",
     "seed-dev": "tsx ./src/db/seed/seed-dev.ts",
     "seed-prod": "NODE_ENV=production npm run seed-dev",
-    "start": "tsx ./src/listen.ts",
+    "dev": "tsx ./src/listen.ts",
+    "start": "node ./dist/listen.js",
     "build": "tsc --build"
   },
   "repository": {
@@ -38,7 +39,10 @@
   "dependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
+    "@types/passport": "^1.0.17",
+    "@types/passport-google-oauth20": "^2.0.17",
     "@types/supertest": "^6.0.3",
+    "cookie-session": "^2.1.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "drizzle-kit": "^0.31.7",
@@ -46,6 +50,8 @@
     "drizzle-seed": "^0.3.1",
     "express": "^5.1.0",
     "node-postgres": "^0.6.2",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
     "pg": "^8.16.3",
     "supertest": "^7.1.4",
     "ts-node": "^10.9.2"
