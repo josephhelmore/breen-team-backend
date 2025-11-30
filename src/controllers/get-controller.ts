@@ -1,6 +1,6 @@
 import { Response, Request, NextFunction } from 'express';
 import { readUser, readUsers } from '../models/read-model.js';
-import { readScores } from '../models/index.js';
+import { readScores, readScoresByScoreId } from '../models/index.js';
 import { validId, userExist, ValidGameId, gameExists } from './controller-error-handling.js';
 
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
@@ -17,16 +17,29 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
 };
 
 export const getScores = async (req: Request, res: Response, next: NextFunction) => {
-  const { p, score_id } = req.query;
+  const { p } = req.query;
   const { game_id } = req.params;
 
-  ValidGameId(game_id);
-
   const numGame_id = Number(game_id);
+
+  ValidGameId(numGame_id);
 
   await gameExists(numGame_id);
 
   const page = Number(p);
-  const scores = await readScores(page || 1, Number(score_id));
+  const scores = await readScores(page || 1);
+  res.send(scores);
+};
+
+export const getScoresByScoreId = async (req: Request, res: Response, next: NextFunction) => {
+  const { game_id, score_id } = req.params;
+
+  const numGame_id = Number(game_id);
+
+  ValidGameId(numGame_id);
+
+  await gameExists(numGame_id);
+
+  const scores = await readScoresByScoreId(Number(score_id));
   res.send(scores);
 };

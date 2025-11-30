@@ -19,27 +19,10 @@ export const readUserIdByUsername = async (username: string): Promise<{ user_id:
     .where(eq(users.username, username));
 };
 
-export const readScores = async (
-  page: number,
-  score_id: number
-): Promise<{ scores: Score[]; page?: number }> => {
+export const readScores = async (page: number): Promise<{ scores: Score[]; page?: number }> => {
   const limit = 10;
 
   const dbScores: Score[] = await db.select().from(scores).orderBy(desc(scores.score));
-
-  if (!Number.isNaN(score_id)) {
-    const indexOfScoreId = dbScores.findIndex(score => score.score_id === score_id);
-    const topOverflow = indexOfScoreId < 4 ? 4 - indexOfScoreId : 0;
-    const botOverflow =
-      dbScores.length - indexOfScoreId < 6 ? 6 - (dbScores.length - indexOfScoreId) : 0;
-
-    const scoreIdPage = dbScores.slice(
-      indexOfScoreId - (4 - topOverflow + botOverflow),
-      indexOfScoreId + (6 + topOverflow - botOverflow)
-    );
-
-    return { scores: scoreIdPage };
-  }
 
   const paginatedScores = dbScores.reduce(
     (acc: { [key: number]: Score[] }, cur) => {
@@ -55,6 +38,22 @@ export const readScores = async (
   );
 
   return { scores: paginatedScores[page], page: page };
+};
+
+export const readScoresByScoreId = async (score_id: number) => {
+  const dbScores: Score[] = await db.select().from(scores).orderBy(desc(scores.score));
+
+  const indexOfScoreId = dbScores.findIndex(score => score.score_id === score_id);
+  const topOverflow = indexOfScoreId < 4 ? 4 - indexOfScoreId : 0;
+  const botOverflow =
+    dbScores.length - indexOfScoreId < 6 ? 6 - (dbScores.length - indexOfScoreId) : 0;
+
+  const scoreIdPage = dbScores.slice(
+    indexOfScoreId - (4 - topOverflow + botOverflow),
+    indexOfScoreId + (6 + topOverflow - botOverflow)
+  );
+
+  return { scores: scoreIdPage };
 };
 
 export const readGame = async (game_id: number) =>
