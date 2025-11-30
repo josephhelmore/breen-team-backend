@@ -39,8 +39,10 @@ export const scoresRelations = relations(scores, ({ one }) => ({
 export const users = pgTable('users', {
   user_id: serial('user_id').primaryKey().notNull(),
   username: varchar('username').notNull().unique(),
+  email: varchar('email'),
   created_on: timestamp('created_on').defaultNow().notNull(),
-  google_id: varchar('google_id').unique()
+  google_id: varchar('google_id').unique(),
+  avatar_url: varchar('avatar_url')
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
