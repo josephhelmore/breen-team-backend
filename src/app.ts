@@ -4,7 +4,14 @@ import cors from 'cors';
 import { getUser, getUsers } from './controllers/get-controller.js';
 import { deleteUserId } from './controllers/delete-controller.js';
 import { postUser } from './controllers/post-controller.js';
-import { getScores, postGuestUserAndPostScore, getScoresByScoreId } from './controllers/index.js';
+import {
+  getScores,
+  postGuestUserAndPostScore,
+  getScoresByScoreId,
+  getGames,
+  postGames,
+  deleteGames
+} from './controllers/index.js';
 
 const app = express();
 
@@ -16,6 +23,12 @@ app.get('/api', express.static('public'));
 app.get('/api/users', getUsers);
 
 app.get('/api/users/:user_id', getUser);
+
+app.get('/api/games', getGames);
+
+app.post('/api/games', postGames);
+
+app.delete('/api/games/:game_id', deleteGames);
 
 app.get('/api/games/:game_id/scores/', getScores);
 

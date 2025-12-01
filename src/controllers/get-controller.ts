@@ -1,6 +1,6 @@
 import { Response, Request, NextFunction } from 'express';
 import { readUser, readUsers } from '../models/read-model.js';
-import { readScores, readScoresByScoreId } from '../models/index.js';
+import { readScores, readScoresByScoreId, readGames } from '../models/index.js';
 import {
   validId,
   userExist,
@@ -48,9 +48,15 @@ export const getScoresByScoreId = async (req: Request, res: Response, next: Next
 
   await gameExists(numGame_id);
 
-  const scores = await readScoresByScoreId( numScore_id, numGame_id);
-  
+  const scores = await readScoresByScoreId(numScore_id, numGame_id);
+
   validScore(numScore_id);
   await scoreExist(numScore_id);
   res.send(scores);
+};
+
+export const getGames = async (req: Request, res: Response, next: NextFunction) => {
+  const games = await readGames();
+
+  return res.send({ games: games });
 };

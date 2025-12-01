@@ -2,12 +2,13 @@ import { beforeAll, afterAll, describe, test, expect } from 'vitest';
 import { users, scores, games } from '../src/db/data/schema.js';
 import matchers from 'jest-extended';
 import db from '../src/db/connection.js';
-import seedTable from '../src/db/seed/seed-test.js';
 import dropTable from '../src/db/seed/drop.js';
+import { seed } from '../src/db/seed/seed.js';
+import { data } from '../src/db/data/test/index.js';
 
 expect.extend(matchers);
 
-beforeAll(() => seedTable());
+beforeAll(() => seed(data));
 afterAll(() => dropTable());
 
 describe('Data Insertion for user table', () => {
@@ -16,7 +17,7 @@ describe('Data Insertion for user table', () => {
       .select()
       .from(users)
       .then(users => {
-        expect(users).toHaveLength(10);
+        expect(users).toHaveLength(data.usersData.length);
         users.forEach(user => {
           expect(user).toHaveProperty('user_id');
           expect(user).toHaveProperty('username');
@@ -48,7 +49,7 @@ describe('Data insertion for scores table', () => {
       .select()
       .from(scores)
       .then(scores => {
-        expect(scores).toHaveLength(10);
+        expect(scores).toHaveLength(data.scoresData.length);
         scores.forEach(score => {
           expect(score).toHaveProperty('score_id');
           expect(score).toHaveProperty('score');
@@ -82,7 +83,7 @@ describe('Data insertion into the game table', () => {
       .select()
       .from(games)
       .then(games => {
-        expect(games).toHaveLength(10);
+        expect(games).toHaveLength(data.gamesData.length);
         games.forEach(game => {
           expect(game).toHaveProperty('game_id');
           expect(game).toHaveProperty('name');
