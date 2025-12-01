@@ -109,6 +109,18 @@ describe('GET', () => {
       });
     });
 
+    test('GET scores for game 2 order by scores ascending', async () => {
+      const {
+        body: { scores }
+      }: {
+        body: { scores: Score[] };
+      } = await request(app).get('/api/games/2/scores').expect(200);
+
+      for (let i = 0; i < scores.length - 1; i++) {
+        expect(scores[i].score <= scores[i + 1].score).toBeTrue();
+      }
+    });
+
     test('GET /scores/:score_id', async () => {
       const {
         body: { scores }

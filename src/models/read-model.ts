@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm';
 import db from '../db/connection.js';
 import { users, scores, games } from '../db/data/schema.js';
 import { Score } from '../types/index.js';
-import { desc } from 'drizzle-orm';
+import { desc, asc } from 'drizzle-orm';
 import { addRankToScores } from '../util/util.js';
 
 export const readUsers = async () => {
@@ -26,11 +26,18 @@ export const readScores = async (
 ): Promise<{ scores: Score[]; page?: number }> => {
   const limit = 10;
 
-  const dbScores: Score[] = await db
-    .select()
-    .from(scores)
-    .where(eq(scores.game_id, game_id))
-    .orderBy(desc(scores.score));
+  const dbScores: Score[] =
+    game_id !== 2
+      ? await db
+          .select()
+          .from(scores)
+          .where(eq(scores.game_id, game_id))
+          .orderBy(desc(scores.score))
+      : await db
+          .select()
+          .from(scores)
+          .where(eq(scores.game_id, game_id))
+          .orderBy(asc(scores.score));
 
   const rankedScores = addRankToScores(dbScores);
 
