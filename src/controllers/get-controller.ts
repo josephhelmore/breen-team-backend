@@ -19,7 +19,9 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
   const { user_id } = req.params;
   const numId = validId(user_id);
   const user = await readUser(numId);
+  
   userExist(user);
+  
   return res.status(200).json({ user: user[0] });
 };
 

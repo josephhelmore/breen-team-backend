@@ -40,6 +40,15 @@ app.post('/api/users', postUser);
 
 app.delete('/api/users/:user_id', deleteUserId);
 
+
+app.use((req, res, next) => {
+  const error = {
+    status: 404,
+    message: 'Path not found',
+  };
+  next(error);
+});
+
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   if (error.status) {
     return res.status(error.status).json({
@@ -48,7 +57,7 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
       cause: error.cause
     });
   }
-
+  
   return res.status(500).json({
     error: 'unknown error',
     message: error.message || 'An error occurred'

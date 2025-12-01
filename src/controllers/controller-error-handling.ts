@@ -13,6 +13,7 @@ export function validId(id: string) {
 }
 export function userExist(user: User[]) {
   if (user.length === 0) {
+    console.log('the array is empty!')
     throw {
       status: 404,
       message: 'Sorry, this user does not exist'
@@ -37,7 +38,6 @@ export async function gameExists(game_id: number) {
     };
   }
 }
-
 export async function scoreExist(score: number) {
   const resScore = await readScore(score);
 
@@ -48,7 +48,6 @@ export async function scoreExist(score: number) {
     };
   }
 }
-
 export function validScore(score: number) {
   if (isNaN(score)) {
     throw {
