@@ -1,4 +1,4 @@
-import { User, Score } from '../types/index.js';
+import { User } from '../types/index.js';
 import { readGame, readScore } from '../models/read-model.js';
 
 export function validId(id: string) {
