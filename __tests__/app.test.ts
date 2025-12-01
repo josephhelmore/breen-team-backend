@@ -257,6 +257,22 @@ describe('DELETE', () => {
       return request(app).delete('/api/users/9').expect(200);
     });
   });
+  test('Should return a 404 user not found when passed a user ID that does note exist', () => {
+    return request(app)
+    .delete('/api/users/99999999')
+    .expect(404)
+    .then(({body}) => {
+      expect(body.message).toBe('Sorry, this user does not exist')
+    })
+  });
+  test('Should return a 400 invalud user_id when passed an invalid user_id', () => {
+    return request(app)
+    .delete('/api/users/invalid')
+    .expect(400)
+    .then(({body}) => {
+      expect(body.message).toBe('Please enter a valid user_id')
+    })
+  });
 });
 describe('USER ERROR HANDLING', () => {
   test('Should return with a status of 400 when passed an invalid user_id is passed', () => {
