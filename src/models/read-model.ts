@@ -2,7 +2,8 @@ import { eq } from 'drizzle-orm';
 import db from '../db/connection.js';
 import { users, scores, games } from '../db/data/schema.js';
 import { Score } from '../types/index.js';
-import { desc } from 'drizzle-orm';
+import { desc, asc } from 'drizzle-orm';
+import { addRankToScores } from '../util/util.js';
 
 export const readUsers = async () => {
   return await db.select().from(users);
@@ -25,13 +26,22 @@ export const readScores = async (
 ): Promise<{ scores: Score[]; page?: number }> => {
   const limit = 10;
 
-  const dbScores: Score[] = await db
-    .select()
-    .from(scores)
-    .where(eq(scores.game_id, game_id))
-    .orderBy(desc(scores.score));
+  const dbScores: Score[] =
+    game_id !== 2
+      ? await db
+          .select()
+          .from(scores)
+          .where(eq(scores.game_id, game_id))
+          .orderBy(desc(scores.score))
+      : await db
+          .select()
+          .from(scores)
+          .where(eq(scores.game_id, game_id))
+          .orderBy(asc(scores.score));
 
-  const paginatedScores = dbScores.reduce(
+  const rankedScores = addRankToScores(dbScores);
+
+  const paginatedScores = rankedScores.reduce(
     (acc: { [key: number]: Score[] }, cur) => {
       const currentPage = Object.keys(acc).length;
       if (acc[currentPage]!.length < limit) {
@@ -54,7 +64,9 @@ export const readScoresByScoreId = async (score_id: number, game_id: number) => 
     .where(eq(scores.game_id, game_id))
     .orderBy(desc(scores.score));
 
-  const indexOfScoreId = dbScores.findIndex(score => score.score_id === score_id);
+  const rankedScores = addRankToScores(dbScores);
+
+  const indexOfScoreId = rankedScores.findIndex(score => score.score_id === score_id);
   const topOverflow = indexOfScoreId < 4 ? 4 - indexOfScoreId : 0;
   const botOverflow =
     dbScores.length - indexOfScoreId < 6 ? 6 - (dbScores.length - indexOfScoreId) : 0;
@@ -70,6 +82,6 @@ export const readScoresByScoreId = async (score_id: number, game_id: number) => 
 export const readGame = async (game_id: number) =>
   db.select().from(games).where(eq(games.game_id, game_id));
 
-export const readScore = async(score_id: number) => {
- return await db.select().from(scores).where(eq(scores.score_id, score_id));
+export const readScore = async (score_id: number) => {
+  return await db.select().from(scores).where(eq(scores.score_id, score_id));
 };

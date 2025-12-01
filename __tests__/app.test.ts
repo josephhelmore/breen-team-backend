@@ -47,6 +47,8 @@ describe('GET', () => {
     test('GET scores from database', async () => {
       const {
         body: { scores }
+      }: {
+        body: { scores: Score[] };
       } = await request(app).get('/api/games/1/scores').expect(200);
 
       scores.forEach((score: Score) => {
@@ -59,6 +61,8 @@ describe('GET', () => {
         expect(
           /^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(score.created_on!)
         ).toBeTrue();
+        expect(score.rank).toBeNumber();
+        expect(score.rank! <= 10).toBeTrue();
       });
     });
 
@@ -102,6 +106,39 @@ describe('GET', () => {
 
       scores.forEach((score: Score) => {
         expect(score.game_id).toBe(2);
+      });
+    });
+
+    test('GET scores for game 2 order by scores ascending', async () => {
+      const {
+        body: { scores }
+      }: {
+        body: { scores: Score[] };
+      } = await request(app).get('/api/games/2/scores').expect(200);
+
+      for (let i = 0; i < scores.length - 1; i++) {
+        expect(scores[i].score <= scores[i + 1].score).toBeTrue();
+      }
+    });
+
+    test('GET /scores/:score_id', async () => {
+      const {
+        body: { scores }
+      }: {
+        body: { scores: Score[] };
+      } = await request(app).get('/api/games/1/scores/1').expect(200);
+
+      scores.forEach((score: Score) => {
+        expect(score.score_id).toBeNumber();
+        expect(score.score).toBeNumber();
+        expect(score.user_id).toBeNumber();
+        expect(score.username).toBeString();
+        expect(score.game_id).toBeNumber();
+        expect(score.created_on).toBeString();
+        expect(
+          /^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(score.created_on!)
+        ).toBeTrue();
+        expect(score.rank).toBeNumber();
       });
     });
 
@@ -376,8 +413,8 @@ describe('Invalid Path', () => {
     return request(app)
       .get('/api/invalid/invalid')
       .expect(404)
-      .then(({body})=> {
-        expect(body.message).toBe('Path not found')
-      })
+      .then(({ body }) => {
+        expect(body.message).toBe('Path not found');
+      });
   });
 });
