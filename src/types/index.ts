@@ -1,10 +1,8 @@
-
-
-export type User ={ 
-username: string;
-user_id?: number;
-created_on?: string;
-}
+export type User = {
+  username: string;
+  user_id?: number;
+  created_on?: string;
+};
 
 export type Score = {
   score_id?: number;
@@ -13,6 +11,7 @@ export type Score = {
   username: string;
   game_id: number;
   created_on?: string;
+  rank?: number;
 };
 
 export type Game = {

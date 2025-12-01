@@ -34,7 +34,7 @@ export const getScores = async (req: Request, res: Response, next: NextFunction)
   await gameExists(numGame_id);
 
   const page = Number(p);
-  const scores = await readScores(page || 1);
+  const scores = await readScores(page || 1, numGame_id);
   res.send(scores);
 };
 
