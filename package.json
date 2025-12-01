@@ -12,7 +12,7 @@
     "seed-dev": "tsx ./src/db/seed/seed-dev.ts",
     "seed-prod": "NODE_ENV=production npm run seed-dev",
     "dev": "tsx watch ./src/listen.ts",
-    "start": "node ./dist/listen.js",
+    "start": "tsx ./src/listen.js",
     "build": "tsc --build"
   },
   "repository": {
