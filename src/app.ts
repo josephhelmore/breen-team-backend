@@ -18,6 +18,7 @@ const app = express();
 
 app.use(
   cors({
+    origin: 'https://breen-team-fe.vercel.app/',
     credentials: true
   })
 );
