@@ -58,3 +58,7 @@ export const readScoresByScoreId = async (score_id: number) => {
 
 export const readGame = async (game_id: number) =>
   db.select().from(games).where(eq(games.game_id, game_id));
+
+export const readScore = async(score_id: number) => {
+ return await db.select().from(scores).where(eq(scores.score_id, score_id));
+};

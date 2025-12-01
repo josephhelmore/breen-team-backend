@@ -228,19 +228,19 @@ describe('DELETE', () => {
   });
   test('Should return a 404 user not found when passed a user ID that does note exist', () => {
     return request(app)
-    .delete('/api/users/99999999')
-    .expect(404)
-    .then(({body}) => {
-      expect(body.message).toBe('Sorry, this user does not exist')
-    })
+      .delete('/api/users/99999999')
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe('Sorry, this user does not exist');
+      });
   });
   test('Should return a 400 invalud user_id when passed an invalid user_id', () => {
     return request(app)
-    .delete('/api/users/invalid')
-    .expect(400)
-    .then(({body}) => {
-      expect(body.message).toBe('Please enter a valid user_id')
-    })
+      .delete('/api/users/invalid')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe('Please enter a valid user_id');
+      });
   });
 });
 describe('USER ERROR HANDLING', () => {
@@ -270,6 +270,7 @@ describe('USER ERROR HANDLING', () => {
       });
   });
 });
+
 describe('SCORES ERROR HANDLING', () => {
   test('Should return a 400 when passed an invalid game_id', () => {
     return request(app)
@@ -278,13 +279,30 @@ describe('SCORES ERROR HANDLING', () => {
       .then(({ body }) => {
         expect(body.message).toBe('Please enter a valid game_id');
       });
+  
   });
-  test('Should return a 400 when passed a game_id that does not exist', () => {
+  test('Should return a 400 when passed an invalid score_id', () => {
+    return request(app)
+    .get('/api/games/1/scores/invalid')
+    .expect(400)
+    .then(({body}) => {
+      expect(body.message).toBe('Please enter a valid score_id')
+    })
+  });
+  test('Should return a 404 when passed a game_id that does not exist', () => {
     return request(app)
       .get('/api/games/9999999/scores')
       .expect(404)
       .then(({ body }) => {
         expect(body.message).toBe('Sorry, this game does not exist');
+      });
+  });
+  test('Should return a 404 when passed a score_id that does not exist', () => {
+    return request(app)
+      .get('/api/games/1/scores/99999999')
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe('Sorry, this score does not exist');
       });
   });
 });
