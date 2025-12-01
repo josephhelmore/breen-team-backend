@@ -1,19 +1,14 @@
-import {
-  readScores,
-  readScoresByScoreId,
-  readUser,
-  readUsers,
-  readUserIdByUsername
-} from './read-model.js';
-import { createScore, createUser } from './create-model.js';
-import { deleteUser } from './delete-model.js';
-import { createGame, readGames, deleteGameByGameId } from './games.js';
+import { createGame, readGames, deleteGameByGameId, readGame } from './games.js';
+import { readUser, readUsers, readUserIdByUsername, createUser, deleteUser } from './users.js';
+import { readScores, readScoresByScoreId, readScore, createScore } from './scores.js';
 
 export {
   readScores,
   readScoresByScoreId,
+  readScore,
   createScore,
   readGames,
+  readGame,
   createGame,
   deleteGameByGameId,
   readUser,

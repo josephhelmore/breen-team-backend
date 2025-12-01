@@ -1,21 +1,16 @@
 import { User } from '../types/index.js';
-import { readGame, readScore } from '../models/read-model.js';
+import { readGame, readScore } from '../models/index.js';
 
-
-export function isValid(id:string) {
-
-  const num = Number(id)
-  if(isNaN(num)) {
+export function isValid(id: string) {
+  const num = Number(id);
+  if (isNaN(num)) {
     throw {
-      status:400,
+      status: 400,
       message: 'Please enter a valid id!'
-    }
+    };
   }
-  return num
+  return num;
 }
-
-
-
 
 export function userExist(user: User[]) {
   if (user.length === 0) {
