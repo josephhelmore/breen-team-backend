@@ -43,7 +43,7 @@ describe('GET', () => {
       expect(/^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(user.created_on)).toBeTrue();
     });
   });
-  describe('GET /scores', () => {
+  describe('GET /games/:game_id/scores', () => {
     test('GET scores from database', async () => {
       const {
         body: { scores }
@@ -93,6 +93,37 @@ describe('GET', () => {
       expect(page1).toBe(1);
       expect(page2).toBe(2);
       expect(scores1[0].score_id).not.toBe(scores2[0].score_id);
+    });
+
+    test('GET scores shows the correct score with the corresponding game', async () => {
+      const {
+        body: { scores }
+      } = await request(app).get('/api/games/2/scores').expect(200);
+
+      scores.forEach((score: Score) => {
+        expect(score.game_id).toBe(2);
+      });
+    });
+
+    test('GET scores/:score_id shows the correct score with the corresponding game', async () => {
+      const testScore = {
+        username: 'testUser1',
+        score: 500
+      };
+
+      const {
+        body: { score }
+      } = await request(app).post('/api/games/2/scores').send(testScore).expect(201);
+
+      const {
+        body: { scores }
+      } = await request(app)
+        .get('/api/games/2/scores/' + score.score_id)
+        .expect(200);
+
+      scores.forEach((score: Score) => {
+        expect(score.game_id).toBe(2);
+      });
     });
 
     test('GET scores with a score_id query will show the page of the queried score', async () => {
@@ -177,7 +208,7 @@ describe('GET', () => {
 });
 
 describe('POST', () => {
-  describe('POST scores', () => {
+  describe('POST /games/:game_id/scores', () => {
     test('POST a score when user exists', async () => {
       const testScore = {
         score: 100,
@@ -262,6 +293,22 @@ describe('DELETE', () => {
       expect(game.game_id).toBe(5);
     });
   });
+  test('Should return a 404 user not found when passed a user ID that does note exist', () => {
+    return request(app)
+      .delete('/api/users/99999999')
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe('Sorry, this user does not exist');
+      });
+  });
+  test('Should return a 400 invalud user_id when passed an invalid user_id', () => {
+    return request(app)
+      .delete('/api/users/invalid')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe('Please enter a valid user_id');
+      });
+  });
 });
 describe('USER ERROR HANDLING', () => {
   test('Should return with a status of 400 when passed an invalid user_id is passed', () => {
@@ -290,6 +337,7 @@ describe('USER ERROR HANDLING', () => {
       });
   });
 });
+
 describe('SCORES ERROR HANDLING', () => {
   test('Should return a 400 when passed an invalid game_id', () => {
     return request(app)
@@ -299,12 +347,28 @@ describe('SCORES ERROR HANDLING', () => {
         expect(body.message).toBe('Please enter a valid game_id');
       });
   });
-  test('Should return a 400 when passed a game_id that does not exist', () => {
+  test('Should return a 400 when passed an invalid score_id', () => {
+    return request(app)
+      .get('/api/games/1/scores/invalid')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe('Please enter a valid score_id');
+      });
+  });
+  test('Should return a 404 when passed a game_id that does not exist', () => {
     return request(app)
       .get('/api/games/9999999/scores')
       .expect(404)
       .then(({ body }) => {
         expect(body.message).toBe('Sorry, this game does not exist');
+      });
+  });
+  test('Should return a 404 when passed a score_id that does not exist', () => {
+    return request(app)
+      .get('/api/games/1/scores/99999999')
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe('Sorry, this score does not exist');
       });
   });
 });

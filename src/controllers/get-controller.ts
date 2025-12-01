@@ -1,7 +1,14 @@
 import { Response, Request, NextFunction } from 'express';
 import { readUser, readUsers } from '../models/read-model.js';
-import { readScores, readScoresByScoreId, readGames } from '../models/index.js';
-import { validId, userExist, ValidGameId, gameExists } from './controller-error-handling.js';
+import { readScores, readScoresByScoreId } from '../models/index.js';
+import {
+  validId,
+  userExist,
+  ValidGameId,
+  gameExists,
+  scoreExist,
+  validScore
+} from './controller-error-handling.js';
 
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
   const users = await readUsers();
@@ -27,20 +34,24 @@ export const getScores = async (req: Request, res: Response, next: NextFunction)
   await gameExists(numGame_id);
 
   const page = Number(p);
-  const scores = await readScores(page || 1);
+  const scores = await readScores(page || 1, numGame_id);
   res.send(scores);
 };
 
 export const getScoresByScoreId = async (req: Request, res: Response, next: NextFunction) => {
   const { game_id, score_id } = req.params;
 
+  const numScore_id = Number(score_id);
   const numGame_id = Number(game_id);
 
   ValidGameId(numGame_id);
 
   await gameExists(numGame_id);
 
-  const scores = await readScoresByScoreId(Number(score_id));
+  const scores = await readScoresByScoreId(numScore_id, numGame_id);
+
+  validScore(numScore_id);
+  await scoreExist(numScore_id);
   res.send(scores);
 };
 

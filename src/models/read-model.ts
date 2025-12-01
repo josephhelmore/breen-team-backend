@@ -19,10 +19,17 @@ export const readUserIdByUsername = async (username: string): Promise<{ user_id:
     .where(eq(users.username, username));
 };
 
-export const readScores = async (page: number): Promise<{ scores: Score[]; page?: number }> => {
+export const readScores = async (
+  page: number,
+  game_id: number
+): Promise<{ scores: Score[]; page?: number }> => {
   const limit = 10;
 
-  const dbScores: Score[] = await db.select().from(scores).orderBy(desc(scores.score));
+  const dbScores: Score[] = await db
+    .select()
+    .from(scores)
+    .where(eq(scores.game_id, game_id))
+    .orderBy(desc(scores.score));
 
   const paginatedScores = dbScores.reduce(
     (acc: { [key: number]: Score[] }, cur) => {
@@ -40,8 +47,12 @@ export const readScores = async (page: number): Promise<{ scores: Score[]; page?
   return { scores: paginatedScores[page], page: page };
 };
 
-export const readScoresByScoreId = async (score_id: number) => {
-  const dbScores: Score[] = await db.select().from(scores).orderBy(desc(scores.score));
+export const readScoresByScoreId = async (score_id: number, game_id: number) => {
+  const dbScores: Score[] = await db
+    .select()
+    .from(scores)
+    .where(eq(scores.game_id, game_id))
+    .orderBy(desc(scores.score));
 
   const indexOfScoreId = dbScores.findIndex(score => score.score_id === score_id);
   const topOverflow = indexOfScoreId < 4 ? 4 - indexOfScoreId : 0;
@@ -58,3 +69,7 @@ export const readScoresByScoreId = async (score_id: number) => {
 
 export const readGame = async (game_id: number) =>
   db.select().from(games).where(eq(games.game_id, game_id));
+
+export const readScore = async(score_id: number) => {
+ return await db.select().from(scores).where(eq(scores.score_id, score_id));
+};
