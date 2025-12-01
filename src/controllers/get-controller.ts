@@ -1,6 +1,6 @@
 import { Response, Request, NextFunction } from 'express';
 import { readUser, readUsers } from '../models/read-model.js';
-import { readScores, readScoresByScoreId } from '../models/index.js';
+import { readScores, readScoresByScoreId, readGames } from '../models/index.js';
 import { validId, userExist, ValidGameId, gameExists } from './controller-error-handling.js';
 
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
@@ -42,4 +42,10 @@ export const getScoresByScoreId = async (req: Request, res: Response, next: Next
 
   const scores = await readScoresByScoreId(Number(score_id));
   res.send(scores);
+};
+
+export const getGames = async (req: Request, res: Response, next: NextFunction) => {
+  const games = await readGames();
+
+  return res.send({ games: games });
 };

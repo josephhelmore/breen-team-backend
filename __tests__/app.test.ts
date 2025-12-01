@@ -161,6 +161,19 @@ describe('GET', () => {
       expect(scores[9].username).toBe(testScore.username);
     });
   });
+
+  describe('GET /games', () => {
+    test('GET games table', async () => {
+      const {
+        body: { games }
+      } = await request(app).get('/api/games').expect(200);
+
+      games.forEach((game: Game) => {
+        expect('game_id' in game).toBeTrue();
+        expect('name' in game).toBeTrue();
+      });
+    });
+  });
 });
 
 describe('POST', () => {
@@ -219,11 +232,34 @@ describe('POST', () => {
       expect(typeof user.created_on).toBe('string');
     });
   });
+
+  test('POST /games', async () => {
+    const {
+      body: { game }
+    } = await request(app).post('/api/games').send({ name: 'test_game' }).expect(201);
+
+    expect(game.name).toBe('test_game');
+  });
 });
+
 describe('DELETE', () => {
   describe('DELETE /users', () => {
     test('DELETE user by Id', async () => {
-      return request(app).delete('/api/users/9').expect(200);
+      const {
+        body: { user }
+      } = await request(app).delete('/api/users/9').expect(200);
+
+      expect(user.user_id).toBe(9);
+    });
+  });
+
+  describe('DELETE /games', () => {
+    test('DELETE /games/:game_id', async () => {
+      const {
+        body: { game }
+      } = await request(app).delete('/api/games/5').expect(200);
+
+      expect(game.game_id).toBe(5);
     });
   });
 });
