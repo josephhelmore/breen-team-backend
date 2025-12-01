@@ -13,7 +13,7 @@ export type Score = {
   score_id?: number;
   score: number;
   user_id: number;
-  username: string;
+  username?: string;
   game_id: number;
   created_on?: string;
   rank?: number;
