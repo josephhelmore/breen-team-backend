@@ -6,8 +6,8 @@ import {
   readUserIdByUsername
 } from './read-model.js';
 import { createScore, createUser } from './create-model.js';
-import { deleteUser, deleteGameByGameId } from './delete-model.js';
-import { createGame, readGames } from './games.js';
+import { deleteUser } from './delete-model.js';
+import { createGame, readGames, deleteGameByGameId } from './games.js';
 
 export {
   readScores,

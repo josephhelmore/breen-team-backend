@@ -1,6 +1,6 @@
 import { Response, Request, NextFunction } from 'express';
 import { readUser, readUsers } from '../models/read-model.js';
-import { readScores, readScoresByScoreId } from '../models/index.js';
+import { readScores, readScoresByScoreId, readGames } from '../models/index.js';
 import {
   validId,
   userExist,

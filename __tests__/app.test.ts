@@ -363,7 +363,7 @@ describe('SCORES ERROR HANDLING', () => {
         expect(body.message).toBe('Sorry, this game does not exist');
       });
   });
-  test('Should return a 404 when passed a score_id that does not exist', () => {
+  test('Should return a 404 when passed a score_id that does not exist', async () => {
     return request(app)
       .get('/api/games/1/scores/99999999')
       .expect(404)
