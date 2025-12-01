@@ -13,6 +13,7 @@ export function validId(id: string) {
 }
 export function userExist(user: User[]) {
   if (user.length === 0) {
+    console.log('the array is empty!')
     throw {
       status: 404,
       message: 'Sorry, this user does not exist'

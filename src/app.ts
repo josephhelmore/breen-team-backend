@@ -4,7 +4,14 @@ import cors from 'cors';
 import { getUser, getUsers } from './controllers/get-controller.js';
 import { deleteUserId } from './controllers/delete-controller.js';
 import { postUser } from './controllers/post-controller.js';
-import { getScores, postGuestUserAndPostScore, getScoresByScoreId } from './controllers/index.js';
+import {
+  getScores,
+  postGuestUserAndPostScore,
+  getScoresByScoreId,
+  getGames,
+  postGames,
+  deleteGames
+} from './controllers/index.js';
 
 const app = express();
 
@@ -17,6 +24,12 @@ app.get('/api/users', getUsers);
 
 app.get('/api/users/:user_id', getUser);
 
+app.get('/api/games', getGames);
+
+app.post('/api/games', postGames);
+
+app.delete('/api/games/:game_id', deleteGames);
+
 app.get('/api/games/:game_id/scores/', getScores);
 
 app.get('/api/games/:game_id/scores/:score_id', getScoresByScoreId);
@@ -27,6 +40,7 @@ app.post('/api/users', postUser);
 
 app.delete('/api/users/:user_id', deleteUserId);
 
+
 app.use((req, res, next) => {
   const error = {
     status: 404,
@@ -34,7 +48,6 @@ app.use((req, res, next) => {
   };
   next(error);
 });
-
 
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   if (error.status) {
@@ -44,7 +57,7 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
       cause: error.cause
     });
   }
-
+  
   return res.status(500).json({
     error: 'unknown error',
     message: error.message || 'An error occurred'

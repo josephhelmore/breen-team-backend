@@ -1,6 +1,5 @@
 import { Response, Request } from 'express';
-import { createScore, readUserIdByUsername, createUser } from '../models/index.js';
-import { validScore } from './controller-error-handling.js';
+import { createScore, readUserIdByUsername, createUser, createGame } from '../models/index.js';
 
 export const postUser = async (req: Request, res: Response) => {
   const { username }: { username: string } = req.body;
@@ -28,4 +27,12 @@ export const postGuestUserAndPostScore = async (req: Request, res: Response) => 
   const [resScore] = await createScore(score, user_id, username, game_id_num);
 
   return res.status(201).send({ score: resScore });
+};
+
+export const postGames = async (req: Request, res: Response) => {
+  const { name } = req.body;
+
+  const resGame = await createGame(name);
+
+  return res.status(201).send({ game: resGame });
 };
