@@ -5,6 +5,10 @@
   "main": "./src/listen.ts",
   "scripts": {
     "test": "vitest",
+    "test-app": "vitest ./__tests__/app.test.ts",
+    "test-get": "vitest ./__tests__/get.test.ts",
+    "test-seed": "vitest ./__tests__/seed.test.ts",
+    "test-sql": "vitest ./__tests__/sql.test.ts",
     "setup-dbs": "psql -f ./src/db/setup-dbs.sql",
     "push-dev": "drizzle-kit push --config=drizzle-dev.config.ts",
     "push-test": "drizzle-kit push --config=drizzle-test.config.ts",
