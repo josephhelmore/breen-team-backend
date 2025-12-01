@@ -1,12 +1,12 @@
 import { Response, Request, NextFunction } from 'express';
-import { readUser, readUsers } from '../models/read-model.js';
-import { readScores, readScoresByScoreId, readGames } from '../models/index.js';
 import {
-  userExist,
-  gameExists,
-  scoreExist,
-  isValid
-} from './controller-error-handling.js';
+  readScores,
+  readScoresByScoreId,
+  readGames,
+  readUser,
+  readUsers
+} from '../models/index.js';
+import { userExist, gameExists, scoreExist, isValid } from './controller-error-handling.js';
 
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
   const users = await readUsers();
@@ -17,9 +17,9 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
   const { user_id } = req.params;
   const numId = isValid(user_id);
   const user = await readUser(numId);
-  
+
   userExist(user);
-  
+
   return res.status(200).json({ user: user[0] });
 };
 
