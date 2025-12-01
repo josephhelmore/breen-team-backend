@@ -1,24 +1,9 @@
 import { eq } from 'drizzle-orm';
 import db from '../db/connection.js';
-import { users, scores, games } from '../db/data/schema.js';
+import { scores } from '../db/data/schema.js';
 import { Score } from '../types/index.js';
 import { desc, asc } from 'drizzle-orm';
 import { addRankToScores } from '../util/util.js';
-
-export const readUsers = async () => {
-  return await db.select().from(users);
-};
-
-export const readUser = async (user_id: number) => {
-  return await db.select().from(users).where(eq(users.user_id, user_id));
-};
-
-export const readUserIdByUsername = async (username: string): Promise<{ user_id: number }[]> => {
-  return await db
-    .select({ user_id: users.user_id })
-    .from(users)
-    .where(eq(users.username, username));
-};
 
 export const readScores = async (
   page: number,
@@ -79,9 +64,22 @@ export const readScoresByScoreId = async (score_id: number, game_id: number) => 
   return { scores: scoreIdPage };
 };
 
-export const readGame = async (game_id: number) =>
-  db.select().from(games).where(eq(games.game_id, game_id));
-
 export const readScore = async (score_id: number) => {
   return await db.select().from(scores).where(eq(scores.score_id, score_id));
+};
+
+export const createScore = async (
+  score: number,
+  user_id: number,
+  username: string,
+  game_id: number
+) => {
+  try {
+    return await db
+      .insert(scores)
+      .values({ score: score, user_id: user_id, username: username, game_id: game_id })
+      .returning();
+  } catch (error) {
+    console.log(error);
+  }
 };
