@@ -1,8 +1,1 @@
-export default [
-  {
-    name: 'Orc of the Rings'
-  },
-  {
-    name: 'Memory heap'
-  }
-];
+export default [{ name: 'Orc of the Rings' }, { name: 'Minesweeper' }, { name: 'Memory heap' }];

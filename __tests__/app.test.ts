@@ -43,7 +43,7 @@ describe('GET', () => {
       expect(/^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(user.created_on)).toBeTrue();
     });
   });
-  describe('GET /scores', () => {
+  describe('GET /games/:game_id/scores', () => {
     test('GET scores from database', async () => {
       const {
         body: { scores }
@@ -93,6 +93,37 @@ describe('GET', () => {
       expect(page1).toBe(1);
       expect(page2).toBe(2);
       expect(scores1[0].score_id).not.toBe(scores2[0].score_id);
+    });
+
+    test('GET scores shows the correct score with the corresponding game', async () => {
+      const {
+        body: { scores }
+      } = await request(app).get('/api/games/2/scores').expect(200);
+
+      scores.forEach(score => {
+        expect(score.game_id).toBe(2);
+      });
+    });
+
+    test('GET scores/:score_id shows the correct score with the corresponding game', async () => {
+      const testScore = {
+        username: 'testUser1',
+        score: 500
+      };
+
+      const {
+        body: { score }
+      } = await request(app).post('/api/games/2/scores').send(testScore).expect(201);
+
+      const {
+        body: { scores }
+      } = await request(app)
+        .get('/api/games/2/scores/' + score.score_id)
+        .expect(200);
+
+      scores.forEach(score => {
+        expect(score.game_id).toBe(2);
+      });
     });
 
     test('GET scores with a score_id query will show the page of the queried score', async () => {
@@ -164,7 +195,7 @@ describe('GET', () => {
 });
 
 describe('POST', () => {
-  describe('POST scores', () => {
+  describe('POST /games/:game_id/scores', () => {
     test('POST a score when user exists', async () => {
       const testScore = {
         score: 100,
