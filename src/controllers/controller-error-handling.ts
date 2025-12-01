@@ -37,7 +37,6 @@ export async function gameExists(game_id: number) {
     };
   }
 }
-
 export async function scoreExist(score: number) {
   const resScore = await readScore(score);
 
@@ -48,7 +47,6 @@ export async function scoreExist(score: number) {
     };
   }
 }
-
 export function validScore(score: number) {
   if (isNaN(score)) {
     throw {

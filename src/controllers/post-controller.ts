@@ -1,5 +1,6 @@
 import { Response, Request } from 'express';
 import { createScore, readUserIdByUsername, createUser } from '../models/index.js';
+import { validScore } from './controller-error-handling.js';
 
 export const postUser = async (req: Request, res: Response) => {
   const { username }: { username: string } = req.body;
@@ -8,7 +9,6 @@ export const postUser = async (req: Request, res: Response) => {
 
   return res.status(201).send({ user: resUsername });
 };
-
 export const postGuestUserAndPostScore = async (req: Request, res: Response) => {
   const { score, username } = req.body;
   const { game_id } = req.params;

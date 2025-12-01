@@ -301,7 +301,6 @@ describe('USER ERROR HANDLING', () => {
       });
   });
 });
-
 describe('SCORES ERROR HANDLING', () => {
   test('Should return a 400 when passed an invalid game_id', () => {
     return request(app)
@@ -334,5 +333,15 @@ describe('SCORES ERROR HANDLING', () => {
       .then(({ body }) => {
         expect(body.message).toBe('Sorry, this score does not exist');
       });
+  });
+});
+describe('Invalid Path', () => {
+  test('Should provide a 404 error when passed an invalid path', () => {
+    return request(app)
+      .get('/api/invalid/invalid')
+      .expect(404)
+      .then(({body})=> {
+        expect(body.message).toBe('Path not found')
+      })
   });
 });
