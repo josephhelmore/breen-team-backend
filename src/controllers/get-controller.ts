@@ -48,7 +48,7 @@ export const getScoresByScoreId = async (req: Request, res: Response, next: Next
 
   await gameExists(numGame_id);
 
-  const scores = await readScoresByScoreId(Number(score_id));
+  const scores = await readScoresByScoreId( numScore_id, numGame_id);
   
   validScore(numScore_id);
   await scoreExist(numScore_id);
