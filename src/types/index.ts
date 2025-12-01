@@ -1,7 +1,12 @@
+import type { Request } from 'express';
+
 export type User = {
-  username: string;
   user_id?: number;
+  username: string;
   created_on?: string;
+  google_id?: string;
+  email?: string;
+  avatar_url?: string;
 };
 
 export type Score = {
@@ -18,3 +23,7 @@ export type Game = {
   game_id?: number;
   name: string;
 };
+
+export interface RequestWithUser extends Request {
+  user?: User;
+}
