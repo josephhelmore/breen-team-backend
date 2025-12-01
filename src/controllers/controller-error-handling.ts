@@ -1,16 +1,22 @@
-import { User, Score } from '../types/index.js';
+import { User } from '../types/index.js';
 import { readGame, readScore } from '../models/read-model.js';
 
-export function validId(id: string) {
-  const num = Number(id);
-  if (isNaN(num)) {
+
+export function isValid(id:string) {
+
+  const num = Number(id)
+  if(isNaN(num)) {
     throw {
-      status: 400,
-      message: 'Please enter a valid user_id'
-    };
+      status:400,
+      message: 'Please enter a valid id!'
+    }
   }
-  return num;
+  return num
 }
+
+
+
+
 export function userExist(user: User[]) {
   if (user.length === 0) {
     throw {
@@ -18,14 +24,6 @@ export function userExist(user: User[]) {
       message: 'Sorry, this user does not exist'
     };
   } else return user;
-}
-export function ValidGameId(game_id: number) {
-  if (Number.isNaN(game_id)) {
-    throw {
-      status: 400,
-      message: 'Please enter a valid game_id'
-    };
-  } else return game_id;
 }
 export async function gameExists(game_id: number) {
   const resGame = await readGame(game_id);
@@ -46,12 +44,4 @@ export async function scoreExist(score: number) {
       message: 'Sorry, this score does not exist'
     };
   }
-}
-export function validScore(score: number) {
-  if (isNaN(score)) {
-    throw {
-      status: 400,
-      message: 'Please enter a valid score_id'
-    };
-  } else return score;
 }
