@@ -59,6 +59,7 @@ describe('GET', () => {
         expect(
           /^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(score.created_on!)
         ).toBeTrue();
+        expect(score.rank).toBeNumber();
       });
     });
 
@@ -376,8 +377,8 @@ describe('Invalid Path', () => {
     return request(app)
       .get('/api/invalid/invalid')
       .expect(404)
-      .then(({body})=> {
-        expect(body.message).toBe('Path not found')
-      })
+      .then(({ body }) => {
+        expect(body.message).toBe('Path not found');
+      });
   });
 });
