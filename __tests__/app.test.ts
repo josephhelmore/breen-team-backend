@@ -100,7 +100,7 @@ describe('GET', () => {
         body: { scores }
       } = await request(app).get('/api/games/2/scores').expect(200);
 
-      scores.forEach(score => {
+      scores.forEach((score: Score) => {
         expect(score.game_id).toBe(2);
       });
     });
@@ -121,7 +121,7 @@ describe('GET', () => {
         .get('/api/games/2/scores/' + score.score_id)
         .expect(200);
 
-      scores.forEach(score => {
+      scores.forEach((score: Score) => {
         expect(score.game_id).toBe(2);
       });
     });
@@ -310,15 +310,14 @@ describe('SCORES ERROR HANDLING', () => {
       .then(({ body }) => {
         expect(body.message).toBe('Please enter a valid game_id');
       });
-  
   });
   test('Should return a 400 when passed an invalid score_id', () => {
     return request(app)
-    .get('/api/games/1/scores/invalid')
-    .expect(400)
-    .then(({body}) => {
-      expect(body.message).toBe('Please enter a valid score_id')
-    })
+      .get('/api/games/1/scores/invalid')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe('Please enter a valid score_id');
+      });
   });
   test('Should return a 404 when passed a game_id that does not exist', () => {
     return request(app)
