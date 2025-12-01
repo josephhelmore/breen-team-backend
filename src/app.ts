@@ -50,7 +50,7 @@ app.get('/protected_route', auth, (req: RequestWithUser, res: Response) => {
   res.send('You must be logged in to see this!');
 });
 
-app.use('/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 
 app.get('/api/users', getUsers);
 

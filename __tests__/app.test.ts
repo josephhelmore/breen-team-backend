@@ -306,7 +306,7 @@ describe('DELETE', () => {
       .delete('/api/users/invalid')
       .expect(400)
       .then(({ body }) => {
-        expect(body.message).toBe('Please enter a valid user_id');
+        expect(body.message).toBe('Please enter a valid id!');
       });
   });
 });
@@ -316,7 +316,7 @@ describe('USER ERROR HANDLING', () => {
       .get('/api/users/invalid')
       .expect(400)
       .then(({ body }) => {
-        expect(body.message).toBe('Please enter a valid user_id');
+        expect(body.message).toBe('Please enter a valid id!');
       });
   });
   test('Should return with a status of 404 when passed a user_id that does not exist', () => {
@@ -343,7 +343,7 @@ describe('SCORES ERROR HANDLING', () => {
       .get('/api/games/invalid/scores')
       .expect(400)
       .then(({ body }) => {
-        expect(body.message).toBe('Please enter a valid game_id');
+        expect(body.message).toBe('Please enter a valid id!');
       });
   });
   test('Should return a 400 when passed an invalid score_id', () => {
@@ -351,7 +351,7 @@ describe('SCORES ERROR HANDLING', () => {
       .get('/api/games/1/scores/invalid')
       .expect(400)
       .then(({ body }) => {
-        expect(body.message).toBe('Please enter a valid score_id');
+        expect(body.message).toBe('Please enter a valid id!');
       });
   });
   test('Should return a 404 when passed a game_id that does not exist', () => {
