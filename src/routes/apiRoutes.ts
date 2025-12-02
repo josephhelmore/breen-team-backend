@@ -15,6 +15,10 @@ import {
 
 export const apiRoutes = Router();
 
+apiRoutes.get('/', (req, res) => {
+  res.redirect('https://josephhelmore.github.io/breen-team-backend/');
+});
+
 apiRoutes.route('/users').get(getUsers).post(postUser);
 
 apiRoutes.route('/users/:user_id').get(getUser).patch(patchUser).delete(deleteUser);

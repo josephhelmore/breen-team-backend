@@ -19,8 +19,8 @@ router.get(
 
     res.redirect(
       process.env.NODE_ENV === 'production'
-        ? `https://breen-team-fe.vercel.app/login-success?token=${token}`
-        : `http://localhost:5173/login-success?token=${token}`
+        ? `https://breen-team-fe.vercel.app/profile?token=${token}`
+        : `http://localhost:5173/profile?token=${token}`
     );
   }
 );
