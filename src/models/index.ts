@@ -1,7 +1,8 @@
 import { createGame, readGames, deleteGameByGameId, readGame } from './games.js';
 import {
-  readUser,
+  readUserByGoogleId,
   readUsers,
+  readUserByUserId,
   readUserIdByUsername,
   createUser,
   deleteUserById,
@@ -18,10 +19,11 @@ export {
   readGame,
   createGame,
   deleteGameByGameId,
-  readUser,
+  readUserByGoogleId,
   readUsers,
   createUser,
   updateUser,
   deleteUserById,
-  readUserIdByUsername
+  readUserIdByUsername,
+  readUserByUserId
 };

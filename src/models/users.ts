@@ -5,7 +5,19 @@ import { User } from '../types/index.js';
 
 export const readUsers = async (): Promise<User[]> => await db.select().from(users);
 
-export const readUser = async (user_id: number): Promise<User[]> =>
+export const readUserByGoogleId = async (google_id: string): Promise<User[]> => {
+  return await db
+    .select({
+      username: users.username,
+      avatar_url: users.avatar_url,
+      email: users.email,
+      bio: users.bio
+    })
+    .from(users)
+    .where(eq(users.google_id, google_id));
+};
+
+export const readUserByUserId = async (user_id: number): Promise<User[]> =>
   await db.select().from(users).where(eq(users.user_id, user_id));
 
 export const readUserIdByUsername = async (username: string): Promise<{ user_id: number }[]> =>

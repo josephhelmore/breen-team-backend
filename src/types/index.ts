@@ -7,6 +7,7 @@ export type User = {
   google_id?: string;
   email?: string;
   avatar_url?: string;
+  bio?: string;
 };
 
 export type Score = {

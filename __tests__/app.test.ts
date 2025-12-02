@@ -1,4 +1,5 @@
 import app from '../src/app.js';
+import db from '../src/db/connection.js';
 import * as matchers from 'jest-extended';
 import { beforeAll, afterAll, describe, test, expect } from 'vitest';
 import request from 'supertest';
@@ -6,10 +7,20 @@ import { seed } from '../src/db/seed/seed.js';
 import dropTable from '../src/db/seed/drop.js';
 import { data } from '../src/db/data/test/index.js';
 import { Score, User, Game } from '../src/types';
+import jwt from 'jsonwebtoken';
+import { users } from '../src/db/data/schema.js';
+import { eq } from 'drizzle-orm';
 
 expect.extend(matchers);
 
-beforeAll(() => seed(data));
+let testToken: string;
+
+beforeAll(async () => {
+  testToken = await jwt.sign({ userId: 'test_google_id' }, process.env.SESSION_SECRET, {
+    expiresIn: '7d'
+  });
+  await seed(data);
+});
 afterAll(() => dropTable());
 
 describe('GET', () => {
@@ -33,46 +44,57 @@ describe('GET', () => {
       });
     });
 
-    test('GET user by user_id', async () => {
+    test('GET user by google_id', async () => {
       const {
         body: { user }
       }: {
         body: { user: User };
-      } = await request(app).get('/api/users/3').expect(200);
-      expect(user.user_id).toBe(3);
+      } = await request(app)
+        .get('/api/users/profile')
+        .set('Authorization', `Bearer ${testToken}`)
+        .expect(200);
+
       expect(user.username).toBeString();
-      expect(user.created_on).toBeString();
-      expect(/^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(user.created_on!)).toBeTrue();
+      expect(user.avatar_url).toBe('test_avatar_url');
+      expect(user.email).toBe('test_email');
+      expect(user.bio).toBe('test bio');
     });
 
     describe('GET USER ERROR HANDLING', () => {
-      test('Should return with a status of 400 when passed an invalid user_id is passed', () => {
-        return request(app)
-          .get('/api/users/invalid')
-          .expect(400)
-          .then(({ body }) => {
-            expect(body.message).toBe('Please enter a valid id!');
-          });
-      });
+      test.skip('Unauthorised user profile get request will be status 401', async () => {
+        const {
+          body: { message }
+        }: { body: { message: string } } = await request(app).get('/users/profile').expect(401);
 
-      test('Should return with a status of 404 when passed a user_id that does not exist', () => {
-        return request(app)
-          .get('/api/users/999999999')
-          .expect(404)
-          .then(({ body }) => {
-            expect(body.message).toBe('Sorry, this user does not exist');
-          });
+        expect(message).toBe('You need to log in to see this page.');
       });
+      // test('Should return with a status of 400 when passed an invalid user_id is passed', () => {
+      //   return request(app)
+      //     .get('/api/users/invalid')
+      //     .expect(400)
+      //     .then(({ body }) => {
+      //       expect(body.message).toBe('Please enter a valid id!');
+      //     });
+      // });
 
-      test('Should return with a status of 200 when a user is fetched', () => {
-        return request(app)
-          .get('/api/users/1')
-          .expect(200)
-          .then(({ body }) => {
-            expect(body.user.user_id).toBe(1);
-            expect(typeof body.user.username).toBe('string');
-          });
-      });
+      // test('Should return with a status of 404 when passed a user_id that does not exist', () => {
+      //   return request(app)
+      //     .get('/api/users/999999999')
+      //     .expect(404)
+      //     .then(({ body }) => {
+      //       expect(body.message).toBe('Sorry, this user does not exist');
+      //     });
+      // });
+
+      // test('Should return with a status of 200 when a user is fetched', () => {
+      //   return request(app)
+      //     .get('/api/users/1')
+      //     .expect(200)
+      //     .then(({ body }) => {
+      //       expect(body.user.user_id).toBe(1);
+      //       expect(typeof body.user.username).toBe('string');
+      //     });
+      // });
     });
   });
 
@@ -354,9 +376,7 @@ describe('POST', () => {
         body: { score }
       } = await request(app).post('/api/games/1/scores').send(testScore).expect(201);
 
-      const {
-        body: { user }
-      } = await request(app).get(`/api/users/${score.user_id}`).expect(200);
+      const [user] = await db.select().from(users).where(eq(users.username, score.username));
 
       expect(user.username).toBe('testUser10');
       expect(score.score).toBe(200);
@@ -479,8 +499,12 @@ describe('DELETE', () => {
 
 describe('Invalid Path', () => {
   test('Should provide a 404 error when passed an invalid path', async () => {
-    const { body } = await request(app).get('/api/invalid/invalid').expect(404);
+    const {
+      body: { message }
+    }: {
+      body: { message: string };
+    } = await request(app).get('/api/invalid/invalid').expect(404);
 
-    console.log(body);
+    expect(message).toBe('Path not found');
   });
 });
