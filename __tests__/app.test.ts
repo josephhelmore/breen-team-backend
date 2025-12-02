@@ -324,6 +324,24 @@ describe('POST', () => {
   });
 });
 
+describe('PATCH', () => {
+  describe('PATCH /users/:user_id', () => {
+    test('Update username', async () => {
+      const {
+        body: { user }
+      }: {
+        body: { user: User };
+      } = await request(app)
+        .patch('/api/users/1')
+        .send({ username: 'updatedTestUser1' })
+        .expect(200);
+
+      expect(user.user_id).toBe(1);
+      expect(user.username).toBe('updatedTestUser1');
+    });
+  });
+});
+
 describe('DELETE', () => {
   describe('DELETE /users', () => {
     test('DELETE user by Id', async () => {

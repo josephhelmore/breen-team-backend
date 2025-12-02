@@ -22,6 +22,14 @@ export const createUser = async (username: string): Promise<User[]> => {
   return await db.insert(users).values({ username: username }).returning();
 };
 
+export const updateUser = async (user_id: number, username: string): Promise<User[]> => {
+  return await db
+    .update(users)
+    .set({ username: username })
+    .where(eq(users.user_id, user_id))
+    .returning();
+};
+
 export const deleteUserById = async (user_id: number): Promise<User[]> => {
   return await db.delete(users).where(eq(users.user_id, user_id)).returning();
 };
