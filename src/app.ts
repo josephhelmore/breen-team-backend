@@ -7,7 +7,6 @@ import passport from './auth/passport.js';
 
 import authRoutes from './routes/auth.js';
 import type { RequestWithUser } from './types/index.js';
-import auth from './middleware/auth.js';
 import { apiRoutes } from './routes/apiRoutes.js';
 
 const ENV = process.env.NODE_ENV || 'development';
@@ -18,20 +17,17 @@ const app = express();
 
 app.use(
   cors({
-    origin: 'https://breen-team-fe.vercel.app/',
+    origin: ENV === 'production' ? 'https://breen-team-fe.vercel.app' : 'http://localhost:5173',
     credentials: true
   })
 );
 app.use(express.json());
 
-app.get('/api', express.static('public'));
-
 app.use(
   session({
     secret: process.env.SESSION_SECRET!,
     resave: false,
-    saveUninitialized: false,
-    cookie: { secure: true, sameSite: 'none' }
+    saveUninitialized: false
   })
 );
 
@@ -39,11 +35,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', (req: RequestWithUser, res: Response) => {
+  console.log(req.user);
   res.send(req.user ? `Logged in as ${req.user.email}` : 'Not logged in');
-});
-
-app.get('/protected_route', auth, (req: RequestWithUser, res: Response) => {
-  res.send('You must be logged in to see this!');
 });
 
 app.use('/api/auth', authRoutes);
