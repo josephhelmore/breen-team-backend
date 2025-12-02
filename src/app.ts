@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import session from 'express-session';
 import cors from 'cors';
 import passport from './auth/passport.js';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 
 import authRoutes from './routes/auth.js';
 import type { RequestWithUser } from './types/index.js';
@@ -14,6 +15,13 @@ const envPath = import.meta.dirname + '/.env.' + ENV;
 dotenv.config({ path: envPath });
 
 const app = express();
+
+const proxyMiddleware = createProxyMiddleware<Request, Response>({
+  target: 'https://breen-team-fe.vercel.app/api',
+  changeOrigin: true
+});
+
+app.use('/api', proxyMiddleware);
 
 app.use(
   cors({
