@@ -9,6 +9,7 @@ import {
   postGames,
   deleteGames,
   postUser,
+  patchUser,
   deleteUser
 } from '../controllers/index.js';
 
@@ -17,6 +18,8 @@ export const apiRoutes = Router();
 apiRoutes.get('/users', getUsers);
 
 apiRoutes.get('/users/:user_id', getUser);
+
+apiRoutes.patch('/users/:user_id', patchUser);
 
 apiRoutes.get('/games', getGames);
 

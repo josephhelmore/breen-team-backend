@@ -22,9 +22,9 @@ describe('Data Insertion for user table', () => {
           expect(user).toHaveProperty('user_id');
           expect(user).toHaveProperty('username');
           expect(user).toHaveProperty('created_on');
-          expect(typeof user.user_id).toBe('number');
-          expect(typeof user.username).toBe('string');
-          expect(typeof user.created_on).toBe('object');
+          expect(user.user_id).toBeNumber();
+          expect(user.username).toBeString();
+          expect(user.created_on).toBeDate();
         });
       });
   });
@@ -35,8 +35,8 @@ describe('Data Insertion for user table', () => {
       .from(users)
       .then(users => {
         users.forEach(user => {
-          expect(typeof user.user_id).toBe('number');
-          expect(typeof user.username).toBe('string');
+          expect(user.user_id).toBeNumber();
+          expect(user.username).toBeString();
           expect(user.created_on).toBeDate();
         });
       });
@@ -67,38 +67,31 @@ describe('Data insertion for scores table', () => {
       .from(scores)
       .then(scores => {
         scores.forEach(score => {
-          expect(typeof score.score_id).toBe('number');
-          expect(typeof score.score).toBe('number');
-          expect(typeof score.user_id).toBe('number');
-          expect(typeof score.username).toBe('string');
-          expect(typeof score.game_id).toBe('number');
+          expect(score.score_id).toBeNumber();
+          expect(score.score).toBeNumber();
+          expect(score.user_id).toBeNumber();
+          expect(score.username).toBeString();
+          expect(score.game_id).toBeNumber();
           expect(score.created_on).toBeDate();
         });
       });
   });
 });
 describe('Data insertion into the game table', () => {
-  test('Should check that the game table has the correct columns', () => {
-    return db
-      .select()
-      .from(games)
-      .then(games => {
-        expect(games).toHaveLength(data.gamesData.length);
-        games.forEach(game => {
-          expect(game).toHaveProperty('game_id');
-          expect(game).toHaveProperty('name');
-        });
-      });
+  test('Should check that the game table has the correct columns', async () => {
+    const resGames = await db.select().from(games);
+
+    resGames.forEach(game => {
+      expect(game).toHaveProperty('game_id');
+      expect(game).toHaveProperty('name');
+    });
   });
-  test('Should check the game table to have the correct data-types', () => {
-    return db
-      .select()
-      .from(games)
-      .then(games => {
-        games.forEach(game => {
-          expect(typeof game.game_id).toBe('number');
-          expect(typeof game.name).toBe('string');
-        });
-      });
+  test('Should check the game table to have the correct data-types', async () => {
+    const resGames = await db.select().from(games);
+
+    resGames.forEach(game => {
+      expect(game.game_id).toBeNumber();
+      expect(game.name).toBeString();
+    });
   });
 });

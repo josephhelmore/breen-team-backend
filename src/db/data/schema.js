@@ -18,7 +18,7 @@ export const scores = pgTable('scores', {
     .references(() => users.user_id, { onDelete: 'cascade' }),
   username: varchar('username', { length: 255 })
     .notNull()
-    .references(() => users.username, { onDelete: 'cascade' }),
+    .references(() => users.username, { onDelete: 'cascade', onUpdate: 'cascade' }),
   game_id: integer('game_id')
     .notNull()
     .references(() => games.game_id, { onDelete: 'cascade' }),
