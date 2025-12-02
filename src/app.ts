@@ -17,7 +17,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ENV === 'production' ? 'https://breen-team-fe.vercel.app' : 'http://localhost:5173',
+    origin: 'https://breen-team-fe.vercel.app',
     credentials: true
   })
 );
