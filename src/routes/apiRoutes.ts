@@ -15,24 +15,14 @@ import {
 
 export const apiRoutes = Router();
 
-apiRoutes.get('/users', getUsers);
+apiRoutes.route('/users').get(getUsers).post(postUser);
 
-apiRoutes.get('/users/:user_id', getUser);
+apiRoutes.route('/users/:user_id').get(getUser).patch(patchUser).delete(deleteUser);
 
-apiRoutes.patch('/users/:user_id', patchUser);
-
-apiRoutes.get('/games', getGames);
-
-apiRoutes.post('/games', postGames);
+apiRoutes.route('/games').get(getGames).post(postGames);
 
 apiRoutes.delete('/games/:game_id', deleteGames);
 
-apiRoutes.get('/games/:game_id/scores/', getScores);
+apiRoutes.route('/games/:game_id/scores/').get(getScores).post(postGuestUserAndPostScore);
 
 apiRoutes.get('/games/:game_id/scores/:score_id', getScoresByScoreId);
-
-apiRoutes.post('/games/:game_id/scores', postGuestUserAndPostScore);
-
-apiRoutes.post('/users', postUser);
-
-apiRoutes.delete('/users/:user_id', deleteUser);

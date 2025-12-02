@@ -32,7 +32,7 @@ export const postGuestUserAndPostScore = async (req: Request, res: Response) => 
 export const postGames = async (req: Request, res: Response) => {
   const { name } = req.body;
 
-  const resGame = await createGame(name);
+  const [resGame] = await createGame(name);
 
   return res.status(201).send({ game: resGame });
 };

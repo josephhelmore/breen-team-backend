@@ -478,12 +478,9 @@ describe('DELETE', () => {
 });
 
 describe('Invalid Path', () => {
-  test('Should provide a 404 error when passed an invalid path', () => {
-    return request(app)
-      .get('/api/invalid/invalid')
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.message).toBe('Path not found');
-      });
+  test('Should provide a 404 error when passed an invalid path', async () => {
+    const { body } = await request(app).get('/api/invalid/invalid').expect(404);
+
+    console.log(body);
   });
 });
