@@ -25,10 +25,13 @@
 
       <nav>
         <h2>Nav for endpoints</h2>
-        <p></p>
+        <p>
+          Click the below buttons to see the examples of what is recieved when you access a GET
+          endpoint.
+        </p>
         <ul class="nav__ul">
           <li class="nav__li">
-            <a href="https://breen-team-backend.vercel.app/api/users">Users</a>
+            <button href="https://breen-team-backend.vercel.app/api/users">/api/users</button>
           </li>
           <li class="nav__li">
             <a href="https://breen-team-backend.vercel.app/api/games/1/scores"
@@ -54,14 +57,20 @@
         <p>POST requests</p>
         <ul class="example-response">
           <li><b>/api/users</b> - This allows the FE to create a user</li>
-          <li><b>/api/games/:gameid/scores</b> - This allows the FE to add a score to the specified game</li>
+          <li>
+            <b>/api/games/:gameid/scores</b> - This allows the FE to add a score to the specified
+            game
+          </li>
           <li><b>/api/games/:game_id</b> - When needed, this allows the team to add a new game</li>
         </ul>
 
         <p>DELETE</p>
         <ul class="example-response">
           <li><b>/api/users/:userid</b> - Allows the FE to delete a user when needed</li>
-          <li><b>/api/games/:game_id</b> - When needed, this allows the team to delete a game if needed</li>
+          <li>
+            <b>/api/games/:game_id</b> - When needed, this allows the team to delete a game if
+            needed
+          </li>
         </ul>
       </section>
       <footer>
