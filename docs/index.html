@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Breen Team Server</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="body">
+    <div class="api-body">
+      <header>
+        <h1>Breen Team Arcade API</h1>
+        <p>
+          This API homepage will provide some basic information about the Breen Team Arcade Server
+          for the game website! To view the live version of our app, you can click
+          <a href="https://breen-team-fe-hcif.vercel.app/">here</a>.
+        </p>
+      </header>
+      <nav>
+        <h2>Nav for endpoints</h2>
+        <ul class="nav__ul">
+          <li class="nav__li">
+            <a href="https://breen-team-backend.vercel.app/api/users">Users</a>
+          </li>
+          <li class="nav__li">
+            <a href="https://breen-team-backend.vercel.app/api/games/1/scores"
+              >Scores for Orc of the Rings</a
+            >
+          </li>
+        </ul>
+      </nav>
+      <section class="section-endpoints">
+        <h2>Endpoints</h2>
+
+        <p>GET</p>
+        <ul>
+          <li>/api/users - a list of users</li>
+          <li>/api/users/:userid - a user by user id</li>
+          <li>/api/games/:gamesid/scores - paginated scoress by game</li>
+        </ul>
+
+        <p>POST</p>
+        <ul>
+          <li>/api/users - create a user</li>
+          <li>/api/games/:gameid/scores - create a score</li>
+        </ul>
+
+        <p>DELETE</p>
+        <ul>
+          <li>/api/users/:userid - create a user</li>
+        </ul>
+      </section>
+      <footer>
+        <p>
+          Please refer to our
+          <a id="link-github" href="https://github.com/josephhelmore/breen-team-backend"
+            >repo on GitHub</a
+          >
+          for this project
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+.body {
+  background-color: black;
+}
+
+.api-body {
+
+
+  color: white;
+  height: 100vh;
+  width: fit-content;
+
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 50px;
+  margin-right: 50px;
+
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: .5rem;
+  background-color: rgb(30, 30, 30);
+
+  border-radius: 20px;
+  box-shadow: 10px 5px 5px rgb(255, 115, 115);
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
