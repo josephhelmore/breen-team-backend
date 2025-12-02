@@ -1,7 +1,7 @@
 import { User } from '../types/index.js';
 import { readGame, readScore } from '../models/index.js';
 
-export function isValid(id: string) {
+export function isValid(id: string): number {
   const num = Number(id);
   if (isNaN(num)) {
     throw {
@@ -12,7 +12,7 @@ export function isValid(id: string) {
   return num;
 }
 
-export function userExist(user: User[]) {
+export function userExist(user: User[]): User[] {
   if (user.length === 0) {
     throw {
       status: 404,

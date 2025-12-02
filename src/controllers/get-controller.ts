@@ -10,7 +10,7 @@ import { userExist, gameExists, scoreExist, isValid } from './controller-error-h
 
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
   const users = await readUsers();
-  return res.send(users);
+  return res.send({ users: users });
 };
 
 export const getUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -35,7 +35,7 @@ export const getScores = async (req: Request, res: Response, next: NextFunction)
 
   const page = Number(p);
   const scores = await readScores(page || 1, numGame_id);
-  res.send(scores);
+  return res.send(scores);
 };
 
 export const getScoresByScoreId = async (req: Request, res: Response, next: NextFunction) => {
@@ -52,7 +52,7 @@ export const getScoresByScoreId = async (req: Request, res: Response, next: Next
 
   isValid(score_id);
   await scoreExist(numScore_id);
-  res.send(scores);
+  return res.send(scores);
 };
 
 export const getGames = async (req: Request, res: Response, next: NextFunction) => {

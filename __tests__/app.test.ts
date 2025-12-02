@@ -14,33 +14,35 @@ afterAll(() => dropTable());
 
 describe('GET', () => {
   describe('GET /users', () => {
-    interface User {
-      user_id: number;
-      username: string;
-      created_on: string;
-    }
-
     test('GET all users from database', async () => {
-      const { body } = await request(app).get('/api/users').expect(200);
-      const users: User[] = body;
+      const {
+        body: { users }
+      }: {
+        body: { users: User[] };
+      } = await request(app).get('/api/users').expect(200);
+
+      expect(users.length).toBe(data.usersData.length);
+
       users.forEach(user => {
         expect(user.user_id).toBeNumber();
         expect(user.username).toBeString();
         expect(user.created_on).toBeString();
         expect(
-          /^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(user.created_on)
+          /^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(user.created_on!)
         ).toBeTrue();
       });
     });
 
-    test('GET user by id', async () => {
+    test('GET user by user_id', async () => {
       const {
         body: { user }
+      }: {
+        body: { user: User };
       } = await request(app).get('/api/users/3').expect(200);
-      expect(user.user_id).toBeNumber();
+      expect(user.user_id).toBe(3);
       expect(user.username).toBeString();
       expect(user.created_on).toBeString();
-      expect(/^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(user.created_on)).toBeTrue();
+      expect(/^\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/.test(user.created_on!)).toBeTrue();
     });
   });
   describe('GET /games/:game_id/scores', () => {
@@ -66,9 +68,11 @@ describe('GET', () => {
       });
     });
 
-    test('GET score sort by scores by default', async () => {
+    test('GET score sort by scores descending for game 1', async () => {
       const {
         body: { scores }
+      }: {
+        body: { scores: Score[] };
       } = await request(app).get('/api/games/1/scores').expect(200);
 
       for (let i = 0; i < scores.length - 1; i++) {
@@ -79,6 +83,8 @@ describe('GET', () => {
     test('GET scores pagination of 10 score per page and shows page 1 by default', async () => {
       const {
         body: { scores, page }
+      }: {
+        body: { scores: Score[]; page: number };
       } = await request(app).get('/api/games/1/scores').expect(200);
 
       expect(scores.length).toBe(10);
@@ -88,10 +94,14 @@ describe('GET', () => {
     test('GET scores shows the correct page and correct scores corresponding to the page', async () => {
       const {
         body: { scores: scores1, page: page1 }
+      }: {
+        body: { scores: Score[]; page: number };
       } = await request(app).get('/api/games/1/scores?p=1').expect(200);
 
       const {
         body: { scores: scores2, page: page2 }
+      }: {
+        body: { scores: Score[]; page: number };
       } = await request(app).get('/api/games/1/scores?p=2').expect(200);
 
       expect(page1).toBe(1);
@@ -102,14 +112,16 @@ describe('GET', () => {
     test('GET scores shows the correct score with the corresponding game', async () => {
       const {
         body: { scores }
+      }: {
+        body: { scores: Score[] };
       } = await request(app).get('/api/games/2/scores').expect(200);
 
-      scores.forEach((score: Score) => {
+      scores.forEach(score => {
         expect(score.game_id).toBe(2);
       });
     });
 
-    test('GET scores for game 2 order by scores ascending', async () => {
+    test('GET scores for game 2 has ascending order by scores ', async () => {
       const {
         body: { scores }
       }: {
@@ -154,6 +166,8 @@ describe('GET', () => {
 
       const {
         body: { scores }
+      }: {
+        body: { scores: Score[] };
       } = await request(app)
         .get('/api/games/2/scores/' + score.score_id)
         .expect(200);

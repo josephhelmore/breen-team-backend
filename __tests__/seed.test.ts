@@ -37,7 +37,7 @@ describe('Data Insertion for user table', () => {
         users.forEach(user => {
           expect(typeof user.user_id).toBe('number');
           expect(typeof user.username).toBe('string');
-          expect(typeof user.created_on).toBe('object');
+          expect(user.created_on).toBeDate();
         });
       });
   });
@@ -72,7 +72,7 @@ describe('Data insertion for scores table', () => {
           expect(typeof score.user_id).toBe('number');
           expect(typeof score.username).toBe('string');
           expect(typeof score.game_id).toBe('number');
-          expect(typeof score.created_on).toBe('object');
+          expect(score.created_on).toBeDate();
         });
       });
   });

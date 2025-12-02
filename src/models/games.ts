@@ -7,7 +7,7 @@ export const readGames = async (): Promise<Game[]> => {
   return await db.select().from(games);
 };
 
-export const readGame = async (game_id: number) =>
+export const readGame = async (game_id: number): Promise<Game[]> =>
   db.select().from(games).where(eq(games.game_id, game_id));
 
 export const createGame = async (name: string): Promise<Game> => {
@@ -15,6 +15,6 @@ export const createGame = async (name: string): Promise<Game> => {
   return game;
 };
 
-export const deleteGameByGameId = async (game_id: number) => {
+export const deleteGameByGameId = async (game_id: number): Promise<Game[]> => {
   return await db.delete(games).where(eq(games.game_id, game_id)).returning();
 };
