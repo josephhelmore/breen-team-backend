@@ -9,7 +9,7 @@ import {
   postGames,
   deleteGames,
   postUser,
-  deleteUserId
+  deleteUser
 } from '../controllers/index.js';
 
 export const apiRoutes = Router();
@@ -32,4 +32,4 @@ apiRoutes.post('/games/:game_id/scores', postGuestUserAndPostScore);
 
 apiRoutes.post('/users', postUser);
 
-apiRoutes.delete('/users/:user_id', deleteUserId);
+apiRoutes.delete('/users/:user_id', deleteUser);

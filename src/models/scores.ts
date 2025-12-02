@@ -42,7 +42,10 @@ export const readScores = async (
   return { scores: paginatedScores[page], page: page };
 };
 
-export const readScoresByScoreId = async (score_id: number, game_id: number) => {
+export const readScoresByScoreId = async (
+  score_id: number,
+  game_id: number
+): Promise<{ scores: Score[] }> => {
   const dbScores: Score[] = await db
     .select()
     .from(scores)
@@ -64,7 +67,7 @@ export const readScoresByScoreId = async (score_id: number, game_id: number) => 
   return { scores: scoreIdPage };
 };
 
-export const readScore = async (score_id: number) => {
+export const readScore = async (score_id: number): Promise<Score[]> => {
   return await db.select().from(scores).where(eq(scores.score_id, score_id));
 };
 
@@ -73,13 +76,9 @@ export const createScore = async (
   user_id: number,
   username: string,
   game_id: number
-) => {
-  try {
-    return await db
-      .insert(scores)
-      .values({ score: score, user_id: user_id, username: username, game_id: game_id })
-      .returning();
-  } catch (error) {
-    console.log(error);
-  }
+): Promise<Score[]> => {
+  return await db
+    .insert(scores)
+    .values({ score: score, user_id: user_id, username: username, game_id: game_id })
+    .returning();
 };
