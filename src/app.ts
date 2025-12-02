@@ -1,7 +1,6 @@
 import express from 'express';
 import type { Response, Request, NextFunction } from 'express';
 import dotenv from 'dotenv';
-import session from 'express-session';
 import cors from 'cors';
 import passport from './auth/passport.js';
 
@@ -15,26 +14,8 @@ dotenv.config({ path: envPath });
 
 const app = express();
 
-app.use(
-  cors({
-    origin: ENV === 'production' ? 'https://breen-team-fe.vercel.app' : 'http://localhost:5173',
-    credentials: true
-  })
-);
+app.use(cors());
 app.use(express.json());
-
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET!,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none'
-    }
-  })
-);
 
 app.use(passport.initialize());
 app.use(passport.session());
