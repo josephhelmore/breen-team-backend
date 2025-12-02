@@ -1,18 +1,26 @@
 import { Router } from 'express';
 import passport from '../auth/passport.js';
-
+import jwt from 'jsonwebtoken';
+import { RequestWithUser } from '../types/index.js';
 const router = Router();
 
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get(
+  '/google',
+  passport.authenticate('google', { session: false, scope: ['profile', 'email'] })
+);
 
 router.get(
   '/google/callback',
-  passport.authenticate('google', { failureRedirect: '/auth/failure' }),
-  (req, res) => {
+  passport.authenticate('google', { session: false, failureRedirect: '/auth/failure' }),
+  (req: RequestWithUser, res) => {
+    const token = jwt.sign({ userId: req.user.google_id }, process.env.SESSION_SECRET, {
+      expiresIn: '7d'
+    });
+
     res.redirect(
       process.env.NODE_ENV === 'production'
-        ? 'https://breen-team-fe.vercel.app'
-        : 'http://localhost:5173'
+        ? `https://breen-team-fe.vercel.app/login-success?token=${token}`
+        : `http://localhost:5173/login-success?token=${token}`
     );
   }
 );
