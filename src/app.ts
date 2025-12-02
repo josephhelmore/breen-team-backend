@@ -7,6 +7,7 @@ import passport from './auth/passport.js';
 import authRoutes from './routes/auth.js';
 import type { RequestWithUser } from './types/index.js';
 import { apiRoutes } from './routes/apiRoutes.js';
+import auth from './middleware/auth.js';
 
 const ENV = process.env.NODE_ENV || 'development';
 const envPath = import.meta.dirname + '/.env.' + ENV;
@@ -19,9 +20,8 @@ app.use(express.json());
 
 app.use(passport.initialize());
 
-app.get('/', (req: RequestWithUser, res: Response) => {
-  console.log(req.user);
-  res.send(req.user ? `Logged in as ${req.user.email}` : 'Not logged in');
+app.get('/jwt', auth, (req: RequestWithUser, res: Response) => {
+  res.send(req.user ? req.user : 'Not logged in');
 });
 
 app.use('/api/auth', authRoutes);
