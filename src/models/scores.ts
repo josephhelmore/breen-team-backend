@@ -12,7 +12,7 @@ export const readScores = async (
   const limit = 10;
 
   const dbScores: Score[] =
-    game_id !== 2
+    game_id === 1
       ? await db
           .select()
           .from(scores)
@@ -54,6 +54,10 @@ export const readScoresByScoreId = async (
 
   const rankedScores = addRankToScores(dbScores);
 
+  if (rankedScores.length < 10) {
+    return { scores: rankedScores };
+  }
+
   const indexOfScoreId = rankedScores.findIndex(score => score.score_id === score_id);
   const topOverflow = indexOfScoreId < 4 ? 4 - indexOfScoreId : 0;
   const botOverflow =
@@ -67,18 +71,16 @@ export const readScoresByScoreId = async (
   return { scores: scoreIdPage };
 };
 
-export const readScore = async (score_id: number): Promise<Score[]> => {
-  return await db.select().from(scores).where(eq(scores.score_id, score_id));
-};
+export const readScore = async (score_id: number): Promise<Score[]> =>
+  await db.select().from(scores).where(eq(scores.score_id, score_id));
 
 export const createScore = async (
   score: number,
   user_id: number,
   username: string,
   game_id: number
-): Promise<Score[]> => {
-  return await db
+): Promise<Score[]> =>
+  await db
     .insert(scores)
     .values({ score: score, user_id: user_id, username: username, game_id: game_id })
     .returning();
-};
