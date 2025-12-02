@@ -19,15 +19,37 @@ export const readUserIdByUsername = async (username: string): Promise<{ user_id:
 };
 
 export const createUser = async (username: string): Promise<User[]> => {
-  return await db.insert(users).values({ username: username }).returning();
+  try {
+    return await db.insert(users).values({ username: username }).returning();
+  } catch (err) {
+    if (err.cause.code === '23505' && err.cause.constraint === 'users_username_unique') {
+      throw {
+        status: 400,
+        message: 'Username already exists'
+      };
+    } else {
+      throw err;
+    }
+  }
 };
 
 export const updateUser = async (user_id: number, username: string): Promise<User[]> => {
-  return await db
-    .update(users)
-    .set({ username: username })
-    .where(eq(users.user_id, user_id))
-    .returning();
+  try {
+    return await db
+      .update(users)
+      .set({ username: username })
+      .where(eq(users.user_id, user_id))
+      .returning();
+  } catch (err) {
+    if (err.cause.code === '23505' && err.cause.constraint === 'users_username_unique') {
+      throw {
+        status: 400,
+        message: 'Username already exists'
+      };
+    } else {
+      throw err;
+    }
+  }
 };
 
 export const deleteUserById = async (user_id: number): Promise<User[]> => {

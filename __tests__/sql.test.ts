@@ -204,6 +204,23 @@ describe('scores table', () => {
     expect(rows).toHaveLength(1);
   });
 
+  test('scores table user_id has on delete casecade constraint', async () => {
+    const { rows } = await db.execute(sql`
+        SELECT pg_describe_object(classid, objid, objsubid),pg_get_constraintdef(objid)
+        FROM pg_depend 
+        WHERE refobjid = 'users'::regclass AND deptype = 'n';
+      `);
+
+    expect(
+      rows.some(
+        row =>
+          row.pg_get_constraintdef ===
+            'FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE' &&
+          row.pg_describe_object === 'constraint scores_user_id_users_user_id_fk on table scores'
+      )
+    ).toBeTrue();
+  });
+
   test('scores table has username column as character varying', async () => {
     const {
       rows: [column]
@@ -233,6 +250,23 @@ describe('scores table', () => {
       `
     );
     expect(rows).toHaveLength(1);
+  });
+
+  test('scores table username has on update cascade and on delete casecade constraint', async () => {
+    const { rows } = await db.execute(sql`
+        SELECT pg_describe_object(classid, objid, objsubid),pg_get_constraintdef(objid)
+        FROM pg_depend 
+        WHERE refobjid = 'users'::regclass AND deptype = 'n';
+      `);
+
+    expect(
+      rows.some(
+        row =>
+          row.pg_get_constraintdef ===
+            'FOREIGN KEY (username) REFERENCES users(username) ON UPDATE CASCADE ON DELETE CASCADE' &&
+          row.pg_describe_object === 'constraint scores_username_users_username_fk on table scores'
+      )
+    ).toBeTrue();
   });
 
   test('scores table has game_id column as integer', async () => {
