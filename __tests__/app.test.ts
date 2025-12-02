@@ -398,10 +398,6 @@ describe('POST', () => {
     });
   });
 
-  describe('POST /users/auth', () => {
-    test('POST auth user to users table', async () => {});
-  });
-
   test('POST /games', async () => {
     const {
       body: { game }
