@@ -24,17 +24,9 @@ app.get('/jwt', auth, (req: RequestWithUser, res: Response) => {
   res.send(req.user ? req.user : 'Not logged in');
 });
 
-app.use('/api', (req, res) => {
-  res.redirect('https://josephhelmore.github.io/breen-team-backend/');
-});
-
-
 app.use('/api/auth', authRoutes);
 
 app.use('/api', apiRoutes);
-
-
-
 
 app.use((req, res, next) => {
   const error = {
