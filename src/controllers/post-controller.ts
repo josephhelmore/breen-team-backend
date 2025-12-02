@@ -8,6 +8,7 @@ export const postUser = async (req: Request, res: Response) => {
 
   return res.status(201).send({ user: resUsername });
 };
+
 export const postGuestUserAndPostScore = async (req: Request, res: Response) => {
   const { score, username } = req.body;
   const { game_id } = req.params;
