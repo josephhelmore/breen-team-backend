@@ -13,12 +13,19 @@
         <h1>Breen Team Arcade API</h1>
         <p>
           This API homepage will provide some basic information about the Breen Team Arcade Server
-          for the game website! To view the live version of our app, you can click
+          for the game website. To view the live version of our app, you can click
           <a href="https://breen-team-fe-hcif.vercel.app/">here</a>.
+          <br />
+          <br />
+          The Arcade is designed with a library of games in mind, providing the user with a handful
+          of options of which games to choose from. So far we have developed a runner game, 'Orc Of
+          The Rings', a minesweeper style game, 'Debugger' and a card 'Memory Game'.
         </p>
       </header>
+
       <nav>
         <h2>Nav for endpoints</h2>
+        <p></p>
         <ul class="nav__ul">
           <li class="nav__li">
             <a href="https://breen-team-backend.vercel.app/api/users">Users</a>
@@ -33,22 +40,28 @@
       <section class="section-endpoints">
         <h2>Endpoints</h2>
 
-        <p>GET</p>
-        <ul>
-          <li>/api/users - a list of users</li>
-          <li>/api/users/:userid - a user by user id</li>
-          <li>/api/games/:gamesid/scores - paginated scoress by game</li>
+        <p>GET requests</p>
+        <ul class="example-response">
+          <li><b>/api/users</b> - recieves a list of users</li>
+          <li>
+            <b>/api/users/:user_id</b> - recieves information about a specific user via user id
+          </li>
+          <li>
+            <b>/api/games/:games_id/scores </b>- recieves a paginated list of scores via game_id
+          </li>
         </ul>
 
-        <p>POST</p>
-        <ul>
-          <li>/api/users - create a user</li>
-          <li>/api/games/:gameid/scores - create a score</li>
+        <p>POST requests</p>
+        <ul class="example-response">
+          <li><b>/api/users</b> - This allows the FE to create a user</li>
+          <li><b>/api/games/:gameid/scores</b> - This allows the FE to add a score to the specified game</li>
+          <li><b>/api/games/:game_id</b> - When needed, this allows the team to add a new game</li>
         </ul>
 
         <p>DELETE</p>
-        <ul>
-          <li>/api/users/:userid - create a user</li>
+        <ul class="example-response">
+          <li><b>/api/users/:userid</b> - Allows the FE to delete a user when needed</li>
+          <li><b>/api/games/:game_id</b> - When needed, this allows the team to delete a game if needed</li>
         </ul>
       </section>
       <footer>
