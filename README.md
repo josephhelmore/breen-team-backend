@@ -4,7 +4,7 @@
 
 The backend server for the game project of the breen team. \
 Link to the hosted app: https://breen-team-fe-hcif.vercel.app \
-Link to the hosted API: https://breen-team-backend.vercel.app \
+Link to the hosted API: https://breen-team-backend.vercel.app/api \
 Repo for the front end project: https://github.com/Gilson96/breen-team-FE
 
 
@@ -12,6 +12,23 @@ Repo for the front end project: https://github.com/Gilson96/breen-team-FE
 # App Plan 
 
 ![Alt text](app-plan.png)
+
+
+## Dependencies
+
+### Basic Dependencies
+
+node-postgres \ 
+tsx \
+Drizzle-kit \
+Drizzle-ORM \
+express
+
+### Dev Dependencies
+
+Vitest \
+jest-extended
+
 
 ## Dev Setup
 
@@ -37,15 +54,12 @@ GOOGLE_CLIENT_ID={client_id}
 GOOGLE_CLIENT_SECRET={client_secret}
 SESSION_SECRET={session_secret}
 Leave these blank for now
-
 ```
 
 4. Push the schemas to create tables through drizzle-kit
 
 ```
-
 npm run push-dev
-
 ```
 
 5. Seed the dev-schema with the development data
@@ -94,8 +108,13 @@ To do this, there are a few steps to follow;
     5. Visit - https://key-generator.com
         1. paste this key into the SESSION_SECRET={session_secret} within the .env files
 
+
 </details>
 
+7. run dev
+``` 
+npm run dev
+```
 
 ## Test Setup
 
@@ -119,39 +138,20 @@ GOOGLE_CLIENT_ID={client_id}
 GOOGLE_CLIENT_SECRET={client_secret}
 
 Follow step 6 of dev setup if you have not done so yet.
-
 ```
 
 4. Push the schemas to create tables through drizzle-kit
 
 ```
-
 npm run push-test
-
 ```
 
 4. Run the test through Vitest
 
 ```
-
 npm t
-
 ```
 
-## Dependencies
-
-### Basic Dependencies
-
-node-postgres \ 
-tsx \
-Drizzle-kit \
-Drizzle-ORM \
-express
-
-### Dev Dependencies
-
-Vitest \
-jest-extended
 
 
 # Running locally script order
@@ -166,3 +166,10 @@ npm run start -- start server
 npm run setup-dbs   \
 npm run push-test  \
 npm run test
+
+
+## Contributors
+Ricky - https://github.com/Colorrr34
+Dan - https://github.com/SmackSmash
+Gilson - https://github.com/Gilson96
+Bruno - https://github.com/Sathoryn
