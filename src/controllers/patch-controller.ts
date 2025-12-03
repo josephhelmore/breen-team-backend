@@ -1,13 +1,20 @@
-import { Response, Request } from 'express';
+import { Response } from 'express';
+import { RequestWithUser } from '../types/index.js';
 import { updateUser } from '../models/index.js';
 
-export const patchUser = async (req: Request, res: Response) => {
-  const { user_id } = req.params;
-  const { username } = req.body;
+export const patchUser = async (req: RequestWithUser, res: Response) => {
+  const { google_id } = req.user;
+  const { username, bio } = req.body;
 
-  const num_user_id = Number(user_id);
+  const [resUser] = await updateUser(google_id, username, bio);
 
-  const [resUser] = await updateUser(num_user_id, username);
-
-  return res.send({ user: resUser });
+  return res.send({
+    user: {
+      username: resUser.username,
+      bio: resUser.bio,
+      google_id: resUser.google_id,
+      email: resUser.email,
+      avatar_url: resUser.avatar_url
+    }
+  });
 };
