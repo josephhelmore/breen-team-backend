@@ -54,15 +54,12 @@ GOOGLE_CLIENT_ID={client_id}
 GOOGLE_CLIENT_SECRET={client_secret}
 SESSION_SECRET={session_secret}
 Leave these blank for now
-
 ```
 
 4. Push the schemas to create tables through drizzle-kit
 
 ```
-
 npm run push-dev
-
 ```
 
 5. Seed the dev-schema with the development data
@@ -117,7 +114,6 @@ To do this, there are a few steps to follow;
 7. run dev
 ``` 
 npm run dev
-
 ```
 
 ## Test Setup
@@ -142,23 +138,18 @@ GOOGLE_CLIENT_ID={client_id}
 GOOGLE_CLIENT_SECRET={client_secret}
 
 Follow step 6 of dev setup if you have not done so yet.
-
 ```
 
 4. Push the schemas to create tables through drizzle-kit
 
 ```
-
 npm run push-test
-
 ```
 
 4. Run the test through Vitest
 
 ```
-
 npm t
-
 ```
 
 
