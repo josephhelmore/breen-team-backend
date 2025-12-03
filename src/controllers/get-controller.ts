@@ -1,10 +1,12 @@
 import { Response, Request, NextFunction } from 'express';
+import { RequestWithUser } from '../types/index.js';
 import {
   readScores,
   readScoresByScoreId,
   readGames,
-  readUser,
-  readUsers
+  readUserByGoogleId,
+  readUsers,
+  readScoresByUser
 } from '../models/index.js';
 import { userExist, gameExists, scoreExist, isValid } from './controller-error-handling.js';
 
@@ -13,14 +15,18 @@ export const getUsers = async (req: Request, res: Response, next: NextFunction) 
   return res.send({ users: users });
 };
 
-export const getUser = async (req: Request, res: Response, next: NextFunction) => {
-  const { user_id } = req.params;
-  const numId = isValid(user_id);
-  const user = await readUser(numId);
+export const getUser = async (req: RequestWithUser, res: Response, next: NextFunction) => {
+  const google_id: string = req.user.google_id;
 
-  userExist(user);
+  const profile = await readUserByGoogleId(google_id);
 
-  return res.status(200).json({ user: user[0] });
+  userExist(profile);
+
+  const userProfile = profile[0];
+
+  const scores = await readScoresByUser(userProfile.user_id);
+
+  return res.status(200).json({ user: { profile: userProfile, scores: scores } });
 };
 
 export const getScores = async (req: Request, res: Response, next: NextFunction) => {

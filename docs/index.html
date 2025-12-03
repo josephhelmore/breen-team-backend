@@ -26,24 +26,46 @@
       <nav>
         <h2>Nav for endpoints</h2>
         <p>
-          Click the below buttons to see the examples of what is recieved when you access a GET
+          Hover or click on the below to see the examples of what is recieved when you access a GET
           endpoint.
         </p>
-        <ul class="nav__ul">
-          <li class="nav__li">
-            <button href="https://breen-team-backend.vercel.app/api/users">/api/users</button>
-          </li>
-          <li class="nav__li">
-            <a href="https://breen-team-backend.vercel.app/api/games/1/scores"
-              >Scores for Orc of the Rings</a
+        <ul class="nav-list">
+          <li>
+            <button
+              class="nav-buttons"
+              id="users-button"
+              onclick="window.location.href= 'https://breen-team-backend.vercel.app/api/users'"
             >
+              <span>/api/users</span>
+            </button>
+          </li>
+          <li>
+            <button
+              class="nav-buttons"
+              id="scores-button"
+              onclick="window.location.href= 'https://breen-team-backend.vercel.app/api/games/1/scores'"
+            >
+              <span
+                >/api/games/:game_id/scores <br /><br /><b id="example-text"
+                  >Where game_id = 1, 'Orc Of The Ring'</b
+                ></span
+              >
+            </button>
+          </li>
+          <li>
+            <button
+              class="nav-buttons"
+              id="games-button"
+              onclick="window.location.href= 'https://breen-team-backend.vercel.app/api/games'">
+              <span>/api/games</span>
+            </button>
           </li>
         </ul>
       </nav>
       <section class="section-endpoints">
         <h2>Endpoints</h2>
 
-        <p>GET requests</p>
+        <section class="title-section"><p id="GET">GET </p> &nbsp;request</section>
         <ul class="example-response">
           <li><b>/api/users</b> - recieves a list of users</li>
           <li>
@@ -54,7 +76,7 @@
           </li>
         </ul>
 
-        <p>POST requests</p>
+        <section class="title-section"><p id="POST">POST </p> &nbsp;request</section>
         <ul class="example-response">
           <li><b>/api/users</b> - This allows the FE to create a user</li>
           <li>
@@ -64,7 +86,7 @@
           <li><b>/api/games/:game_id</b> - When needed, this allows the team to add a new game</li>
         </ul>
 
-        <p>DELETE</p>
+        <section class="title-section"><p id="DELETE">DELETE </p> &nbsp;request</section>
         <ul class="example-response">
           <li><b>/api/users/:userid</b> - Allows the FE to delete a user when needed</li>
           <li>

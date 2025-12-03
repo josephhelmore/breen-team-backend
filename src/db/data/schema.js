@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { pgTable, serial, varchar, timestamp, integer } from 'drizzle-orm/pg-core';
+import { pgTable, serial, varchar, timestamp, integer, text } from 'drizzle-orm/pg-core';
 
 export const games = pgTable('games', {
   game_id: serial('game_id').primaryKey().notNull(),
@@ -42,7 +42,8 @@ export const users = pgTable('users', {
   email: varchar('email'),
   created_on: timestamp('created_on').defaultNow().notNull(),
   google_id: varchar('google_id').unique(),
-  avatar_url: varchar('avatar_url')
+  avatar_url: varchar('avatar_url'),
+  bio: text('bio')
 });
 
 export const usersRelations = relations(users, ({ many }) => ({

@@ -12,6 +12,7 @@ import {
   patchUser,
   deleteUser
 } from '../controllers/index.js';
+import auth from '../middleware/auth.js';
 
 export const apiRoutes = Router();
 
@@ -21,7 +22,9 @@ apiRoutes.get('/', (req, res) => {
 
 apiRoutes.route('/users').get(getUsers).post(postUser);
 
-apiRoutes.route('/users/:user_id').get(getUser).patch(patchUser).delete(deleteUser);
+apiRoutes.route('/users/:user_id').delete(deleteUser);
+
+apiRoutes.route('/users/profile').get(auth, getUser).patch(auth, patchUser);
 
 apiRoutes.route('/games').get(getGames).post(postGames);
 

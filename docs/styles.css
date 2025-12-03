@@ -1,10 +1,7 @@
 .body {
-  background-color: rgb(0, 2, 29);
+  background-color: rgb(0, 6, 83);
 }
-
 .api-body {
-
-
   color: rgb(0, 0, 0);
   height: auto;
   width: fit-content;
@@ -16,26 +13,84 @@
 
   padding-left: 1rem;
   padding-right: 1rem;
-  padding-top: .5rem;
+  padding-top: 0.5rem;
   padding-bottom: 1rem;
   background-color: white;
 
   border-radius: 20px;
   box-shadow: 10px 5px 5px rgb(169, 169, 169);
 }
-
+.nav-buttons {
+  background-color: rgb(0, 6, 83);
+  border-radius: 10px;
+  color: white;
+  font-size: 15px;
+  width: 18rem;
+  height: 8rem;
+}
+#users-button:hover span {
+  display: none;
+}
+#users-button:hover:before {
+  display: block;
+  word-break: break-all;
+  content: "{users:{'user_id':5,'username':'Ricky','email':null,'created_on':'2025-12-01T14:27:36.706Z','google_id':null,'avatar_url':null}}";
+}
+#scores-button:hover span {
+  display: none;
+}
+#scores-button:hover:before {
+  display: block;
+  word-break: break-all;
+  content: "{'scores':[{'score_id':1,'score':234,'user_id':5,'username':'Ricky','game_id':1,'created_on':'2025-12-01T14:27:36.784Z','rank':1}";
+}
+#games-button:hover span {
+  display: none;
+}
+#games-button:hover:before {
+  display: block;
+  word-break: break-all;
+  content: "{'games':[{'game_id':1,'name':'Orc of the Rings'},{'game_id':3,'name':'Memory heap'},{'game_id':2,'name':'Debugger'}]}";
+}
+.nav-list {
+  display: flex;
+  justify-content: center;
+}
 a {
   text-decoration: none;
 }
-
 li {
   list-style: none;
 }
-
-.example-response{
+.example-response {
   text-wrap: auto;
   border-radius: 10px;
-  padding: 3rem 1.5rem;
+ padding: 2rem;
   background-color: rgb(231, 231, 231);
   line-height: 2;
+}
+#example-text {
+  font-size: 10px;
+}
+#GET {
+  padding: 5px;
+  border-radius: 10px;
+  width: fit-content;
+  background-color: rgba(78, 255, 78, 0.518);
+}
+#POST {
+  padding: 5px;
+  border-radius: 10px;
+  width: fit-content;
+  background-color: rgba(255, 251, 0, 0.707);
+}
+#DELETE {
+  padding: 5px;
+  border-radius: 10px;
+  width: fit-content;
+  background-color: rgba(255, 0, 0, 0.707);
+}
+.title-section {
+  display:flex;
+  align-items: baseline;
 }

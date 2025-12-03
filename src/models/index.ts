@@ -1,27 +1,36 @@
 import { createGame, readGames, deleteGameByGameId, readGame } from './games.js';
 import {
-  readUser,
+  readUserByGoogleId,
   readUsers,
+  readUserByUserId,
   readUserIdByUsername,
   createUser,
   deleteUserById,
   updateUser
 } from './users.js';
-import { readScores, readScoresByScoreId, readScore, createScore } from './scores.js';
+import {
+  readScores,
+  readScoresByScoreId,
+  readScore,
+  readScoresByUser,
+  createScore
+} from './scores.js';
 
 export {
   readScores,
   readScoresByScoreId,
   readScore,
+  readScoresByUser,
   createScore,
   readGames,
   readGame,
   createGame,
   deleteGameByGameId,
-  readUser,
+  readUserByGoogleId,
   readUsers,
   createUser,
   updateUser,
   deleteUserById,
-  readUserIdByUsername
+  readUserIdByUsername,
+  readUserByUserId
 };

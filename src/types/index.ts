@@ -7,6 +7,13 @@ export type User = {
   google_id?: string;
   email?: string;
   avatar_url?: string;
+  bio?: string;
+};
+
+export type AuthUser = {
+  google_id: string;
+  iat: number;
+  exp: number;
 };
 
 export type Score = {
@@ -25,5 +32,5 @@ export type Game = {
 };
 
 export interface RequestWithUser extends Request {
-  user?: User;
+  user?: AuthUser;
 }

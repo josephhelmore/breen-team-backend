@@ -13,7 +13,7 @@ router.get(
   '/google/callback',
   passport.authenticate('google', { session: false, failureRedirect: '/auth/failure' }),
   (req: RequestWithUser, res) => {
-    const token = jwt.sign({ userId: req.user.google_id }, process.env.SESSION_SECRET, {
+    const token = jwt.sign({ google_id: req.user.google_id }, process.env.SESSION_SECRET, {
       expiresIn: '7d'
     });
 

@@ -81,6 +81,23 @@ export const readScoresByScoreId = async (
 export const readScore = async (score_id: number): Promise<Score[]> =>
   await db.select().from(scores).where(eq(scores.score_id, score_id));
 
+export const readScoresByUser = async (
+  user_id: number
+): Promise<{ scores: { [key: number]: Score[] } }> => {
+  const userScores = await db.select().from(scores).where(eq(scores.user_id, user_id));
+
+  const resScores = userScores.reduce((acc: { [key: number]: Score[] }, cur) => {
+    if (Object.keys(acc).includes(cur.game_id.toString())) {
+      acc[cur.game_id].push(cur);
+    } else {
+      acc[cur.game_id] = [cur];
+    }
+    return acc;
+  }, {});
+
+  return resScores;
+};
+
 export const createScore = async (
   score: number,
   user_id: number,
