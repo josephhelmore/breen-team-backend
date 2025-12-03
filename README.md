@@ -13,6 +13,23 @@ Repo for the front end project: https://github.com/Gilson96/breen-team-FE
 
 ![Alt text](app-plan.png)
 
+
+## Dependencies
+
+### Basic Dependencies
+
+node-postgres \ 
+tsx \
+Drizzle-kit \
+Drizzle-ORM \
+express
+
+### Dev Dependencies
+
+Vitest \
+jest-extended
+
+
 ## Dev Setup
 
 1. Run npm install
@@ -94,8 +111,14 @@ To do this, there are a few steps to follow;
     5. Visit - https://key-generator.com
         1. paste this key into the SESSION_SECRET={session_secret} within the .env files
 
+
 </details>
 
+7. run dev
+``` 
+npm run dev
+
+```
 
 ## Test Setup
 
@@ -138,20 +161,6 @@ npm t
 
 ```
 
-## Dependencies
-
-### Basic Dependencies
-
-node-postgres \ 
-tsx \
-Drizzle-kit \
-Drizzle-ORM \
-express
-
-### Dev Dependencies
-
-Vitest \
-jest-extended
 
 
 # Running locally script order
@@ -166,3 +175,10 @@ npm run start -- start server
 npm run setup-dbs   \
 npm run push-test  \
 npm run test
+
+
+## Contributors
+Ricky - https://github.com/Colorrr34
+Dan - https://github.com/SmackSmash
+Gilson - https://github.com/Gilson96
+Bruno - https://github.com/Sathoryn
