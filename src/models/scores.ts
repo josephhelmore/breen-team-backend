@@ -46,11 +46,18 @@ export const readScoresByScoreId = async (
   score_id: number,
   game_id: number
 ): Promise<{ scores: Score[] }> => {
-  const dbScores: Score[] = await db
-    .select()
-    .from(scores)
-    .where(eq(scores.game_id, game_id))
-    .orderBy(desc(scores.score));
+  const dbScores: Score[] =
+    game_id === 1
+      ? await db
+          .select()
+          .from(scores)
+          .where(eq(scores.game_id, game_id))
+          .orderBy(desc(scores.score))
+      : await db
+          .select()
+          .from(scores)
+          .where(eq(scores.game_id, game_id))
+          .orderBy(asc(scores.score));
 
   const rankedScores = addRankToScores(dbScores);
 
