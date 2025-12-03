@@ -8,12 +8,19 @@ import {
   deleteUserById,
   updateUser
 } from './users.js';
-import { readScores, readScoresByScoreId, readScore, createScore } from './scores.js';
+import {
+  readScores,
+  readScoresByScoreId,
+  readScore,
+  readScoresByUser,
+  createScore
+} from './scores.js';
 
 export {
   readScores,
   readScoresByScoreId,
   readScore,
+  readScoresByUser,
   createScore,
   readGames,
   readGame,
