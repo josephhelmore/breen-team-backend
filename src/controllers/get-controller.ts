@@ -1,4 +1,5 @@
 import { Response, Request, NextFunction } from 'express';
+import { RequestWithUser } from '../types/index.js';
 import {
   readScores,
   readScoresByScoreId,
@@ -13,7 +14,7 @@ export const getUsers = async (req: Request, res: Response, next: NextFunction) 
   return res.send({ users: users });
 };
 
-export const getUser = async (req: Request, res: Response, next: NextFunction) => {
+export const getUser = async (req: RequestWithUser, res: Response, next: NextFunction) => {
   const google_id: string = req.user.userId;
 
   const user = await readUserByGoogleId(google_id);

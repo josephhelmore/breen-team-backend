@@ -10,6 +10,12 @@ export type User = {
   bio?: string;
 };
 
+export type AuthUser = {
+  userId: string;
+  iat: number;
+  exp: number;
+};
+
 export type Score = {
   score_id?: number;
   score: number;
@@ -26,5 +32,5 @@ export type Game = {
 };
 
 export interface RequestWithUser extends Request {
-  user?: User;
+  user?: AuthUser;
 }
