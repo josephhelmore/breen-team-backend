@@ -1,9 +1,10 @@
 import { Response, Request, NextFunction } from 'express';
+import { RequestWithUser } from '../types/index.js';
 import {
   readScores,
   readScoresByScoreId,
   readGames,
-  readUser,
+  readUserByGoogleId,
   readUsers
 } from '../models/index.js';
 import { userExist, gameExists, scoreExist, isValid } from './controller-error-handling.js';
@@ -13,10 +14,10 @@ export const getUsers = async (req: Request, res: Response, next: NextFunction) 
   return res.send({ users: users });
 };
 
-export const getUser = async (req: Request, res: Response, next: NextFunction) => {
-  const { user_id } = req.params;
-  const numId = isValid(user_id);
-  const user = await readUser(numId);
+export const getUser = async (req: RequestWithUser, res: Response, next: NextFunction) => {
+  const google_id: string = req.user.userId;
+
+  const user = await readUserByGoogleId(google_id);
 
   userExist(user);
 
