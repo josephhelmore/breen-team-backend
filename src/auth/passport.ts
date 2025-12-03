@@ -49,8 +49,6 @@ passport.use(
           .from(users)
           .where(eq(users.google_id, googleId));
 
-        console.log(existingUser);
-
         if (existingUser) return done(null, existingUser);
 
         const [newUser] = await db
