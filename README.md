@@ -7,23 +7,11 @@ Link to the hosted app: https://breen-team-fe-hcif.vercel.app \
 Link to the hosted API: https://breen-team-backend.vercel.app \
 Repo for the front end project: https://github.com/Gilson96/breen-team-FE
 
-## Dependencies
 
-### Basic Dependencies
+<details>
 
-node-postgres \ 
-tsx \
-Drizzle-kit \
-Drizzle-ORM \
-express
-
-### Dev Dependencies
-
-Vitest \
-jest-extended
-
-
-## Google-authorisation 
+<summary> <header> Google-authorisation </header> </summary>
+<br>
 For this setup, a google client_id, client_secret and session secret is needed. \
 To do this, there are a few steps to follow; 
 
@@ -56,6 +44,23 @@ To do this, there are a few steps to follow;
     4. Click 'Create' and you will be given your client_id and client_secret in a popup. 
         1. Paste your client_id in your .env.production; GOOGLE_CLIENT_ID={client_id}
         2. Paste your client_secret in your .env.production; GOOGLE_CLIENT_SECRET={client_secret}
+
+</details>
+
+## Dependencies
+
+### Basic Dependencies
+
+node-postgres \ 
+tsx \
+Drizzle-kit \
+Drizzle-ORM \
+express
+
+### Dev Dependencies
+
+Vitest \
+jest-extended
 
 
 ## Dev Setup
