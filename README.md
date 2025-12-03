@@ -35,6 +35,7 @@ If you do not have a password, you can remove {password}
 
 GOOGLE_CLIENT_ID={client_id}
 GOOGLE_CLIENT_SECRET={client_secret}
+SESSION_SECRET={session_secret}
 Leave these blank for now
 
 ```
@@ -54,7 +55,6 @@ npm run seed-dev
 ```
 
 6. setup Google Auth
-## Google-authorisation
 <details>
 <summary> Setup steps for Oauth. </summary>
 <br>
@@ -91,9 +91,10 @@ To do this, there are a few steps to follow;
         1. Paste your client_id in your .env.production; GOOGLE_CLIENT_ID={client_id}
         2. Paste your client_secret in your .env.production; GOOGLE_CLIENT_SECRET={client_secret}
 
+    5. Visit - https://key-generator.com
+        1. paste this key into the SESSION_SECRET={session_secret} within the .env files
+
 </details>
-
-
 
 
 ## Test Setup
