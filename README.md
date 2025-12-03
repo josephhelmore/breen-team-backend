@@ -8,9 +8,9 @@ Link to the hosted API: https://breen-team-backend.vercel.app \
 Repo for the front end project: https://github.com/Gilson96/breen-team-FE
 
 
+## Google-authorisation
 <details>
-
-## <summary> Google-authorisation </summary>
+<summary> If needed, click here for setup steps for OAuth </summary>
 <br>
 For this setup, a google client_id, client_secret and session secret is needed. \
 To do this, there are a few steps to follow; 
