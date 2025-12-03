@@ -8,9 +8,55 @@ Link to the hosted API: https://breen-team-backend.vercel.app \
 Repo for the front end project: https://github.com/Gilson96/breen-team-FE
 
 
+
+# App Plan 
+
+![Alt text](app-plan.png)
+
+## Dev Setup
+
+1. Run npm install
+
+```
+npm install
+```
+
+2. Set up databases through through psql command in npm script
+
+```
+npm run setup-dbs
+```
+
+3. Create .env.development inside the /db folder and set DATABASE_URL in the files.
+
+```
+DATABASE_URL=postgresql://{username}:{password}@localhost/breen_server \
+If you do not have a password, you can remove {password}
+
+GOOGLE_CLIENT_ID={client_id}
+GOOGLE_CLIENT_SECRET={client_secret}
+Leave these blank for now
+
+```
+
+4. Push the schemas to create tables through drizzle-kit
+
+```
+
+npm run push-dev
+
+```
+
+5. Seed the dev-schema with the development data
+
+```
+npm run seed-dev
+```
+
+6. setup Google Auth
 ## Google-authorisation
 <details>
-<summary> If needed, click here for setup steps for OAuth </summary>
+<summary> Setup steps for Oauth. </summary>
 <br>
 For this setup, a google client_id, client_secret and session secret is needed. \
 To do this, there are a few steps to follow; 
@@ -47,53 +93,6 @@ To do this, there are a few steps to follow;
 
 </details>
 
-## Dependencies
-
-### Basic Dependencies
-
-node-postgres \ 
-tsx \
-Drizzle-kit \
-Drizzle-ORM \
-express
-
-### Dev Dependencies
-
-Vitest \
-jest-extended
-
-
-## Dev Setup
-
-1. Run npm install
-
-```
-npm install
-```
-
-2. Set up databases through through psql command in npm script
-
-```
-npm run setup-dbs
-```
-
-3. Create .env.development inside the /db folder and set DATABASE_URL in the files.
-
-```
-DATABASE_URL=postgresql://{username}:{password}@localhost/breen_server \
-If you do not have a password, you can remove {password}
-```
-
-4. Push the schemas to create tables through drizzle-kit
-
-```
-
-npm run push-dev
-
-```
-
-5. Seed the dev-schema with the 
-
 
 
 
@@ -115,6 +114,11 @@ npm run setup-dbs
 
 ```
 DATABASE_URL=postgresql://{username}:{password}@localhost/breen_server_test
+GOOGLE_CLIENT_ID={client_id}
+GOOGLE_CLIENT_SECRET={client_secret}
+
+Follow step 6 of dev setup if you have not done so yet.
+
 ```
 
 4. Push the schemas to create tables through drizzle-kit
@@ -132,6 +136,22 @@ npm run push-test
 npm t
 
 ```
+
+## Dependencies
+
+### Basic Dependencies
+
+node-postgres \ 
+tsx \
+Drizzle-kit \
+Drizzle-ORM \
+express
+
+### Dev Dependencies
+
+Vitest \
+jest-extended
+
 
 # Running locally script order
 
