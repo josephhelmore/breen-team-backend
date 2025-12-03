@@ -1,15 +1,13 @@
-import { beforeAll, afterAll, describe, test, expect } from 'vitest';
+import { beforeAll, describe, test, expect } from 'vitest';
 import { users, scores, games } from '../src/db/data/schema.js';
 import matchers from 'jest-extended';
 import db from '../src/db/connection.js';
-import dropTable from '../src/db/seed/drop.js';
 import { seed } from '../src/db/seed/seed.js';
 import { data } from '../src/db/data/test/index.js';
 
 expect.extend(matchers);
 
 beforeAll(() => seed(data));
-afterAll(() => dropTable());
 
 describe('Data Insertion for user table', () => {
   test('should check if users table has the correct columns and data types', () => {
@@ -80,6 +78,7 @@ describe('Data insertion for scores table', () => {
       });
   });
 });
+
 describe('Data insertion into the game table', () => {
   test('Should check that the game table has the correct columns', async () => {
     const resGames = await db.select().from(games);

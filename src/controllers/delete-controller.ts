@@ -4,10 +4,13 @@ import { isValid, userExists } from './error-handling-controller.js';
 
 export const deleteUser = async (req: Request, res: Response) => {
   const user_id = req.params.user_id;
+
   isValid(user_id);
   const convertedUserIdToNumber = Number(user_id);
+
   const user = await readUserByUserId(convertedUserIdToNumber);
   userExists(user);
+
   const [deletedUser] = await deleteUserById(convertedUserIdToNumber);
   return res.send({ user: deletedUser });
 };

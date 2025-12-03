@@ -1,10 +1,9 @@
 import app from '../src/app.js';
 import db from '../src/db/connection.js';
 import * as matchers from 'jest-extended';
-import { beforeAll, afterAll, describe, test, expect } from 'vitest';
+import { beforeAll, describe, test, expect } from 'vitest';
 import request from 'supertest';
 import { seed } from '../src/db/seed/seed.js';
-import dropTable from '../src/db/seed/drop.js';
 import { data } from '../src/db/data/test/index.js';
 import { Score, User, Game } from '../src/types';
 import jwt from 'jsonwebtoken';
@@ -16,15 +15,14 @@ expect.extend(matchers);
 let testToken: string;
 
 beforeAll(async () => {
-  testToken = await jwt.sign({ google_id: 'test_google_id' }, process.env.SESSION_SECRET, {
+  testToken = jwt.sign({ google_id: 'test_google_id' }, process.env.SESSION_SECRET!, {
     expiresIn: '10s'
   });
   await seed(data);
 });
-afterAll(() => dropTable());
 
 describe('GET', () => {
-  describe('GET /users', () => {
+  describe('GET users /users', () => {
     test('GET all users from database', async () => {
       const {
         body: { users }
@@ -67,7 +65,7 @@ describe('GET', () => {
         body: {
           user: { scores }
         }
-      } = await request(app)
+      }: { body: { user: { scores: { [key: string]: Score[] } } } } = await request(app)
         .get('/api/users/profile')
         .set('Authorization', `Bearer ${testToken}`)
         .expect(200);
@@ -79,7 +77,20 @@ describe('GET', () => {
     });
   });
 
-  describe('GET /games/:game_id/scores', () => {
+  describe('GET games /games', () => {
+    test('GET games table', async () => {
+      const {
+        body: { games }
+      } = await request(app).get('/api/games').expect(200);
+
+      games.forEach((game: Game) => {
+        expect('game_id' in game).toBeTrue();
+        expect('name' in game).toBeTrue();
+      });
+    });
+  });
+
+  describe('GET scores /games/:game_id/scores', () => {
     test('GET scores from database', async () => {
       const {
         body: { scores }
@@ -196,6 +207,8 @@ describe('GET', () => {
 
       const {
         body: { score }
+      }: {
+        body: { score: Score };
       } = await request(app).post('/api/games/2/scores').send(testScore).expect(201);
 
       const {
@@ -221,10 +234,16 @@ describe('GET', () => {
         body: {
           score: { score_id }
         }
+      }: {
+        body: {
+          score: { score_id: number };
+        };
       } = await request(app).post('/api/games/1/scores').send(testScore).expect(201);
 
       const {
         body: { scores }
+      }: {
+        body: { scores: Score[] };
       } = await request(app).get(`/api/games/1/scores/${score_id}`).expect(200);
 
       expect(scores.length).toBe(10);
@@ -243,6 +262,10 @@ describe('GET', () => {
         body: {
           score: { score_id }
         }
+      }: {
+        body: {
+          score: { score_id: number };
+        };
       } = await request(app).post('/api/games/1/scores').send(testScore).expect(201);
 
       const {
@@ -265,10 +288,16 @@ describe('GET', () => {
         body: {
           score: { score_id }
         }
+      }: {
+        body: {
+          score: { score_id: number };
+        };
       } = await request(app).post('/api/games/1/scores').send(testScore).expect(201);
 
       const {
         body: { scores }
+      }: {
+        body: { scores: Score[] };
       } = await request(app).get(`/api/games/1/scores/${score_id}`).expect(200);
 
       expect(scores.length).toBe(10);
@@ -278,60 +307,51 @@ describe('GET', () => {
     });
 
     describe('SCORES ERROR HANDLING', () => {
-      test('Should return a 400 when passed an invalid game_id', () => {
-        return request(app)
+      test('Should return a 400 when passed an invalid game_id', async () => {
+        const {
+          body: { message }
+        }: { body: { message: string } } = await request(app)
           .get('/api/games/invalid/scores')
-          .expect(400)
-          .then(({ body }) => {
-            expect(body.message).toBe('Please enter a valid id!');
-          });
+          .expect(400);
+
+        expect(message).toBe('Please enter a valid id!');
       });
 
-      test('Should return a 400 when passed an invalid score_id', () => {
-        return request(app)
+      test('Should return a 400 when passed an invalid score_id', async () => {
+        const {
+          body: { message }
+        }: { body: { message: string } } = await request(app)
           .get('/api/games/1/scores/invalid')
-          .expect(400)
-          .then(({ body }) => {
-            expect(body.message).toBe('Please enter a valid id!');
-          });
+          .expect(400);
+
+        expect(message).toBe('Please enter a valid id!');
       });
 
-      test('Should return a 404 when passed a game_id that does not exist', () => {
-        return request(app)
+      test('Should return a 404 when passed a game_id that does not exist', async () => {
+        const {
+          body: { message }
+        }: { body: { message: string } } = await request(app)
           .get('/api/games/9999999/scores')
-          .expect(404)
-          .then(({ body }) => {
-            expect(body.message).toBe('Sorry, this game does not exist');
-          });
+          .expect(404);
+
+        expect(message).toBe('Sorry, this game does not exist');
       });
 
       test('Should return a 404 when passed a score_id that does not exist', async () => {
-        return request(app)
+        const {
+          body: { message }
+        }: { body: { message: string } } = await request(app)
           .get('/api/games/1/scores/99999999')
-          .expect(404)
-          .then(({ body }) => {
-            expect(body.message).toBe('Sorry, this score does not exist');
-          });
-      });
-    });
-  });
+          .expect(404);
 
-  describe('GET /games', () => {
-    test('GET games table', async () => {
-      const {
-        body: { games }
-      } = await request(app).get('/api/games').expect(200);
-
-      games.forEach((game: Game) => {
-        expect('game_id' in game).toBeTrue();
-        expect('name' in game).toBeTrue();
+        expect(message).toBe('Sorry, this score does not exist');
       });
     });
   });
 });
 
 describe('POST', () => {
-  describe('POST /games/:game_id/scores', () => {
+  describe('POST score /games/:game_id/scores', () => {
     test('POST a score when user exists', async () => {
       const testScore = {
         score: 100,
@@ -366,7 +386,7 @@ describe('POST', () => {
     });
   });
 
-  describe('POST /users', () => {
+  describe('POST user /users', () => {
     test('POST user to the database', async () => {
       const newUser = {
         username: 'testNewUser'
@@ -399,7 +419,7 @@ describe('POST', () => {
     });
   });
 
-  test('POST /games', async () => {
+  test('POST game /games', async () => {
     const {
       body: { game }
     } = await request(app).post('/api/games').send({ name: 'test_game' }).expect(201);
@@ -409,7 +429,7 @@ describe('POST', () => {
 });
 
 describe('PATCH', () => {
-  describe('PATCH /users/:user_id', () => {
+  describe('PATCH user /users/profile', () => {
     test('Update username', async () => {
       const {
         body: { user }
@@ -479,29 +499,31 @@ describe('DELETE', () => {
     test('DELETE /games/:game_id', async () => {
       const {
         body: { game }
-      } = await request(app).delete('/api/games/5').expect(200);
+      }: { body: { game: Game } } = await request(app).delete('/api/games/5').expect(200);
 
       expect(game.game_id).toBe(5);
     });
   });
 
   describe('Error handling', () => {
-    test('Should return a 404 user not found when passed a user ID that does note exist', () => {
-      return request(app)
+    test('Should return a 404 user not found when passed a user ID that does note exist', async () => {
+      const {
+        body: { message }
+      }: { body: { message: string } } = await request(app)
         .delete('/api/users/99999999')
-        .expect(404)
-        .then(({ body }) => {
-          expect(body.message).toBe('Sorry, this user does not exist');
-        });
+        .expect(404);
+
+      expect(message).toBe('Sorry, this user does not exist');
     });
 
-    test('Should return a 400 invalud user_id when passed an invalid user_id', () => {
-      return request(app)
+    test('Should return a 400 invalud user_id when passed an invalid user_id', async () => {
+      const {
+        body: { message }
+      }: { body: { message: string } } = await request(app)
         .delete('/api/users/invalid')
-        .expect(400)
-        .then(({ body }) => {
-          expect(body.message).toBe('Please enter a valid id!');
-        });
+        .expect(400);
+
+      expect(message).toBe('Please enter a valid id!');
     });
   });
 });

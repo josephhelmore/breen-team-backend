@@ -1,9 +1,7 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
-
 import dotenv from 'dotenv';
 
 const ENV = process.env.NODE_ENV || 'development';
-
 const envPath = import.meta.dirname + '/.env.' + ENV;
 
 dotenv.config({ path: envPath });

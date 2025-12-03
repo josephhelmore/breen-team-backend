@@ -30,7 +30,7 @@ export async function gameExists(game_id: number) {
     };
   }
 }
-export async function scoreExist(score: number) {
+export async function scoreExists(score: number) {
   const resScore = await readScore(score);
 
   if (resScore.length === 0) {

@@ -8,7 +8,7 @@ import {
   readUsers,
   readScoresByUser
 } from '../models/index.js';
-import { userExists, gameExists, scoreExist, isValid } from './error-handling-controller.js';
+import { userExists, gameExists, scoreExists, isValid } from './error-handling-controller.js';
 
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
   const users = await readUsers();
@@ -67,7 +67,7 @@ export const getScoresByScoreId = async (req: Request, res: Response, next: Next
   const scores = await readScoresByScoreId(numScore_id, numGame_id);
 
   isValid(score_id);
-  await scoreExist(numScore_id);
+  await scoreExists(numScore_id);
   return res.send(scores);
 };
 

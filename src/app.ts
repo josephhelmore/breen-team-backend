@@ -3,7 +3,6 @@ import type { Response, Request, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import passport from './auth/passport.js';
-
 import authRoutes from './routes/auth.js';
 import type { RequestWithUser } from './types/index.js';
 import { apiRoutes } from './routes/apiRoutes.js';
