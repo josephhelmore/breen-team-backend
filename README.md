@@ -27,7 +27,7 @@ jest-extended
 For this setup, a google client_id, client_secret and session secret is needed. \
 To do this, there are a few steps to follow; 
 
-1. Go to: https://console.cloud.google.com/apis/dashboard - çYou may need to login to your google account 
+1. Go to: https://console.cloud.google.com/apis/dashboard - You may need to login to your google account 
 
 2. Click 'New Project' near the top left corner and give your project a name and make sure the location is set to 'No Organisation'
 
