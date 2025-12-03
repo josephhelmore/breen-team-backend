@@ -8,7 +8,7 @@ import {
   readUsers,
   readScoresByUser
 } from '../models/index.js';
-import { userExist, gameExists, scoreExist, isValid } from './controller-error-handling.js';
+import { userExists, gameExists, scoreExist, isValid } from './error-handling-controller.js';
 
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
   const users = await readUsers();
@@ -20,13 +20,23 @@ export const getUser = async (req: RequestWithUser, res: Response, next: NextFun
 
   const profile = await readUserByGoogleId(google_id);
 
-  userExist(profile);
+  userExists(profile);
 
   const userProfile = profile[0];
 
   const scores = await readScoresByUser(userProfile.user_id);
 
-  return res.status(200).json({ user: { profile: userProfile, scores: scores } });
+  return res.status(200).json({
+    user: {
+      profile: {
+        username: userProfile.username,
+        avatar_url: userProfile.avatar_url,
+        email: userProfile.email,
+        bio: userProfile.bio
+      },
+      scores: scores
+    }
+  });
 };
 
 export const getScores = async (req: Request, res: Response, next: NextFunction) => {

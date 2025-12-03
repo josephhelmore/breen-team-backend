@@ -22,6 +22,9 @@ describe('Data Insertion for user table', () => {
           expect(user).toHaveProperty('user_id');
           expect(user).toHaveProperty('username');
           expect(user).toHaveProperty('created_on');
+          expect(user).toHaveProperty('avatar_url');
+          expect(user).toHaveProperty('bio');
+          expect(user).toHaveProperty('google_id');
           expect(user.user_id).toBeNumber();
           expect(user.username).toBeString();
           expect(user.created_on).toBeDate();

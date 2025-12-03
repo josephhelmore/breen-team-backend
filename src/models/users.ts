@@ -6,16 +6,7 @@ import { User } from '../types/index.js';
 export const readUsers = async (): Promise<User[]> => await db.select().from(users);
 
 export const readUserByGoogleId = async (google_id: string): Promise<User[]> => {
-  return await db
-    .select({
-      user_id: users.user_id,
-      username: users.username,
-      avatar_url: users.avatar_url,
-      email: users.email,
-      bio: users.bio
-    })
-    .from(users)
-    .where(eq(users.google_id, google_id));
+  return await db.select().from(users).where(eq(users.google_id, google_id));
 };
 
 export const readUserByUserId = async (user_id: number): Promise<User[]> =>

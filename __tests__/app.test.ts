@@ -17,7 +17,7 @@ let testToken: string;
 
 beforeAll(async () => {
   testToken = await jwt.sign({ google_id: 'test_google_id' }, process.env.SESSION_SECRET, {
-    expiresIn: '7d'
+    expiresIn: '10s'
   });
   await seed(data);
 });
@@ -76,43 +76,6 @@ describe('GET', () => {
       for (const game in scores) {
         scores[game].forEach(score => expect(score.game_id).toBe(Number(game)));
       }
-    });
-
-    describe('GET USER ERROR HANDLING', () => {
-      test.skip('Unauthorised user profile get request will be status 401', async () => {
-        const {
-          body: { message }
-        }: { body: { message: string } } = await request(app).get('/users/profile').expect(401);
-
-        expect(message).toBe('You need to log in to see this page.');
-      });
-      // test('Should return with a status of 400 when passed an invalid user_id is passed', () => {
-      //   return request(app)
-      //     .get('/api/users/invalid')
-      //     .expect(400)
-      //     .then(({ body }) => {
-      //       expect(body.message).toBe('Please enter a valid id!');
-      //     });
-      // });
-
-      // test('Should return with a status of 404 when passed a user_id that does not exist', () => {
-      //   return request(app)
-      //     .get('/api/users/999999999')
-      //     .expect(404)
-      //     .then(({ body }) => {
-      //       expect(body.message).toBe('Sorry, this user does not exist');
-      //     });
-      // });
-
-      // test('Should return with a status of 200 when a user is fetched', () => {
-      //   return request(app)
-      //     .get('/api/users/1')
-      //     .expect(200)
-      //     .then(({ body }) => {
-      //       expect(body.user.user_id).toBe(1);
-      //       expect(typeof body.user.username).toBe('string');
-      //     });
-      // });
     });
   });
 
