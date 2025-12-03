@@ -4,14 +4,15 @@
 
 The backend server for the game project of the breen team. \
 Link to the hosted app: https://breen-team-fe-hcif.vercel.app \
-Link to the hosted API: https://breen-team-backend.vercel.app \ 
+Link to the hosted API: https://breen-team-backend.vercel.app \
 Repo for the front end project: https://github.com/Gilson96/breen-team-FE
 
 ## Dependencies
 
 ### Basic Dependencies
 
-node-postgres \ tsx \
+node-postgres \ 
+tsx \
 Drizzle-kit \
 Drizzle-ORM \
 express
