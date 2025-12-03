@@ -3,7 +3,9 @@
 ## Description
 
 The backend server for the game project of the breen team. \
-Link to the hosted API: https://breen-team-backend.vercel.app \ Repo for the front end project: https://github.com/Gilson96/breen-team-FE
+Link to the hosted app: https://breen-team-fe-hcif.vercel.app \
+Link to the hosted API: https://breen-team-backend.vercel.app \ 
+Repo for the front end project: https://github.com/Gilson96/breen-team-FE
 
 ## Dependencies
 
@@ -85,10 +87,13 @@ npm t
 
 # Running locally script order
 
-npm run setup-dbs -- create DB npm run push-dev -- create tables npm run seed-dev -- optional, add
-test data npm run start -- start server
+npm run setup-dbs -- create DB \
+npm run push-dev -- create tables \
+npm run seed-dev -- optional, add test data \
+npm run start -- start server
 
 # Testing script order
 
-npm run setup-dbs  
-npm run push-test npm run test
+npm run setup-dbs   \
+npm run push-test  \
+npm run test
