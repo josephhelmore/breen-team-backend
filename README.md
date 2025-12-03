@@ -10,7 +10,7 @@ Repo for the front end project: https://github.com/Gilson96/breen-team-FE
 
 <details>
 
-<summary> <header> Google-authorisation </header> </summary>
+## <summary> Google-authorisation </summary>
 <br>
 For this setup, a google client_id, client_secret and session secret is needed. \
 To do this, there are a few steps to follow; 
