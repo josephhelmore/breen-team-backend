@@ -36,9 +36,20 @@ passport.use(
         const name = profile.displayName;
         const picture = profile.photos?.[0]?.value;
 
-        console.log(googleId);
+        // const [existingUser] = await db.select().from(users).where(eq(users.google_id, googleId));
+        const [existingUser] = await db
+          .select({
+            user_id: users.user_id,
+            username: users.username,
+            email: users.email,
+            created_on: users.created_on,
+            google_id: users.google_id,
+            avatar_url: users.avatar_url
+          })
+          .from(users)
+          .where(eq(users.google_id, googleId));
 
-        const [existingUser] = await db.select().from(users).where(eq(users.google_id, googleId));
+        console.log(existingUser);
 
         if (existingUser) return done(null, existingUser);
 
