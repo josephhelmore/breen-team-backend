@@ -16,7 +16,7 @@ export const getUsers = async (req: Request, res: Response, next: NextFunction) 
 };
 
 export const getUser = async (req: RequestWithUser, res: Response, next: NextFunction) => {
-  const google_id: string = req.user.userId;
+  const google_id: string = req.user.google_id;
 
   const profile = await readUserByGoogleId(google_id);
 

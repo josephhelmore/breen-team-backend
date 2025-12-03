@@ -11,7 +11,7 @@ export type User = {
 };
 
 export type AuthUser = {
-  userId: string;
+  google_id: string;
   iat: number;
   exp: number;
 };
