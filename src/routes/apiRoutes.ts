@@ -22,9 +22,9 @@ apiRoutes.get('/', (req, res) => {
 
 apiRoutes.route('/users').get(getUsers).post(postUser);
 
-apiRoutes.route('/users/:user_id').patch(patchUser).delete(deleteUser);
+apiRoutes.route('/users/:user_id').delete(deleteUser);
 
-apiRoutes.get('/users/profile', auth, getUser);
+apiRoutes.route('/users/profile').get(auth, getUser).patch(auth, patchUser);
 
 apiRoutes.route('/games').get(getGames).post(postGames);
 

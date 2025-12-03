@@ -453,19 +453,47 @@ describe('PATCH', () => {
       }: {
         body: { user: User };
       } = await request(app)
-        .patch('/api/users/1')
-        .send({ username: 'updatedTestUser1' })
+        .patch('/api/users/profile')
+        .set('Authorization', `Bearer ${testToken}`)
+        .send({ username: 'updatedTestUser8' })
         .expect(200);
 
-      expect(user.user_id).toBe(1);
-      expect(user.username).toBe('updatedTestUser1');
+      expect(Object.keys(user).length).toBe(5);
+      expect(user.google_id).toBe('test_google_id');
+      expect(user.username).toBe('updatedTestUser8');
+      expect(user.bio).toBe('test bio');
+      expect(user.email).toBe('test_email');
+      expect(user.avatar_url).toBe('test_avatar_url');
+    });
+
+    test('Update bio', async () => {
+      const {
+        body: { user }
+      }: {
+        body: { user: User };
+      } = await request(app)
+        .patch('/api/users/profile')
+        .set('Authorization', `Bearer ${testToken}`)
+        .send({ bio: 'test updated bio' })
+        .expect(200);
+
+      expect(Object.keys(user).length).toBe(5);
+      expect(user.google_id).toBe('test_google_id');
+      expect(user.username).toBe('updatedTestUser8');
+      expect(user.bio).toBe('test updated bio');
+      expect(user.email).toBe('test_email');
+      expect(user.avatar_url).toBe('test_avatar_url');
     });
 
     describe('Error handling', () => {
       test('Status 400, username already exists', async () => {
         const {
           body: { message }
-        } = await request(app).patch('/api/users/1').send({ username: 'testUser2' }).expect(400);
+        } = await request(app)
+          .patch('/api/users/profile')
+          .set('Authorization', `Bearer ${testToken}`)
+          .send({ username: 'testUser2' })
+          .expect(400);
 
         expect(message).toBe('Username already exists');
       });

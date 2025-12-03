@@ -39,12 +39,21 @@ export const createUser = async (username: string): Promise<User[]> => {
   }
 };
 
-export const updateUser = async (user_id: number, username: string): Promise<User[]> => {
+export const updateUser = async (
+  google_id: string,
+  username?: string,
+  bio?: string
+): Promise<User[]> => {
+  const updateObject: { username?: string; bio?: string } = {};
+
+  if (username) updateObject.username = username;
+  if (bio) updateObject.bio = bio;
+
   try {
     return await db
       .update(users)
-      .set({ username: username })
-      .where(eq(users.user_id, user_id))
+      .set(updateObject)
+      .where(eq(users.google_id, google_id))
       .returning();
   } catch (err) {
     if (err.cause.code === '23505' && err.cause.constraint === 'users_username_unique') {
