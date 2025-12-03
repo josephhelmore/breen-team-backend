@@ -16,7 +16,7 @@ expect.extend(matchers);
 let testToken: string;
 
 beforeAll(async () => {
-  testToken = await jwt.sign({ userId: 'test_google_id' }, process.env.SESSION_SECRET, {
+  testToken = await jwt.sign({ google_id: 'test_google_id' }, process.env.SESSION_SECRET, {
     expiresIn: '7d'
   });
   await seed(data);
@@ -46,18 +46,36 @@ describe('GET', () => {
 
     test('GET user by google_id', async () => {
       const {
-        body: { user }
+        body: {
+          user: { profile }
+        }
       }: {
-        body: { user: User };
+        body: { user: { profile: User } };
       } = await request(app)
         .get('/api/users/profile')
         .set('Authorization', `Bearer ${testToken}`)
         .expect(200);
 
-      expect(user.username).toBeString();
-      expect(user.avatar_url).toBe('test_avatar_url');
-      expect(user.email).toBe('test_email');
-      expect(user.bio).toBe('test bio');
+      expect(profile.username).toBeString();
+      expect(profile.avatar_url).toBe('test_avatar_url');
+      expect(profile.email).toBe('test_email');
+      expect(profile.bio).toBe('test bio');
+    });
+
+    test('GET user profile attached with a score object with scores with each game', async () => {
+      const {
+        body: {
+          user: { scores }
+        }
+      } = await request(app)
+        .get('/api/users/profile')
+        .set('Authorization', `Bearer ${testToken}`)
+        .expect(200);
+
+      expect(Object.keys(scores).length).toBe(data.gamesData.length);
+      for (const game in scores) {
+        scores[game].forEach(score => expect(score.game_id).toBe(Number(game)));
+      }
     });
 
     describe('GET USER ERROR HANDLING', () => {

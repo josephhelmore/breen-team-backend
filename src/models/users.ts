@@ -8,6 +8,7 @@ export const readUsers = async (): Promise<User[]> => await db.select().from(use
 export const readUserByGoogleId = async (google_id: string): Promise<User[]> => {
   return await db
     .select({
+      user_id: users.user_id,
       username: users.username,
       avatar_url: users.avatar_url,
       email: users.email,
