@@ -103,8 +103,9 @@ export const createScore = async (
   user_id: number,
   username: string,
   game_id: number
-): Promise<Score[]> =>
-  await db
+): Promise<Score[]> => {
+  return await db
     .insert(scores)
     .values({ score: score, user_id: user_id, username: username, game_id: game_id })
     .returning();
+};

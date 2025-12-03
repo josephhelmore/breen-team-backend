@@ -1,13 +1,16 @@
 import { Response, Request } from 'express';
 import { deleteUserById, deleteGameByGameId, readUserByUserId } from '../models/index.js';
-import { isValid, userExist } from './controller-error-handling.js';
+import { isValid, userExists } from './error-handling-controller.js';
 
 export const deleteUser = async (req: Request, res: Response) => {
   const user_id = req.params.user_id;
+
   isValid(user_id);
   const convertedUserIdToNumber = Number(user_id);
+
   const user = await readUserByUserId(convertedUserIdToNumber);
-  userExist(user);
+  userExists(user);
+
   const [deletedUser] = await deleteUserById(convertedUserIdToNumber);
   return res.send({ user: deletedUser });
 };

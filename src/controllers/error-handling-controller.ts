@@ -12,7 +12,7 @@ export function isValid(id: string): number {
   return num;
 }
 
-export function userExist(user: User[]): User[] {
+export function userExists(user: User[]): User[] {
   if (user.length === 0) {
     throw {
       status: 404,
@@ -30,7 +30,7 @@ export async function gameExists(game_id: number) {
     };
   }
 }
-export async function scoreExist(score: number) {
+export async function scoreExists(score: number) {
   const resScore = await readScore(score);
 
   if (resScore.length === 0) {

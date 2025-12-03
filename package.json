@@ -30,10 +30,11 @@
   "devDependencies": {
     "@jest/globals": "^30.2.0",
     "@types/pg": "^8.15.6",
+    "@types/supertest": "^6.0.3",
     "jest-extended": "^6.0.0",
-    "nodemon": "^3.1.11",
+    "pg": "^8.16.3",
+    "supertest": "^7.1.4",
     "tsx": "^4.20.6",
-    "typescript": "^5.9.3",
     "vitest": "^4.0.12"
   },
   "dependencies": {
@@ -43,19 +44,16 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/passport": "^1.0.17",
     "@types/passport-google-oauth20": "^2.0.17",
-    "@types/supertest": "^6.0.3",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "drizzle-kit": "^0.31.7",
     "drizzle-orm": "^0.44.7",
-    "drizzle-seed": "^0.3.1",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "node-postgres": "^0.6.2",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
-    "pg": "^8.16.3",
-    "supertest": "^7.1.4",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }

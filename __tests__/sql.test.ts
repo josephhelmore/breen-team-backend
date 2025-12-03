@@ -56,7 +56,7 @@ describe('users table', () => {
     expect(column.data_type).toBe('character varying');
   });
 
-  test('users table has created_on column as varying character', async () => {
+  test('users table has created_on column as timestamp', async () => {
     const {
       rows: [column]
     } = await db.execute(sql`SELECT column_name, data_type, column_default
@@ -65,6 +65,39 @@ describe('users table', () => {
             AND column_name = 'created_on';`);
     expect(column.column_name).toBe('created_on');
     expect(column.data_type).toBe('timestamp without time zone');
+  });
+
+  test('users table has google_id column as varying character', async () => {
+    const {
+      rows: [column]
+    } = await db.execute(sql`SELECT column_name, data_type, column_default
+            FROM information_schema.columns
+            WHERE table_name = 'users'
+            AND column_name = 'google_id';`);
+    expect(column.column_name).toBe('google_id');
+    expect(column.data_type).toBe('character varying');
+  });
+
+  test('users table has email column as character varying', async () => {
+    const {
+      rows: [column]
+    } = await db.execute(sql`SELECT column_name, data_type, column_default
+            FROM information_schema.columns
+            WHERE table_name = 'users'
+            AND column_name = 'email';`);
+    expect(column.column_name).toBe('email');
+    expect(column.data_type).toBe('character varying');
+  });
+
+  test('users table has bio column as text', async () => {
+    const {
+      rows: [column]
+    } = await db.execute(sql`SELECT column_name, data_type, column_default
+            FROM information_schema.columns
+            WHERE table_name = 'users'
+            AND column_name = 'bio';`);
+    expect(column.column_name).toBe('bio');
+    expect(column.data_type).toBe('text');
   });
 });
 
