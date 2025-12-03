@@ -16,7 +16,7 @@ expect.extend(matchers);
 let testToken: string;
 
 beforeAll(async () => {
-  testToken = await jwt.sign({ userId: 'test_google_id' }, process.env.SESSION_SECRET, {
+  testToken = await jwt.sign({ google_id: 'test_google_id' }, process.env.SESSION_SECRET, {
     expiresIn: '7d'
   });
   await seed(data);
