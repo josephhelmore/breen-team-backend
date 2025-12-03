@@ -31,19 +31,19 @@ passport.use(
     },
     async (_accessToken, _refreshToken, profile, done) => {
       try {
-        const googleId = profile.id;
+        const google_id = profile.id;
         const email = profile.emails?.[0]?.value;
         const name = profile.displayName;
         const picture = profile.photos?.[0]?.value;
 
-        const [existingUser] = await db.select().from(users).where(eq(users.google_id, googleId));
+        const [existingUser] = await db.select().from(users).where(eq(users.google_id, google_id));
 
         if (existingUser) return done(null, existingUser);
 
         const [newUser] = await db
           .insert(users)
           .values({
-            google_id: googleId,
+            google_id,
             email: email || '',
             username: name,
             avatar_url: picture
