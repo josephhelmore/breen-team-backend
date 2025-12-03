@@ -90,6 +90,14 @@ li {
   width: fit-content;
   background-color: rgba(255, 0, 0, 0.707);
 }
+
+#PATCH {
+  padding: 5px;
+  border-radius: 10px;
+  width: fit-content;
+  background-color: rgba(145, 0, 177, 0.573);
+}
+
 .title-section {
   display:flex;
   align-items: baseline;
