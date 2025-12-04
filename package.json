@@ -6,8 +6,8 @@
   "scripts": {
     "test": "vitest",
     "setup-dbs": "psql -f ./src/db/setup-dbs.sql",
-    "push-dev": "drizzle-kit push --config=drizzle-dev.config.ts",
-    "push-test": "drizzle-kit push --config=drizzle-test.config.ts",
+    "push-dev": "NODE_ENV=development drizzle-kit push --config=drizzle.config.ts",
+    "push-test": "NODE_ENV=test drizzle-kit push --config=drizzle.config.ts",
     "push-prod": "drizzle-kit push --config=drizzle-prod.config.ts",
     "seed-dev": "tsx ./src/db/seed/seed-dev.ts",
     "seed-prod": "NODE_ENV=production npm run seed-dev",

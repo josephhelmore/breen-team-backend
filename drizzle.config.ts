@@ -1,11 +1,11 @@
 import 'dotenv/config';
 import { defineConfig } from 'drizzle-kit';
 
-const pathToCorrectEnvFile = `./src/db/.env.development`;
+const ENV = process.env.NODE_ENV;
 import dotenv from 'dotenv';
 
 dotenv.config({
-  path: pathToCorrectEnvFile
+  path: './src/db/.env.' + ENV
 });
 
 export default defineConfig({
