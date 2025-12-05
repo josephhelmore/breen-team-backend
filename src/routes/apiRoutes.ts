@@ -10,7 +10,8 @@ import {
   deleteGames,
   postUser,
   patchUser,
-  deleteUser
+  deleteUser,
+  deleteUserProfile
 } from '../controllers/index.js';
 import auth from '../middleware/auth.js';
 
@@ -22,9 +23,13 @@ apiRoutes.get('/', (req, res) => {
 
 apiRoutes.route('/users').get(getUsers).post(postUser);
 
-apiRoutes.route('/users/:user_id').delete(deleteUser);
+apiRoutes
+  .route('/users/profile')
+  .get(auth, getUser)
+  .patch(auth, patchUser)
+  .delete(auth, deleteUserProfile);
 
-apiRoutes.route('/users/profile').get(auth, getUser).patch(auth, patchUser);
+apiRoutes.delete('/users/:user_id', deleteUser);
 
 apiRoutes.route('/games').get(getGames).post(postGames);
 

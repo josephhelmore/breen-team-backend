@@ -37,8 +37,24 @@ export const updateUser = async (
 ): Promise<User[]> => {
   const updateObject: { username?: string; bio?: string } = {};
 
-  if (username) updateObject.username = username;
-  if (bio) updateObject.bio = bio;
+  if (username) {
+    if (typeof username !== 'string') {
+      throw {
+        status: 400,
+        message: 'Invalid patch body'
+      };
+    }
+    updateObject.username = username;
+  }
+  if (bio) {
+    if (typeof bio !== 'string') {
+      throw {
+        status: 400,
+        message: 'Invalid patch body'
+      };
+    }
+    updateObject.bio = bio;
+  }
 
   try {
     return await db

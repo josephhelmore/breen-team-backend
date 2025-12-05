@@ -1,10 +1,12 @@
 import { Response } from 'express';
 import { RequestWithUser } from '../types/index.js';
 import { updateUser } from '../models/index.js';
+import { validPatchBody } from './error-handling-controller.js';
 
 export const patchUser = async (req: RequestWithUser, res: Response) => {
   const { google_id } = req.user;
-  const { username, bio } = req.body;
+  const { username, bio }: { username: string; bio: string } = req.body;
+  validPatchBody([username, bio]);
 
   const [resUser] = await updateUser(google_id, username, bio);
 

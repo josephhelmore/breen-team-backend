@@ -1,6 +1,6 @@
 import { getScores, getUsers, getUser, getScoresByScoreId, getGames } from './get-controller.js';
 import { postGuestUserAndPostScore, postUser, postGames } from './post-controller.js';
-import { deleteGames, deleteUser } from './delete-controller.js';
+import { deleteGames, deleteUser, deleteUserProfile } from './delete-controller.js';
 import { patchUser } from './patch-controller.js';
 
 export {
@@ -14,5 +14,6 @@ export {
   postGames,
   patchUser,
   deleteGames,
-  deleteUser
+  deleteUser,
+  deleteUserProfile
 };
