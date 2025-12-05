@@ -480,6 +480,32 @@ describe('PATCH', () => {
 
         expect(message).toBe('Username already exists');
       });
+
+      test('status 400, missing patch details', async () => {
+        const {
+          body: { message }
+        }: {
+          body: { message: string };
+        } = await request(app)
+          .patch('/api/users/profile')
+          .set('Authorization', `Bearer ${testToken}`)
+          .send({})
+          .expect(400);
+
+        expect(message).toBe('Missing patch body');
+      });
+
+      test('status 400, invalid patch body', async () => {
+        const {
+          body: { message }
+        }: {
+          body: { message: string };
+        } = await request(app)
+          .patch('/api/users/profile')
+          .set('Authorization', `Bearer ${testToken}`)
+          .send({ username: -1 })
+          .expect(400);
+      });
     });
   });
 });
@@ -489,9 +515,25 @@ describe('DELETE', () => {
     test('DELETE user by Id', async () => {
       const {
         body: { user }
+      }: {
+        body: { user: User };
       } = await request(app).delete('/api/users/9').expect(200);
 
       expect(user.user_id).toBe(9);
+    });
+  });
+
+  describe('DELETE /users/profile', () => {
+    test('DELETE logged in user', async () => {
+      const {
+        body: { user }
+      }: { body: { user: User } } = await request(app)
+        .delete('/api/users/profile')
+        .set('Authorization', `Bearer ${testToken}`)
+        .expect(200);
+
+      expect(user.google_id).toBe('test_google_id');
+      expect(user.user_id).toBe(8);
     });
   });
 

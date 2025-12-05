@@ -1,7 +1,7 @@
 import { User } from '../types/index.js';
 import { readGame, readScore } from '../models/index.js';
 
-export function isValid(id: string): number {
+export const isValid = (id: string): number => {
   const num = Number(id);
   if (isNaN(num)) {
     throw {
@@ -10,17 +10,17 @@ export function isValid(id: string): number {
     };
   }
   return num;
-}
+};
 
-export function userExists(user: User[]): User[] {
+export const userExists = (user: User[]): User[] => {
   if (user.length === 0) {
     throw {
       status: 404,
       message: 'Sorry, this user does not exist'
     };
   } else return user;
-}
-export async function gameExists(game_id: number) {
+};
+export const gameExists = async (game_id: number) => {
   const resGame = await readGame(game_id);
 
   if (resGame.length === 0) {
@@ -29,8 +29,8 @@ export async function gameExists(game_id: number) {
       message: 'Sorry, this game does not exist'
     };
   }
-}
-export async function scoreExists(score: number) {
+};
+export const scoreExists = async (score: number) => {
   const resScore = await readScore(score);
 
   if (resScore.length === 0) {
@@ -39,4 +39,13 @@ export async function scoreExists(score: number) {
       message: 'Sorry, this score does not exist'
     };
   }
-}
+};
+
+export const validPatchBody = <ColumnType>(columnArray: ColumnType[]) => {
+  if (columnArray.every(column => column === undefined)) {
+    throw {
+      status: 400,
+      message: 'Missing patch body'
+    };
+  }
+};
